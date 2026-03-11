@@ -1,0 +1,163 @@
+/* DARK THEME VERSION */
+
+/* ---------------- ROOT COLORS ---------------- */
+:root{
+  --navy: #D5E8FF;              /* متن‌های پررنگ روشن */
+  --muted: #8FA3B5;             /* متن‌های کم‌رنگ */
+  --light: #1C2430;             /* بکراند‌های روشن تاریک */
+  --accent: #FF8A4C;            /* همان */
+  --white: #11171F;             /* کارت و سکشن در دارک */
+  --glass: rgba(255,255,255,0.05);
+  --max-width: 1100px;
+  --radius: 12px;
+  --shadow-sm: 0 6px 18px rgba(0,0,0,0.45);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.65);
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto;
+  color-scheme: dark;
+}
+
+/* --------------- BASE ---------------- */
+body{
+  margin:0;
+  background: linear-gradient(180deg, #0E141B 0%, #121820 100%);
+  color: #E5EDF5;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+  font-size:16px;
+}
+
+/* ---------------- HEADER ---------------- */
+.site-header {
+  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(18,24,32,0.75), rgba(18,24,32,0.55));
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.brand{
+  color: var(--navy);
+}
+
+.logo{
+  background: linear-gradient(135deg,#243447,#1C2835);
+  color:#fff;
+}
+
+/* NAV LINKS */
+.nav-links a{
+  color: var(--navy);
+}
+.nav-links a:hover{
+  background: rgba(255,255,255,0.06);
+}
+
+/* mobile hamburger */
+.nav-toggle .hamburger,
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after{
+  background:#D5E8FF;
+}
+
+/* ---------------- HERO ---------------- */
+.hero{
+  background:
+    radial-gradient(600px 300px at 10% 20%, rgba(255,255,255,0.06), transparent 12%),
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 40%);
+}
+
+.name{ color: var(--navy); }
+.tagline{ color: var(--muted); }
+
+/* BUTTONS */
+.btn.primary{
+  background: linear-gradient(90deg, #1A2735, #2E3A45);
+  color:white;
+}
+.btn.ghost{
+  background:transparent;
+  color:var(--navy);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* PORTRAIT CARD */
+.portrait-card{
+  background: linear-gradient(180deg, rgba(20,26,33,0.9), #0E141B);
+  box-shadow: var(--shadow-lg);
+}
+.portrait-caption{ color:var(--muted); }
+
+/* ---------------- ABOUT ---------------- */
+.section-title{ color: var(--navy); }
+.section-sub{ color: var(--muted); }
+.about-text p{ color: #C7D5E0; }
+
+.card.small{
+  background: #141A22;
+  color:#DDE7F3;
+}
+.card-title{ color:var(--muted); }
+.card-value{ color:var(--navy); }
+
+/* ---------------- PROJECTS ---------------- */
+.projects{
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent 40%);
+}
+.project{
+  background:#141A22;
+}
+.overlay{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.55) 100%);
+}
+.project-tags{ color:var(--muted); }
+
+/* ---------------- SKILLS ---------------- */
+.skill-card{
+  background:#141A22;
+}
+.skill-name{ color:var(--navy); }
+.skill-bar{
+  background:#28313A;
+}
+.skill-bar span{
+  background:linear-gradient(90deg,var(--accent), #ff6a3d);
+}
+
+/* ---------------- CONTACT ---------------- */
+.contact{
+  background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent 60%);
+}
+
+.contact-form{
+  background:#141A22;
+}
+
+.form-row label{ color:var(--navy); }
+
+.form-row input,
+.form-row textarea{
+  background:#0E141B;
+  border:1px solid #28313A;
+  color:#DDE7F3;
+}
+
+.form-row input:focus,
+.form-row textarea:focus{
+  box-shadow: 0 6px 20px rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.form-status{ color:var(--muted); }
+
+/* CONTACT ASIDE */
+.contact-card{
+  background:#141A22 !important;
+}
+.social{
+  background: rgba(255,255,255,0.06);
+  color:var(--navy);
+}
+
+/* ---------------- FOOTER ---------------- */
+.site-footer{
+  border-top:1px solid rgba(255,255,255,0.06);
+  color:var(--muted);
+}

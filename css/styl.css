@@ -1,0 +1,259 @@
+/* DARK THEME — WINE & GOLD EDITION */
+:root {
+  --navy: #ffdfa3; /* طلایی روشن */
+  --muted: #e5c07b; /* طلایی ملایم */
+  --light: #26080f; /* بکراند شرابی خیلی تیره */
+  --accent: #e5c07b; /* طلایی */
+  --white: #3a0e1a; /* کارت و سکشن شرابی */
+  --glass: rgba(255, 255, 255, 0.04);
+  --max-width: 1100px;
+  --radius: 12px;
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.75);
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto;
+  color-scheme: dark;
+}
+
+/* --------------- BASE ---------------- */
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #1a0a0f 0%, #26080f 100%);
+  color: #f8eedc; /* متن طلایی خیلی روشن */
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+/* ---------------- HEADER ---------------- */
+.site-header {
+  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(58, 14, 26, 0.65), rgba(58, 14, 26, 0.45));
+  border-bottom: 1px solid rgba(255, 223, 163, 0.08);
+}
+
+.brand {
+  color: var(--navy);
+}
+
+.logo {
+  background: linear-gradient(135deg, #4a1623, #3a0e1a);
+  color: #ffdfa3;
+}
+
+/* NAV LINKS */
+.nav-links a {
+  color: var(--navy);
+}
+.nav-links a:hover {
+  background: rgba(255, 223, 163, 0.08);
+}
+
+/* ---------------- HAMBURGER FIXED ---------------- */
+.nav-toggle {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav-toggle .hamburger,
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  width: 26px;
+  height: 3px;
+  background: #ffdfa3; /* طلایی */
+  transition: 0.3s ease;
+  border-radius: 3px;
+}
+
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: '';
+  position: absolute;
+}
+
+.nav-toggle .hamburger::before {
+  transform: translateY(-8px);
+}
+.nav-toggle .hamburger::after {
+  transform: translateY(8px);
+}
+
+/* فعال شدن */
+.nav-toggle.active .hamburger {
+  background: transparent;
+}
+.nav-toggle.active .hamburger::before {
+  transform: rotate(45deg);
+}
+.nav-toggle.active .hamburger::after {
+  transform: rotate(-45deg);
+}
+
+/* ---------------- HERO ---------------- */
+.hero {
+  background:
+    radial-gradient(600px 300px at 10% 20%, rgba(255, 223, 163, 0.05), transparent 12%),
+    linear-gradient(180deg, rgba(255, 223, 163, 0.05), transparent 40%);
+}
+
+.name {
+  color: var(--navy);
+}
+.tagline {
+  color: var(--muted);
+}
+
+/* BUTTONS */
+.btn.primary {
+  background: linear-gradient(90deg, #4a1623, #3a0e1a);
+  color: #ffdfa3;
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--navy);
+  border: 1px solid rgba(255, 223, 163, 0.2);
+}
+
+/* PORTRAIT CARD */
+.portrait-card {
+  background: linear-gradient(180deg, rgba(58, 14, 26, 0.9), #1a0a0f);
+  box-shadow: var(--shadow-lg);
+}
+.portrait-caption {
+  color: var(--muted);
+}
+
+/* ---------------- ABOUT ---------------- */
+.section-title {
+  color: var(--navy);
+}
+.section-sub {
+  color: var(--muted);
+}
+.about-text p {
+  color: #f3ddbe;
+}
+
+/* ABOUT CARDS */
+.card.small {
+  background: #3a0e1a;
+  color: #ffe9b8;
+}
+.card-title {
+  color: var(--muted);
+}
+.card-value {
+  color: var(--navy);
+}
+
+/* ---------------- PROJECTS ---------------- */
+.projects {
+  background: linear-gradient(180deg, rgba(255, 223, 163, 0.04), transparent 40%);
+}
+.project {
+  background: #3a0e1a;
+}
+.overlay {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.55) 100%);
+}
+.project-tags {
+  color: var(--muted);
+}
+
+/* ---------------- SKILLS ---------------- */
+.skill-card {
+  background: #3a0e1a;
+}
+.skill-name {
+  color: var(--navy);
+}
+
+.skill-bar {
+  background: #4a1623;
+}
+.skill-bar span {
+  background: linear-gradient(90deg, #ffdfa3, #e5c07b);
+}
+
+/* ---------------- CONTACT ---------------- */
+.contact {
+  background: linear-gradient(180deg, rgba(255, 223, 163, 0.04), transparent 60%);
+}
+
+.contact-form {
+  background: #3a0e1a;
+}
+
+.form-row label {
+  color: var(--navy);
+}
+
+.form-row input,
+.form-row textarea {
+  background: #1a0a0f;
+  border: 1px solid #4a1623;
+  color: #ffeed2;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  box-shadow: 0 6px 20px rgba(255, 223, 163, 0.06);
+  border-color: rgba(255, 223, 163, 0.2);
+}
+
+.form-status {
+  color: var(--muted);
+}
+
+/* CONTACT ASIDE */
+.contact-card {
+  background: #3a0e1a !important;
+}
+.social {
+  background: rgba(255, 223, 163, 0.08);
+  color: var(--navy);
+}
+
+/* ---------------- FOOTER ---------------- */
+.site-footer {
+  border-top: 1px solid rgba(255, 223, 163, 0.08);
+  color: var(--muted);
+}
+/* MOBILE MENU FIX – DARK MAROON */
+@media (max-width: 768px) {
+  .nav-links {
+    background: #2a0e14 !important; /* شرابی تیره */
+    border-left: 1px solid rgba(255, 214, 94, 0.15); /* طلایی محو */
+  }
+
+  .nav-links a {
+    color: #ffd65e !important; /* طلایی */
+  }
+
+  .nav-links a:hover {
+    background: rgba(255, 214, 94, 0.08) !important; /* طلایی شفاف */
+  }
+}
+@media screen and (max-width: 1200px) {
+}
+/* DESKTOP */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none !important;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+}
