@@ -86,7 +86,29 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+statusEl.textContent = "Sending message...";
+const submitBtn = form.querySelector('button[type="submit"]');
+submitBtn.disabled = true;
 
+fetch(form.action, {
+  method: "POST",
+  body: new FormData(form),
+  headers: { Accept: "application/json" }
+})
+.then(response => {
+  submitBtn.disabled = false;
+
+  if (response.ok) {
+    form.reset();
+    statusEl.innerHTML = "✅ Message sent successfully! <br>Thank you for reaching out. I will contact you as soon as possible.";
+  } else {
+    statusEl.textContent = "❌ Failed to send message.";
+  }
+})
+.catch(() => {
+  submitBtn.disabled = false;
+  statusEl.textContent = "⚠️ Network error.";
+});
     // Optional: live validation feedback
     emailEl.addEventListener('input', () => {
       emailError.textContent = emailEl.value && !validateEmail(emailEl.value) ? 'Invalid email format' : '';
