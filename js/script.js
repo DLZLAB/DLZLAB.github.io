@@ -94,16 +94,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Mock sending (replace with actual send via backend or service)
-      statusEl.textContent = 'Sending message…';
-      const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
+      statusEl.textContent = 'Sending...';
 
-      // Simulate network delay and success (replace with fetch to your API)
-      setTimeout(() => {
-        submitBtn.disabled = false;
-        form.reset();
-        statusEl.textContent = 'Thanks — your message was sent successfully (mock). I will get back to you shortly.';
-      }, 900);
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: {
+          Accept: 'application/json',
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            form.reset();
+            statusEl.textContent = '✅ Message sent successfully!';
+          } else {
+            statusEl.textContent = '❌ Something went wrong.';
+          }
+        })
+        .catch(() => {
+          statusEl.textContent = '❌ Network error.';
+        });
     });
 
     // Optional: live validation feedback
