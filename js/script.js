@@ -11,20 +11,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
 
-  navToggle && navToggle.addEventListener('click', () => {
-    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-    navToggle.setAttribute('aria-expanded', String(!expanded));
-    if (!expanded) {
-      navLinks.style.display = 'flex';
-      // small animation
-      navLinks.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 220, easing: 'ease' });
-    } else {
-      navLinks.style.display = '';
-    }
-  });
+  navToggle &&
+    navToggle.addEventListener('click', () => {
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!expanded));
+      if (!expanded) {
+        navLinks.style.display = 'flex';
+        // small animation
+        navLinks.animate(
+          [
+            { opacity: 0, transform: 'translateY(-6px)' },
+            { opacity: 1, transform: 'translateY(0)' },
+          ],
+          { duration: 220, easing: 'ease' }
+        );
+      } else {
+        navLinks.style.display = '';
+      }
+    });
 
   // Smooth scrolling for internal links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href').slice(1);
       if (targetId.length === 0) return;
@@ -86,29 +93,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-statusEl.textContent = "Sending message...";
-const submitBtn = form.querySelector('button[type="submit"]');
-submitBtn.disabled = true;
+      // Mock sending (replace with actual send via backend or service)
+      statusEl.textContent = 'Sending message…';
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
 
-fetch(form.action, {
-  method: "POST",
-  body: new FormData(form),
-  headers: { Accept: "application/json" }
-})
-.then(response => {
-  submitBtn.disabled = false;
+      // Simulate network delay and success (replace with fetch to your API)
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        form.reset();
+        statusEl.textContent = 'Thanks — your message was sent successfully (mock). I will get back to you shortly.';
+      }, 900);
+    });
 
-  if (response.ok) {
-    form.reset();
-    statusEl.textContent = "✅ Message sent successfully! <br>Thank you for reaching out. I will contact you as soon as possible.";
-  } else {
-    statusEl.textContent = "❌ Failed to send message.";
-  }
-})
-.catch(() => {
-  submitBtn.disabled = false;
-  statusEl.textContent = "⚠️ Network error.";
-});
     // Optional: live validation feedback
     emailEl.addEventListener('input', () => {
       emailError.textContent = emailEl.value && !validateEmail(emailEl.value) ? 'Invalid email format' : '';
