@@ -106,7 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((response) => {
           if (response.ok) {
             form.reset();
-            statusEl.textContent = '✅ Message sent successfully! <br>We will contact you as soon as possible.';
+            statusEl.textContent =
+              '✅ Message sent successfully!' + '<br>' + 'We will contact you as soon as possible.' + '</br>';
           } else {
             statusEl.textContent = '❌ Something went wrong.';
           }
