@@ -245,7 +245,7 @@ body {
 @media screen and (max-width: 1200px) {
 }
 /* DESKTOP */
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   .nav-toggle {
     display: none !important;
   }

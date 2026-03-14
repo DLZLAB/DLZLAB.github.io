@@ -1,361 +1,423 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>DLZ DEV</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DLZ DEV</title>
 
-  <!-- Google Font (modern, readable) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Font (modern, readable) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Main stylesheet -->
-  <link rel="stylesheet" href="css/styl.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/styl.css">
-  <!-- Basic SEO -->
-  <meta name="description" content="Professional portfolio of a developer & photographer. HTML, CSS, JS, PHP, MySQL, Laravel, and photography.">
-</head>
-<body>
-  <!-- STICKY NAV -->
-  <header class="site-header" id="top">
-    <nav class="nav container">
-      <a class="brand" href="#top">
-        <!-- Simple logo / initials -->
-        <div class="logo" aria-hidden="true">DLZ</div>
-        <span class="brand-text">Web designer</span>
-      </a>
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styl.css" />
+    <!-- Basic SEO -->
+    <meta
+      name="description"
+      content="Professional portfolio of a developer & photographer. HTML, CSS, JS, PHP, MySQL, Laravel, and photography."
+    />
+  </head>
+  <body>
+    <!-- STICKY NAV -->
+    <header class="site-header" id="top">
+      <nav class="nav container">
+        <a class="brand" href="#top">
+          <!-- Simple logo / initials -->
+          <div class="logo" aria-hidden="true">DLZ</div>
+          <span class="brand-text">Web designer</span>
+        </a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-        <span class="hamburger">
-          <span class="hamburger"></span>
-        </span>
-      </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger">
+            <span class="hamburger"></span>
+          </span>
+        </button>
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <section id="hero" class="hero">
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <h1 class="name">Dawood WaliZada</h1>
-        <p class="tagline">Full-Stack Developer & Photographer — building beautiful web experiences.</p>
-
-        <div class="hero-cta">
-          <a class="btn primary" href="#projects">See Projects</a>
-          <a class="btn ghost" href="#contact">Contact Me</a>
-        </div>
-
-        <ul class="hero-meta">
-          <li><strong>Location:</strong> Remote / Mazar-i-Sharif, AF</li>
-          <li><strong>Specialties:</strong> HTML · CSS · JavaScript · PHP · Laravel · Photography</li>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
-      </div>
+      </nav>
+    </header>
 
-      <div class="hero-visual" aria-hidden="false">
-        <!-- Subtle abstract background shapes using SVG -->
-        <div class="portrait-card">
-          <div class="portrait-bg">
-            <!-- Placeholder portrait -->
-            <img src="images/dlzd.jpg" alt="Professional portrait placeholder" />
+    <!-- HERO -->
+    <section id="hero" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1 class="name">M Dawood WaliZada</h1>
+          <p class="tagline">Full-Stack Developer & Photographer — building beautiful web experiences.</p>
+
+          <div class="hero-cta">
+            <a class="btn primary" href="#projects">See Projects</a>
+            <a class="btn ghost" href="#contact">Contact Me</a>
           </div>
-          <div class="portrait-caption">Dawood WaliZada — Developer & Photographer</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ABOUT -->
-  <section id="about" class="about">
-    <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-grid">
-        <div class="about-text">
-          <p>Hi — I'm <strong>Dawood WaliZada</strong>. I build clean, accessible, and high-performance web applications and also capture stories through photography. I enjoy solving problems, optimizing user experiences, and learning new technologies. Over the years I've worked with front-end stacks, PHP backends, and relational databases, and have experience with Laravel-based projects.</p>
-
-          <p>My approach combines technical discipline with visual sensitivity — I treat interface design like photography: framing, balance, and light matter. I am collaborative, detail-oriented, and enjoy mentoring and sharing knowledge.</p>
-
-          <ul class="about-list">
-            <li>✅ 5+ years in web development</li>
-            <li>✅ Production apps with PHP & MySQL</li>
-            <li>✅ Responsive UI, accessibility-minded</li>
-            <li>✅ Professional photography & post-processing</li>
+          <ul class="hero-meta">
+            <li><strong>Location:</strong> Remote / Mazar-i-Sharif, AF</li>
+            <li><strong>Specialties:</strong> HTML · CSS · JavaScript · PHP · Laravel · MySQL · Photography</li>
           </ul>
         </div>
-        <div class="about-stats">
-          <div class="card small">
-            <div class="card-title">Experience</div>
-            <div class="card-value">5+ years</div>
-          </div>
-          <div class="card small">
-            <div class="card-title">Projects</div>
-            <div class="card-value">20+ shipped</div>
-          </div>
-          <div class="card small">
-            <div class="card-title">Availability</div>
-            <div class="card-value">Open to work</div>
-          </div>
-          <div class="card small">
-            <div class="card-title">Languages</div>
-            <div class="card-value">EN · FA</div>
+
+        <div class="hero-visual" aria-hidden="false">
+          <!-- Subtle abstract background shapes using SVG -->
+          <div class="portrait-card">
+            <div class="portrait-bg">
+              <!-- Placeholder portrait -->
+              <img src="images/dlzd.jpg" alt="Professional portrait placeholder" />
+            </div>
+            <div class="portrait-caption">Dawood WaliZada — Developer & Photographer</div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PROJECTS -->
-  <section id="projects" class="projects">
-    <div class="container">
-      <h2 class="section-title">Portfolio</h2>
-      <p class="section-sub">Selected projects — front-end, full-stack, and creative work.</p>
+    <!-- ABOUT -->
+    <section id="about" class="about">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              Hi — I'm <strong>Dawood WaliZada</strong>. I build clean, accessible, and high-performance web
+              applications and also capture stories through photography. I enjoy solving problems, optimizing user
+              experiences, and learning new technologies. Over the years I've worked with front-end stacks, PHP
+              backends, and relational databases, and have experience with Laravel-based projects.
+            </p>
 
-      <div class="projects-grid">
-        <!-- Example project card -->
-        <article class="project">
-          <figure class="thumb">
-            <img src="images/2.jpg" alt="Project 1 screenshot">
-            <figcaption class="overlay">
-              <h3 style="text-shadow: 0 0 3px black;">NSMAT</h3>
-              <p>Responsive web app with dashboard and analytics.</p>
-            </figcaption>
-          </figure>
-          <div class="project-body">
-            <h3>NSMAT Business Website</h3>
-            <p>Marketing site with CMS integration and SEO optimizations.</p>
-            
-            <div class="project-tags">Laravel · MySQL · JS</div>
+            <p>
+              My approach combines technical discipline with visual sensitivity — I treat interface design like
+              photography: framing, balance, and light matter. I am collaborative, detail-oriented, and enjoy mentoring
+              and sharing knowledge.
+            </p>
+
+            <ul class="about-list">
+              <li>✅ 5+ years in web development</li>
+              <li>✅ Production apps with PHP & MySQL</li>
+              <li>✅ Responsive UI, accessibility-minded</li>
+              <li>✅ Professional photography & post-processing</li>
+            </ul>
           </div>
-        </article>
+          <div class="about-stats">
+            <div class="card small">
+              <div class="card-title">Experience</div>
+              <div class="card-value">5+ years</div>
+            </div>
+            <div class="card small">
+              <div class="card-title">Projects</div>
+              <div class="card-value">20+ shipped</div>
+            </div>
+            <div class="card small">
+              <div class="card-title">Availability</div>
+              <div class="card-value">Open to work</div>
+            </div>
+            <div class="card small">
+              <div class="card-title">Languages</div>
+              <div class="card-value">EN · FA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <article class="project">
-          <figure class="thumb">
-            <img src="images/1.jpg" alt="Project 2 screenshot">
-            <figcaption class="overlay">
+    <!-- PROJECTS -->
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2 class="section-title">Portfolio</h2>
+        <p class="section-sub">Selected projects — front-end, full-stack, and creative work.</p>
+
+        <div class="projects-grid">
+          <!-- Example project card -->
+          <article class="project">
+            <figure class="thumb">
+              <img src="images/2.jpg" alt="Project 1 screenshot" />
+              <figcaption class="overlay">
+                <h3 style="text-shadow: 0 0 3px black">NSMAT</h3>
+                <p>Responsive web app with dashboard and analytics.</p>
+              </figcaption>
+            </figure>
+            <div class="project-body">
+              <h3>NSMAT Business Website</h3>
+              <p>Marketing site with CMS integration and SEO optimizations.</p>
+
+              <div class="project-tags">Laravel · MySQL · JS</div>
+            </div>
+          </article>
+
+          <article class="project">
+            <figure class="thumb">
+              <img src="images/1.jpg" alt="Project 2 screenshot" />
+              <figcaption class="overlay">
+                <h3>Gallery</h3>
+                <p>Photography portfolio with gallery and lightbox.</p>
+              </figcaption>
+            </figure>
+            <div class="project-body">
               <h3>Gallery</h3>
-              <p>Photography portfolio with gallery and lightbox.</p>
-            </figcaption>
-          </figure>
-          <div class="project-body">
-            <h3>Gallery</h3>
-            <p>Pixel-perfect gallery experience with lazy-loading and keyboard navigation.</p>
-            <div class="project-tags">HTML · CSS · JS</div>
-          </div>
-        </article>
+              <p>Pixel-perfect gallery experience with lazy-loading and keyboard navigation.</p>
+              <div class="project-tags">HTML · CSS · JS</div>
+            </div>
+          </article>
 
-        <article class="project">
-          <figure class="thumb">
-            <img src="images/3.jpg" alt="Project 3 screenshot">
-            <figcaption class="overlay">
+          <article class="project">
+            <figure class="thumb">
+              <img src="images/3.jpg" alt="Project 3 screenshot" />
+              <figcaption class="overlay">
+                <h3>MIS</h3>
+                <p>Full-stack application built with Laravel and MySQL, realtime charts and user auth.</p>
+              </figcaption>
+            </figure>
+            <div class="project-body">
               <h3>MIS</h3>
-              <p>Full-stack application built with Laravel and MySQL, realtime charts and user auth.</p>
-            </figcaption>
-          </figure>
-          <div class="project-body">
-            <h3>MIS</h3>
-            <p>Static + dynamic content combination, built for conversion and speed.</p>
-            <div class="project-tags">PHP · HTML · CSS</div>
-          </div>
-        </article>
+              <p>Static + dynamic content combination, built for conversion and speed.</p>
+              <div class="project-tags">PHP · MySQL</div>
+            </div>
+          </article>
 
-        <!-- Add more project cards as needed -->
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="skills">
-    <div class="container">
-      <h2 class="section-title">Skills & Expertise</h2>
-
-      <div class="skills-grid">
-        <div class="skill-card">
-          <div class="skill-icon" aria-hidden="true">
-            <!-- HTML5 SVG -->
-            <svg viewBox="0 0 128 128" width="42" height="42" role="img" aria-hidden="true">
-              <path fill="#E34F26" d="M19 5h90l-8.2 92L64 123 27.2 97z"></path>
-              <path fill="#EF652A" d="M64 116l33.3-24.4L105 13H64z"></path>
-              <path fill="#fff" d="M64 66.3h-9.3l-1.6-17.2H64V32H38.7l.4 4.4 3.3 36.2H64zM64 96.6l-.1.1-19.2-10.4 1.2-13.6H36.9L35 98.9 64 116z"></path>
-            </svg>
-          </div>
-          <div class="skill-info">
-            <div class="skill-name">HTML  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
-            <div class="skill-bar"><span style="width:95%"></span></div>
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon" aria-hidden="true">
-            <!-- CSS3 -->
-            <svg viewBox="0 0 128 128" width="42" height="42">
-              <path fill="#1572B6" d="M19 5h90l-8.2 92L64 123 27.2 97z"></path>
-              <path fill="#33A9DC" d="M64 116l33.3-24.4L105 13H64z"></path>
-              <path fill="#fff" d="M64 66.3h-9.3l-1.6-17.2H64V32H38.7l.4 4.4 3.3 36.2H64zM64 96.6l-.1.1-19.2-10.4 1.2-13.6H36.9L35 98.9 64 116z"></path>
-            </svg>
-          </div>
-          <div class="skill-info">
-            <div class="skill-name">CSS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
-            <div class="skill-bar"><span style="width:92%"></span></div>
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon" aria-hidden="true">
-            <!-- JS simple circle -->
-            <svg viewBox="0 0 100 100" width="42" height="42">
-              <circle cx="50" cy="50" r="45" fill="#F0DB4F"></circle>
-              <text x="50%" y="58%" text-anchor="middle" font-size="42" font-family="Inter" fill="#323330">JS</text>
-            </svg>
-          </div>
-          <div class="skill-info">
-            <div class="skill-name">JavaScript</div>
-            <div class="skill-bar"><span style="width:88%"></span></div>
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon" aria-hidden="true">
-            <!-- PHP like bracket -->
-            <svg viewBox="0 0 100 100" width="42" height="42">
-              <rect x="6" y="18" width="88" height="64" rx="10" fill="#777BB3"></rect>
-              <text x="50%" y="58%" text-anchor="middle" font-size="28" font-family="Inter" fill="#fff">PHP</text>
-            </svg>
-          </div>
-          <div class="skill-info">
-            <div class="skill-name">PHP  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
-            <div class="skill-bar"><span style="width:78%"></span></div>
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon" aria-hidden="true">
-            <!-- DB icon -->
-            <svg viewBox="0 0 100 100" width="42" height="42">
-              <ellipse cx="50" cy="30" rx="34" ry="12" fill="#6aa84f"></ellipse>
-              <ellipse cx="50" cy="50" rx="34" ry="12" fill="#93c47d"></ellipse>
-              <ellipse cx="50" cy="70" rx="34" ry="12" fill="#6aa84f"></ellipse>
-            </svg>
-          </div>
-          <div class="skill-info">
-            <div class="skill-name">MySQL  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
-            <div class="skill-bar"><span style="width:80%"></span></div>
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon" aria-hidden="true">
-            <!-- Camera icon -->
-            <svg viewBox="0 0 100 100" width="42" height="42">
-              <rect x="12" y="24" width="76" height="52" rx="6" fill="#222"></rect>
-              <circle cx="50" cy="50" r="16" fill="#fff"></circle>
-              <rect x="22" y="32" width="12" height="6" rx="2" fill="#fff"></rect>
-            </svg>
-          </div>
-          <div class="skill-info">
-            <div class="skill-name">Photography</div>
-            <div class="skill-bar"><span style="width:86%"></span></div>
-          </div>
+          <!-- Add more project cards as needed -->
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2 class="section-title">Get in Touch</h2>
-      <p class="section-sub">Interested in working together or have a question? Send a message.</p>
+    <!-- SKILLS -->
+    <section id="skills" class="skills">
+      <div class="container">
+        <h2 class="section-title">Skills & Expertise</h2>
 
-      <div class="contact-grid">
-        <form id="contactForm" class="contact-form" novalidate>
-          <div class="form-row">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Your name" required minlength="2">
-            <small class="field-error" id="nameError" aria-live="polite"></small>
-          </div>
-
-          <div class="form-row">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@domain.com" required>
-            <small class="field-error" id="emailError" aria-live="polite"></small>
-          </div>
-
-          <div class="form-row">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="6" placeholder="Tell me about your project" required minlength="10"></textarea>
-            <small class="field-error" id="messageError" aria-live="polite"></small>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn primary">Send Message</button>
-            <button type="reset" class="btn ghost">Reset</button>
-          </div>
-
-          <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
-        </form>
-
-        <aside class="contact-aside">
-          <div class="contact-card">
-            <h3>Quick Contact</h3>
-            <p><strong>Email:</strong> <a href="mailto:hello@yourdomain.com">hello@yourdomain.com</a></p>
-            <p><strong>Location:</strong> Remote</p>
-
-            <div class="social-row">
-              <!-- Inline SVG icons for LinkedIn, GitHub, Instagram, Email -->
-              <a class="social" href="https://wa.me/93791415631" target="_blank" aria-label="WhatsApp" title="WhatsApp">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-    <path fill="currentColor" d="M12.04 0C5.396 0 0 5.396 0 12.04c0 2.12.553 4.108 1.517 5.842L0 24l6.195-1.558a12.02 12.02 0 005.845 1.488c6.644 0 12.04-5.396 12.04-12.04C24.08 5.396 18.685 0 12.04 0zm0 21.724c-1.87 0-3.606-.55-5.074-1.49l-3.536.888 1.05-3.447a9.78 9.78 0 01-1.49-5.188c0-5.41 4.398-9.808 9.81-9.808 5.41 0 9.808 4.398 9.808 9.808 0 5.41-4.398 9.808-9.808 9.808zm5.37-7.234c-.295-.148-1.743-.86-2.012-.958-.268-.1-.462-.148-.658.148-.196.296-.76.96-.932 1.157-.172.197-.344.22-.64.072-.296-.148-1.25-.46-2.378-1.465-.88-.783-1.472-1.752-1.644-2.048-.173-.296-.018-.456.128-.605.133-.133.297-.345.445-.518.148-.173.197-.297.296-.494.1-.197.05-.37-.025-.518-.074-.148-.666-1.605-.913-2.197-.24-.576-.484-.496-.665-.505-.172-.008-.368-.01-.564-.01-.197 0-.516.074-.787.37-.27.296-1.034 1.012-1.034 2.47 0 1.458 1.057 2.868 1.205 3.065.148.197 2.083 3.184 5.047 4.467.705.305 1.255.485 1.684.62.708.225 1.353.193 1.86.117.568-.085 1.748-.715 1.995-1.405.247-.69.247-1.284.172-1.407-.074-.123-.27-.197-.567-.345z"/>
-</svg>
-
-              </a>
-
-              <a class="social" href="#" aria-label="GitHub" title="GitHub">
-                <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.79 8.2 11.37.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.06-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.1-.76.08-.75.08-.75 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.32 3.52 1.01.11-.79.42-1.32.76-1.62-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.25-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23.96-.27 1.99-.4 3.01-.4 1.02 0 2.05.13 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.17.77.85 1.24 1.93 1.24 3.25 0 4.63-2.81 5.65-5.49 5.95.43.37.82 1.1.82 2.22 0 1.6-.02 2.89-.02 3.28 0 .32.21.7.83.58C20.57 22.29 24 17.8 24 12.5 24 5.87 18.63.5 12 .5z"/></svg>
-              </a>
-
-              <a class="social" href="#" aria-label="Instagram" title="Instagram">
-                <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zM18 6.5a1 .1 0 110 2 1 .1 0 011.0-2z"/></svg>
-              </a>
-
-              <a class="social" href="mailto:hello@yourdomain.com" aria-label="Email" title="Email">
-                <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M2 6h20v12H2zM4 8v8h16V8l-8 5L4 8z"/></svg>
-              </a>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-icon" aria-hidden="true">
+              <!-- HTML5 SVG -->
+              <svg viewBox="0 0 128 128" width="42" height="42" role="img" aria-hidden="true">
+                <path fill="#E34F26" d="M19 5h90l-8.2 92L64 123 27.2 97z"></path>
+                <path fill="#EF652A" d="M64 116l33.3-24.4L105 13H64z"></path>
+                <path
+                  fill="#fff"
+                  d="M64 66.3h-9.3l-1.6-17.2H64V32H38.7l.4 4.4 3.3 36.2H64zM64 96.6l-.1.1-19.2-10.4 1.2-13.6H36.9L35 98.9 64 116z"
+                ></path>
+              </svg>
+            </div>
+            <div class="skill-info">
+              <div class="skill-name">HTML &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
+              <div class="skill-bar"><span style="width: 95%"></span></div>
             </div>
           </div>
 
-          <div class="contact-card">
-            <h3>Availability</h3>
-            <p>Open to freelance & remote roles. I typically respond within 48 hours.</p>
+          <div class="skill-card">
+            <div class="skill-icon" aria-hidden="true">
+              <!-- CSS3 -->
+              <svg viewBox="0 0 128 128" width="42" height="42">
+                <path fill="#1572B6" d="M19 5h90l-8.2 92L64 123 27.2 97z"></path>
+                <path fill="#33A9DC" d="M64 116l33.3-24.4L105 13H64z"></path>
+                <path
+                  fill="#fff"
+                  d="M64 66.3h-9.3l-1.6-17.2H64V32H38.7l.4 4.4 3.3 36.2H64zM64 96.6l-.1.1-19.2-10.4 1.2-13.6H36.9L35 98.9 64 116z"
+                ></path>
+              </svg>
+            </div>
+            <div class="skill-info">
+              <div class="skill-name">CSS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
+              <div class="skill-bar"><span style="width: 92%"></span></div>
+            </div>
           </div>
-        </aside>
-      </div>
-    </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>© <span id="year"></span> Dawood WaliZada. All rights reserved.</div>
-      <div class="footer-links">
-        <a href="#projects">Portfolio</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div class="footer-social">
-        <a href="#" aria-label="LinkedIn">LI</a>
-        <a href="#" aria-label="GitHub">GH</a>
-      </div>
-    </div>
-  </footer>
+          <div class="skill-card">
+            <div class="skill-icon" aria-hidden="true">
+              <!-- JS simple circle -->
+              <svg viewBox="0 0 100 100" width="42" height="42">
+                <circle cx="50" cy="50" r="45" fill="#F0DB4F"></circle>
+                <text x="50%" y="58%" text-anchor="middle" font-size="42" font-family="Inter" fill="#323330">JS</text>
+              </svg>
+            </div>
+            <div class="skill-info">
+              <div class="skill-name">JavaScript</div>
+              <div class="skill-bar"><span style="width: 88%"></span></div>
+            </div>
+          </div>
 
-  <!-- JS -->
-  <script src="js/script.js"></script>
-</body>
+          <div class="skill-card">
+            <div class="skill-icon" aria-hidden="true">
+              <!-- PHP like bracket -->
+              <svg viewBox="0 0 100 100" width="42" height="42">
+                <rect x="6" y="18" width="88" height="64" rx="10" fill="#777BB3"></rect>
+                <text x="50%" y="58%" text-anchor="middle" font-size="28" font-family="Inter" fill="#fff">PHP</text>
+              </svg>
+            </div>
+            <div class="skill-info">
+              <div class="skill-name">PHP &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
+              <div class="skill-bar"><span style="width: 78%"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon" aria-hidden="true">
+              <!-- DB icon -->
+              <svg viewBox="0 0 100 100" width="42" height="42">
+                <ellipse cx="50" cy="30" rx="34" ry="12" fill="#6aa84f"></ellipse>
+                <ellipse cx="50" cy="50" rx="34" ry="12" fill="#93c47d"></ellipse>
+                <ellipse cx="50" cy="70" rx="34" ry="12" fill="#6aa84f"></ellipse>
+              </svg>
+            </div>
+            <div class="skill-info">
+              <div class="skill-name">MySQL &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
+              <div class="skill-bar"><span style="width: 80%"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon" aria-hidden="true">
+              <!-- Camera icon -->
+              <svg viewBox="0 0 100 100" width="42" height="42">
+                <rect x="12" y="24" width="76" height="52" rx="6" fill="#222"></rect>
+                <circle cx="50" cy="50" r="16" fill="#fff"></circle>
+                <rect x="22" y="32" width="12" height="6" rx="2" fill="#fff"></rect>
+              </svg>
+            </div>
+            <div class="skill-info">
+              <div class="skill-name">Photography</div>
+              <div class="skill-bar"><span style="width: 86%"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-sub">Interested in working together or have a question? Send a message.</p>
+
+        <div class="contact-grid">
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required minlength="2" />
+              <small class="field-error" id="nameError" aria-live="polite"></small>
+            </div>
+
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@domain.com" required />
+              <small class="field-error" id="emailError" aria-live="polite"></small>
+            </div>
+
+            <div class="form-row">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
+                placeholder="Tell me about your project"
+                required
+                minlength="10"
+              ></textarea>
+              <small class="field-error" id="messageError" aria-live="polite"></small>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn primary">Send Message</button>
+              <button type="reset" class="btn ghost">Reset</button>
+            </div>
+
+            <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
+          </form>
+
+          <aside class="contact-aside">
+            <div class="contact-card">
+              <h3>Quick Contact</h3>
+              <p><strong>Email:</strong> <a href="digilenszone.com">digilenszone@gmail.com</a></p>
+              <p><strong>Location:</strong> Remote / Mazar-i-Sharif, AF</p>
+
+              <div class="social-row">
+                <!-- Inline SVG icons for LinkedIn, GitHub, Instagram, Email -->
+                <a
+                  class="social"
+                  href="https://wa.me/93791415631"
+                  target="_blank"
+                  aria-label="WhatsApp"
+                  title="WhatsApp"
+                >
+                  <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path
+                      fill="currentColor"
+                      d="M12.04 0C5.396 0 0 5.396 0 12.04c0 2.12.553 4.108 1.517 5.842L0 24l6.195-1.558a12.02 12.02 0 005.845 1.488c6.644 0 12.04-5.396 12.04-12.04C24.08 5.396 18.685 0 12.04 0zm0 21.724c-1.87 0-3.606-.55-5.074-1.49l-3.536.888 1.05-3.447a9.78 9.78 0 01-1.49-5.188c0-5.41 4.398-9.808 9.81-9.808 5.41 0 9.808 4.398 9.808 9.808 0 5.41-4.398 9.808-9.808 9.808zm5.37-7.234c-.295-.148-1.743-.86-2.012-.958-.268-.1-.462-.148-.658.148-.196.296-.76.96-.932 1.157-.172.197-.344.22-.64.072-.296-.148-1.25-.46-2.378-1.465-.88-.783-1.472-1.752-1.644-2.048-.173-.296-.018-.456.128-.605.133-.133.297-.345.445-.518.148-.173.197-.297.296-.494.1-.197.05-.37-.025-.518-.074-.148-.666-1.605-.913-2.197-.24-.576-.484-.496-.665-.505-.172-.008-.368-.01-.564-.01-.197 0-.516.074-.787.37-.27.296-1.034 1.012-1.034 2.47 0 1.458 1.057 2.868 1.205 3.065.148.197 2.083 3.184 5.047 4.467.705.305 1.255.485 1.684.62.708.225 1.353.193 1.86.117.568-.085 1.748-.715 1.995-1.405.247-.69.247-1.284.172-1.407-.074-.123-.27-.197-.567-.345z"
+                    />
+                  </svg>
+                </a>
+
+                <a class="social" href="https://github.com/DLZLAB" aria-label="GitHub" target="_blank" title="GitHub">
+                  <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path
+                      fill="currentColor"
+                      d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.79 8.2 11.37.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.06-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.1-.76.08-.75.08-.75 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.32 3.52 1.01.11-.79.42-1.32.76-1.62-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.25-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23.96-.27 1.99-.4 3.01-.4 1.02 0 2.05.13 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.17.77.85 1.24 1.93 1.24 3.25 0 4.63-2.81 5.65-5.49 5.95.43.37.82 1.1.82 2.22 0 1.6-.02 2.89-.02 3.28 0 .32.21.7.83.58C20.57 22.29 24 17.8 24 12.5 24 5.87 18.63.5 12 .5z"
+                    />
+                  </svg>
+                </a>
+
+                <a
+                  class="social"
+                  href="https://www.instagram.com/dlzlab?igsh=N3ZibXpueWk0dTUz"
+                  aria-label="Instagram"
+                  target="_blank"
+                  title="Instagram"
+                >
+                  <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path
+                      fill="currentColor"
+                      d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zM18 6.5a1 .1 0 110 2 1 .1 0 011.0-2z"
+                    />
+                  </svg>
+                </a>
+
+                <a
+                  class="social"
+                  href="https://t.me/+93791415631"
+                  aria-label="Telegram"
+                  target="_blank"
+                  title="Telegram"
+                >
+                  <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path
+                      fill="currentColor"
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.13-.31-1.08-.66.02-.18.27-.36.74-.55 2.91-1.27 4.85-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .32z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <h3>Availability</h3>
+              <p>Open to freelance & remote roles. I typically respond within 48 hours.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>© <span id="year"></span> Dawood WaliZada. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="#projects">Portfolio</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn">LI</a>
+          <a href="#" aria-label="GitHub">GH</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+  </body>
 </html>
