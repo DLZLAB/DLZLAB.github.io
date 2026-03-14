@@ -294,7 +294,7 @@
         <p class="section-sub">Interested in working together or have a question? Send a message.</p>
 
         <div class="contact-grid">
-          <form id="contactForm" class="contact-form" novalidate>
+          <form id="contactForm" class="contact-form" method="POST" action="https://formspree.io/f/mjgaoayk" novalidate>
             <div class="form-row">
               <label for="name">Name</label>
               <input id="name" name="name" type="text" placeholder="Your name" required minlength="2" />
@@ -419,5 +419,30 @@
 
     <!-- JS -->
     <script src="js/script.js"></script>
+    <script>
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('formStatus');
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const data = new FormData(form);
+
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: {
+            Accept: 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          status.innerHTML = '✅ Message sent successfully!';
+          form.reset();
+        } else {
+          status.innerHTML = '❌ Something went wrong.';
+        }
+      });
+    </script>
   </body>
 </html>
