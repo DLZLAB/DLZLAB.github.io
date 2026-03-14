@@ -86,18 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Mock sending (replace with actual send via backend or service)
-      statusEl.textContent = 'Sending message…';
-      const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-
-      // Simulate network delay and success (replace with fetch to your API)
-      setTimeout(() => {
-        submitBtn.disabled = false;
-        form.reset();
-        statusEl.textContent = 'Thanks — your message was sent successfully (mock). I will get back to you shortly.';
-      }, 900);
-    });
 
     // Optional: live validation feedback
     emailEl.addEventListener('input', () => {
