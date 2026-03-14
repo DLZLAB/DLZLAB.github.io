@@ -100,7 +100,7 @@ fetch(form.action, {
 
   if (response.ok) {
     form.reset();
-    statusEl.innerHTML = "✅ Message sent successfully! <br>Thank you for reaching out. I will contact you as soon as possible.";
+    statusEl.textContent = "✅ Message sent successfully! <br>Thank you for reaching out. I will contact you as soon as possible.";
   } else {
     statusEl.textContent = "❌ Failed to send message.";
   }
