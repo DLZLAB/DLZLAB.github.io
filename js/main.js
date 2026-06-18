@@ -65,7 +65,6 @@ const TRANSLATIONS = {
     modal2_desc: 'A comprehensive Management Information System featuring real-time data visualization, user authentication with role-based access control, report generation, and an intuitive admin interface. Built for organizations that need to track and analyze operational data.',
     modal4_title: 'Duas Collection',
     modal4_desc: 'A beautifully designed collection of Islamic prayers (Duas) with full Arabic text, Persian translation, and English transliteration. Includes Duas for daily occasions, gatherings, and spiritual reflection.',
-    source_code: 'Source Code',
     live_demo: 'Live Demo',
     visit_page: 'Visit Page',
   },
@@ -133,7 +132,6 @@ const TRANSLATIONS = {
     modal2_desc: 'یک سیستم مدیریت اطلاعات جامع با نمایش داده‌های实时، احراز هویت کاربر با کنترل دسترسی مبتنی بر نقش، تولید گزارش و رابط ادمین بصری. ساخته شده برای سازمان‌هایی که نیاز به ردیابی و تحلیل داده‌های عملیاتی دارند.',
     modal4_title: 'مجموعه دعاها',
     modal4_desc: 'مجموعه‌ای زیبا از دعاهای اسلامی با متن کامل عربی، ترجمه فارسی و تلفظ انگلیسی. شامل دعاهای مناسب برای مناسبت‌های روزمره، اجتماعات و تفکر معنوی.',
-    source_code: 'کد منبع',
     live_demo: 'دموی زنده',
     visit_page: 'مشاهده صفحه',
   }
