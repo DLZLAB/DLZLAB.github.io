@@ -328,6 +328,41 @@ document.addEventListener('DOMContentLoaded', () => {
     dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
   });
 
+  // ---- Thumbnail Carousel ----
+  document.querySelectorAll('.thumb-carousel').forEach(carousel => {
+    const slides = carousel.querySelectorAll('.thumb-slide');
+    const dots = carousel.querySelectorAll('.tdot');
+    const card = carousel.closest('.project-card');
+    if (slides.length < 2) return;
+    let current = 0;
+    let interval;
+
+    function show(index) {
+      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      current = index;
+    }
+
+    function next() {
+      show((current + 1) % slides.length);
+    }
+
+    function start() {
+      stop();
+      interval = setInterval(next, 3000);
+    }
+
+    function stop() {
+      clearInterval(interval);
+    }
+
+    card.addEventListener('mouseenter', stop);
+    card.addEventListener('mouseleave', start);
+    card.addEventListener('click', stop);
+
+    start();
+  });
+
   // ---- Counter Animation ----
   const counters = document.querySelectorAll('[data-count]');
 
