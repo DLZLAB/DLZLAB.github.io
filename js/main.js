@@ -12,8 +12,6 @@ const TRANSLATIONS = {
     nav_about: 'About',
     nav_projects: 'Projects',
     nav_contact: 'Contact',
-    muharram_fa: 'ایثار یعنی آنگاه که عشق به حق، از عشق به خویشتن پیشی می‌گیرد و فداکاری معنا پیدا می‌کند',
-    muharram_en: '"Sacrifice is when love for the Truth surpasses love for the self, and devotion finds its meaning."',
     hero_badge: 'Available for Projects',
     hero_tagline: 'Web Developer & MIS Specialist \u2014 building powerful, data-driven web solutions from <strong>Mazar-i-Sharif, Afghanistan</strong>.',
     hero_btn_projects: 'View Projects',
@@ -42,7 +40,7 @@ const TRANSLATIONS = {
     project_view: 'View Details',
     proj1_title: 'NSMAT Business Website',
     proj1_desc: 'Marketing site with CMS integration, analytics dashboard, and SEO optimization.',
-    proj2_title: 'MIS Dashboard',
+    proj2_title: 'Masir MIS',
     proj2_desc: 'Full-stack management information system with real-time charts, authentication, and role-based access.',
     proj3_title: 'E-Commerce Platform',
     proj3_desc: 'Full-featured online store with inventory management, payment integration, and admin panel.',
@@ -65,7 +63,7 @@ const TRANSLATIONS = {
     footer_in: 'in Mazar-i-Sharif.',
     modal1_title: 'NSMAT Business Website',
     modal1_desc: 'A full-featured marketing and business management website built for a stone masonry and tiling company. Includes a CMS-powered dashboard, service pages, project gallery, contact management with email notifications via SMTP, and SEO-optimized content.',
-    modal2_title: 'MIS Dashboard',
+    modal2_title: 'Masir MIS',
     modal2_desc: 'A comprehensive Management Information System featuring real-time data visualization, user authentication with role-based access control, report generation, and an intuitive admin interface. Built for organizations that need to track and analyze operational data.',
     modal3_title: 'E-Commerce Platform',
     modal3_desc: 'A complete e-commerce solution with product management, shopping cart, payment gateway integration, order tracking, and a powerful admin dashboard. Optimized for performance and mobile shopping experience.',
@@ -86,8 +84,6 @@ const TRANSLATIONS = {
     nav_about: 'درباره من',
     nav_projects: 'پروژه‌ها',
     nav_contact: 'تماس',
-    muharram_fa: 'ایثار یعنی آنگاه که عشق به حق، از عشق به خویشتن پیشی می‌گیرد و فداکاری معنا پیدا می‌کند',
-    muharram_en: '"Sacrifice is when love for the Truth surpasses love for the self, and devotion finds its meaning."',
     hero_badge: 'آماده برای پروژه‌ها',
     hero_tagline: 'توسعه‌دهنده وب و متخصص MIS \u2014 ساخت راه‌حل‌های قدرتمند وب از <strong>مزارشریف، افغانستان</strong>.',
     hero_btn_projects: 'مشاهده پروژه‌ها',
@@ -116,7 +112,7 @@ const TRANSLATIONS = {
     project_view: 'مشاهده جزئیات',
     proj1_title: 'وب‌سایت تجاری NSMAT',
     proj1_desc: 'سایت بازاریابی با سیستم مدیریت محتوا، داشبورد تحلیلی و بهینه‌سازی SEO.',
-    proj2_title: 'داشبورد MIS',
+    proj2_title: 'مسیر MIS',
     proj2_desc: 'سیستم مدیریت اطلاعات با نمودارهای实时، احراز هویت و دسترسی مبتنی بر نقش.',
     proj3_title: 'پلتفرم فروشگاه آنلاین',
     proj3_desc: 'فروشگاه اینترنتی کامل با مدیریت موجودی، پرداخت آنلاین و پنل ادمین.',
@@ -139,7 +135,7 @@ const TRANSLATIONS = {
     footer_in: 'در مزارشریف.',
     modal1_title: 'وب‌سایت تجاری NSMAT',
     modal1_desc: 'یک وب‌سایت بازاریابی و مدیریت کسب‌وکار کامل برای یک شرکت سنگ‌کاری و کاشی‌کاری. شامل داشبورد مبتنی بر CMS، صفحات خدمات، گالری پروژه‌ها، مدیریت تماس با اعلان‌های ایمیلی از طریق SMTP و محتوای بهینه‌سازی شده برای SEO.',
-    modal2_title: 'داشبورد MIS',
+    modal2_title: 'مسیر MIS',
     modal2_desc: 'یک سیستم مدیریت اطلاعات جامع با نمایش داده‌های实时، احراز هویت کاربر با کنترل دسترسی مبتنی بر نقش، تولید گزارش و رابط ادمین بصری. ساخته شده برای سازمان‌هایی که نیاز به ردیابی و تحلیل داده‌های عملیاتی دارند.',
     modal3_title: 'پلتفرم فروشگاه آنلاین',
     modal3_desc: 'یک راه‌حل کامل تجارت الکترونیک با مدیریت محصول، سبد خرید، درگاه پرداخت، ردیابی سفارشات و داشبورد ادمین قدرتمند. بهینه‌سازی شده برای عملکرد و تجربه خرید موبایل.',
@@ -307,6 +303,28 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('active');
     document.body.style.overflow = '';
   }
+
+  // ---- Gallery ----
+  document.querySelectorAll('.modal-gallery').forEach(gallery => {
+    const track = gallery.querySelector('.gallery-track');
+    const slides = gallery.querySelectorAll('.gallery-slide');
+    const prevBtn = gallery.querySelector('.gallery-prev');
+    const nextBtn = gallery.querySelector('.gallery-next');
+    const dots = gallery.querySelectorAll('.dot');
+    let current = 0;
+
+    function goTo(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      current = index;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+  });
 
   // ---- Counter Animation ----
   const counters = document.querySelectorAll('[data-count]');
