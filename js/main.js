@@ -42,8 +42,6 @@ const TRANSLATIONS = {
     proj1_desc: 'Marketing site with CMS integration, analytics dashboard, and SEO optimization.',
     proj2_title: 'Masir MIS',
     proj2_desc: 'Full-stack management information system with real-time charts, authentication, and role-based access.',
-    proj3_title: 'E-Commerce Platform',
-    proj3_desc: 'Full-featured online store with inventory management, payment integration, and admin panel.',
     proj4_title: 'Duas Collection',
     proj4_desc: 'Islamic prayer collection with Arabic text, Persian translation, and English transliteration.',
     contact_title: 'Get in Touch',
@@ -65,8 +63,6 @@ const TRANSLATIONS = {
     modal1_desc: 'A full-featured marketing and business management website built for a stone masonry and tiling company. Includes a CMS-powered dashboard, service pages, project gallery, contact management with email notifications via SMTP, and SEO-optimized content.',
     modal2_title: 'Masir MIS',
     modal2_desc: 'A comprehensive Management Information System featuring real-time data visualization, user authentication with role-based access control, report generation, and an intuitive admin interface. Built for organizations that need to track and analyze operational data.',
-    modal3_title: 'E-Commerce Platform',
-    modal3_desc: 'A complete e-commerce solution with product management, shopping cart, payment gateway integration, order tracking, and a powerful admin dashboard. Optimized for performance and mobile shopping experience.',
     modal4_title: 'Duas Collection',
     modal4_desc: 'A beautifully designed collection of Islamic prayers (Duas) with full Arabic text, Persian translation, and English transliteration. Includes Duas for daily occasions, gatherings, and spiritual reflection.',
     source_code: 'Source Code',
@@ -114,8 +110,6 @@ const TRANSLATIONS = {
     proj1_desc: 'سایت بازاریابی با سیستم مدیریت محتوا، داشبورد تحلیلی و بهینه‌سازی SEO.',
     proj2_title: 'مسیر MIS',
     proj2_desc: 'سیستم مدیریت اطلاعات با نمودارهای实时، احراز هویت و دسترسی مبتنی بر نقش.',
-    proj3_title: 'پلتفرم فروشگاه آنلاین',
-    proj3_desc: 'فروشگاه اینترنتی کامل با مدیریت موجودی، پرداخت آنلاین و پنل ادمین.',
     proj4_title: 'مجموعه دعاها',
     proj4_desc: 'مجموعه دعاهای اسلامی با متن عربی، ترجمه فارسی و تلفظ انگلیسی.',
     contact_title: 'در تماس باشید',
@@ -137,8 +131,6 @@ const TRANSLATIONS = {
     modal1_desc: 'یک وب‌سایت بازاریابی و مدیریت کسب‌وکار کامل برای یک شرکت سنگ‌کاری و کاشی‌کاری. شامل داشبورد مبتنی بر CMS، صفحات خدمات، گالری پروژه‌ها، مدیریت تماس با اعلان‌های ایمیلی از طریق SMTP و محتوای بهینه‌سازی شده برای SEO.',
     modal2_title: 'مسیر MIS',
     modal2_desc: 'یک سیستم مدیریت اطلاعات جامع با نمایش داده‌های实时، احراز هویت کاربر با کنترل دسترسی مبتنی بر نقش، تولید گزارش و رابط ادمین بصری. ساخته شده برای سازمان‌هایی که نیاز به ردیابی و تحلیل داده‌های عملیاتی دارند.',
-    modal3_title: 'پلتفرم فروشگاه آنلاین',
-    modal3_desc: 'یک راه‌حل کامل تجارت الکترونیک با مدیریت محصول، سبد خرید، درگاه پرداخت، ردیابی سفارشات و داشبورد ادمین قدرتمند. بهینه‌سازی شده برای عملکرد و تجربه خرید موبایل.',
     modal4_title: 'مجموعه دعاها',
     modal4_desc: 'مجموعه‌ای زیبا از دعاهای اسلامی با متن کامل عربی، ترجمه فارسی و تلفظ انگلیسی. شامل دعاهای مناسب برای مناسبت‌های روزمره، اجتماعات و تفکر معنوی.',
     source_code: 'کد منبع',
@@ -310,8 +302,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const slides = gallery.querySelectorAll('.gallery-slide');
     const prevBtn = gallery.querySelector('.gallery-prev');
     const nextBtn = gallery.querySelector('.gallery-next');
-    const dots = gallery.querySelectorAll('.dot');
+    const dotsContainer = gallery.querySelector('.gallery-dots');
     let current = 0;
+    let dots = [];
+
+    // Generate dots dynamically
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dotsContainer.appendChild(dot);
+      });
+      dots = dotsContainer.querySelectorAll('.dot');
+    }
 
     function goTo(index) {
       if (index < 0) index = slides.length - 1;
