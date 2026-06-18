@@ -252,8 +252,8 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
   z-index: 1;
   padding: 2.8rem 1.5rem;
   text-align: center;
-  background: radial-gradient(ellipse at 50% 50%, #161616 0%, #0d0d0d 60%, #0a0a0a 100%);
-  border-bottom: 1px solid rgba(139, 36, 36, 0.12);
+  background: radial-gradient(ellipse at 50% 0%, #1a080e 0%, #0d0407 60%, #0a0205 100%);
+  border-bottom: 1px solid rgba(139, 36, 36, 0.15);
   animation: fadeUp 0.8s ease both 0.1s;
 }
 
@@ -284,7 +284,7 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
 
 .muharram-text-en {
   font-family: 'Cormorant Garamond', 'Georgia', 'Inter', serif;
-  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
   font-weight: 400;
   line-height: 1.7;
   color: #8b2424;
@@ -757,6 +757,7 @@ html:not([lang="fa"]) .muharram-text { display: none; }
 .project-card:nth-child(1) { animation-delay: 0.1s; }
 .project-card:nth-child(2) { animation-delay: 0.2s; }
 .project-card:nth-child(3) { animation-delay: 0.3s; }
+.project-card:nth-child(4) { animation-delay: 0.4s; }
 
 .project-thumb {
   position: relative;
@@ -1219,6 +1220,23 @@ html[dir="rtl"] .footer-links { flex-direction: row; }
   .hero-card-stats { grid-template-columns: repeat(3, 1fr); }
 
   .footer-grid { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+  /* Fix mobile flickering */
+  .site-header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .nav-links {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .floating-shapes {
+    display: none;
+  }
+  .muharram-banner {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 480px) {

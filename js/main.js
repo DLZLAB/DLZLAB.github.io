@@ -46,6 +46,8 @@ const TRANSLATIONS = {
     proj2_desc: 'Full-stack management information system with real-time charts, authentication, and role-based access.',
     proj3_title: 'E-Commerce Platform',
     proj3_desc: 'Full-featured online store with inventory management, payment integration, and admin panel.',
+    proj4_title: 'Duas Collection',
+    proj4_desc: 'Islamic prayer collection with Arabic text, Persian translation, and English transliteration.',
     contact_title: 'Get in Touch',
     contact_sub: 'Have a project in mind or want to collaborate? Let\'s talk.',
     form_name_label: 'Name',
@@ -67,8 +69,11 @@ const TRANSLATIONS = {
     modal2_desc: 'A comprehensive Management Information System featuring real-time data visualization, user authentication with role-based access control, report generation, and an intuitive admin interface. Built for organizations that need to track and analyze operational data.',
     modal3_title: 'E-Commerce Platform',
     modal3_desc: 'A complete e-commerce solution with product management, shopping cart, payment gateway integration, order tracking, and a powerful admin dashboard. Optimized for performance and mobile shopping experience.',
+    modal4_title: 'Duas Collection',
+    modal4_desc: 'A beautifully designed collection of Islamic prayers (Duas) with full Arabic text, Persian translation, and English transliteration. Includes Duas for daily occasions, gatherings, and spiritual reflection.',
     source_code: 'Source Code',
     live_demo: 'Live Demo',
+    visit_page: 'Visit Page',
   },
   fa: {
     seo_title: 'داود ولی‌زاده | توسعه‌دهنده وب و متخصص MIS از مزارشریف، افغانستان',
@@ -115,6 +120,8 @@ const TRANSLATIONS = {
     proj2_desc: 'سیستم مدیریت اطلاعات با نمودارهای实时، احراز هویت و دسترسی مبتنی بر نقش.',
     proj3_title: 'پلتفرم فروشگاه آنلاین',
     proj3_desc: 'فروشگاه اینترنتی کامل با مدیریت موجودی، پرداخت آنلاین و پنل ادمین.',
+    proj4_title: 'مجموعه دعاها',
+    proj4_desc: 'مجموعه دعاهای اسلامی با متن عربی، ترجمه فارسی و تلفظ انگلیسی.',
     contact_title: 'در تماس باشید',
     contact_sub: 'پروژه‌ای در نظر دارید یا می‌خواهید همکاری کنید؟ بیایید صحبت کنیم.',
     form_name_label: 'نام',
@@ -136,8 +143,11 @@ const TRANSLATIONS = {
     modal2_desc: 'یک سیستم مدیریت اطلاعات جامع با نمایش داده‌های实时، احراز هویت کاربر با کنترل دسترسی مبتنی بر نقش، تولید گزارش و رابط ادمین بصری. ساخته شده برای سازمان‌هایی که نیاز به ردیابی و تحلیل داده‌های عملیاتی دارند.',
     modal3_title: 'پلتفرم فروشگاه آنلاین',
     modal3_desc: 'یک راه‌حل کامل تجارت الکترونیک با مدیریت محصول، سبد خرید، درگاه پرداخت، ردیابی سفارشات و داشبورد ادمین قدرتمند. بهینه‌سازی شده برای عملکرد و تجربه خرید موبایل.',
+    modal4_title: 'مجموعه دعاها',
+    modal4_desc: 'مجموعه‌ای زیبا از دعاهای اسلامی با متن کامل عربی، ترجمه فارسی و تلفظ انگلیسی. شامل دعاهای مناسب برای مناسبت‌های روزمره، اجتماعات و تفکر معنوی.',
     source_code: 'کد منبع',
     live_demo: 'دموی زنده',
+    visit_page: 'مشاهده صفحه',
   }
 };
 
