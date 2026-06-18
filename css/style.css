@@ -1067,9 +1067,9 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
 .modal-gallery {
   position: relative;
   width: 100%;
-  max-height: 320px;
+  height: clamp(200px, 40vw, 320px);
   overflow: hidden;
-  background: #000;
+  background: #0a0a0a;
 }
 
 .gallery-track {
@@ -1079,7 +1079,8 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
 
 .gallery-slide {
   min-width: 100%;
-  max-height: 320px;
+  width: 100%;
+  height: clamp(200px, 40vw, 320px);
   object-fit: cover;
   display: block;
 }
