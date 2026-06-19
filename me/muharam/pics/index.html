@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Muharam Admin</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:#0d0407;color:#f5e6d0;line-height:1.6;padding:2rem 1.5rem}
+.container{max-width:800px;width:100%;margin:0 auto}
+h1{font-size:1.8rem;font-weight:800;margin-bottom:0.3rem;background:linear-gradient(135deg,#f5e6d0,#d4a043);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.desc{color:#b8945a;font-size:0.85rem;margin-bottom:2rem}
+.section{background:rgba(255,255,255,.04);border:1px solid rgba(212,160,67,.12);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
+.section h2{font-size:1rem;font-weight:700;margin-bottom:1rem;color:#d4a043}
+.form-group{margin-bottom:0.8rem}
+.form-group label{display:block;font-size:0.75rem;font-weight:600;color:#b8945a;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.form-group input,.form-group textarea{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(212,160,67,.15);background:rgba(255,255,255,.05);color:#f5e6d0;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.25s}
+.form-group input:focus,.form-group textarea:focus{border-color:#d4a043;background:rgba(212,160,67,.06)}
+.form-group input[type="file"]{padding:8px;color:#b8945a}
+.form-group input[type="file"]::file-selector-button{background:rgba(212,160,67,0.1);border:1px solid rgba(212,160,67,.2);color:#d4a043;padding:6px 14px;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:inherit;margin-right:10px;transition:all 0.25s}
+.form-group input[type="file"]::file-selector-button:hover{background:rgba(212,160,67,0.2)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:40px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;background:linear-gradient(135deg,#d4a043,#b8862b);color:#0d0407;transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,160,67,.35)}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-sm{padding:6px 14px;font-size:11px}
+.btn-outline{background:transparent;border:1px solid rgba(212,160,67,.25);color:#b8945a}
+.btn-outline:hover{background:rgba(212,160,67,.1);color:#d4a043}
+.btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+.btn-danger:hover{box-shadow:0 6px 20px rgba(239,68,68,.35)}
+.status{padding:10px 14px;border-radius:8px;font-size:0.8rem;margin-top:0.8rem;display:none}
+.status.show{display:block}
+.status.ok{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#10b981}
+.status.err{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+.status.info{background:rgba(129,140,248,.15);border:1px solid rgba(129,140,248,.3);color:#818cf8}
+a{color:#d4a043}
+small{color:#6b5a3a;font-size:0.75rem}
+.image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.8rem;margin-top:0.5rem}
+img-item{border-radius:10px;overflow:hidden;border:1px solid rgba(212,160,67,.12);background:rgba(255,255,255,.03);position:relative}
+img-item img{width:100%;height:120px;object-fit:cover;display:block}
+img-item .img-body{padding:0.5rem;display:flex;justify-content:space-between;align-items:center;gap:4px}
+img-item .img-name{font-size:0.7rem;color:#f5e6d0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.empty-msg{color:#6b5a3a;font-size:0.85rem;text-align:center;padding:1rem;grid-column:1/-1}
+.loading-msg{color:#6b5a3a;font-size:0.85rem;text-align:center;padding:1rem}
+.preview{max-width:200px;margin-top:0.5rem;border-radius:8px;display:none}
+.preview.show{display:block}
+#uploadProgress{width:100%;height:4px;background:rgba(212,160,67,.1);border-radius:2px;margin-top:0.5rem;overflow:hidden;display:none}
+#uploadProgress .bar{height:100%;width:0%;background:linear-gradient(90deg,#d4a043,#b8862b);border-radius:2px;transition:width 0.3s}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Muharam Admin</h1>
+  <p class="desc">Upload and manage images for the Muharam page.</p>
+
+  <div class="section">
+    <h2>GitHub Token</h2>
+    <div class="form-group">
+      <label>Personal Access Token</label>
+      <input id="tokenInput" type="password" placeholder="ghp_... or github_pat_..." />
+    </div>
+    <p><small>Saved in your browser. Generate at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> (needs <code>repo</code> scope).</small></p>
+    <button class="btn btn-sm" onclick="loadData()">Load Images</button>
+  </div>
+
+  <div class="section">
+    <h2>Upload Image</h2>
+    <div class="form-group">
+      <label>Image Name</label>
+      <input id="imgName" type="text" placeholder="e.g. Muharam 1446" maxlength="50" />
+    </div>
+    <div class="form-group">
+      <label>Select Image (max 1MB)</label>
+      <input id="imgFile" type="file" accept="image/*" onchange="previewFile()" />
+    </div>
+    <img class="preview" id="preview" />
+    <div id="uploadProgress"><div class="bar" id="progressBar"></div></div>
+    <div style="margin-top:0.8rem">
+      <button class="btn" onclick="uploadImage()">Upload & Publish</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="section">
+    <h2>Current Images (<span id="imgCount">0</span>)</h2>
+    <div class="image-grid" id="imageList"><p class="loading-msg">Enter token and click Load Images</p></div>
+  </div>
+</div>
+
+<script>
+const OWNER = 'DLZLAB', REPO = 'DLZLAB.github.io', BRANCH = 'master';
+const MANIFEST_PATH = 'muharam/manifest.json';
+const IMG_DIR = 'muharam/images/';
+
+let images = [];
+let manifestSha = null;
+
+const tokenInput = document.getElementById('tokenInput');
+tokenInput.value = localStorage.getItem('gh_token') || '';
+tokenInput.addEventListener('input', () => localStorage.setItem('gh_token', tokenInput.value));
+
+function setStatus(msg, type) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status show ' + type;
+}
+
+function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+async function api(url, method, body) {
+  const token = tokenInput.value.trim();
+  const opts = { method, headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }};
+  if (body) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+  const res = await fetch(url, opts);
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message); }
+  return res.json();
+}
+
+async function loadData() {
+  const token = tokenInput.value.trim();
+  if (!token) { setStatus('Enter token first.', 'err'); return; }
+  setStatus('Loading...', 'info');
+  try {
+    const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${MANIFEST_PATH}`);
+    manifestSha = data.sha;
+    images = JSON.parse(atob(data.content.replace(/\n/g, ''))).images || [];
+    renderImages();
+    setStatus('Loaded ' + images.length + ' images.', 'ok');
+  } catch (e) {
+    setStatus('Error: ' + e.message, 'err');
+  }
+}
+
+function renderImages() {
+  const list = document.getElementById('imageList');
+  document.getElementById('imgCount').textContent = images.length;
+  if (!images.length) { list.innerHTML = '<p class="empty-msg">No images yet.</p>'; return; }
+  list.innerHTML = images.map((img, i) => `
+    <div class="img-item" style="border-radius:10px;overflow:hidden;border:1px solid rgba(212,160,67,.12);background:rgba(255,255,255,.03)">
+      <img src="${img.url}?t=${Date.now()}" alt="${escapeHtml(img.name)}" style="width:100%;height:120px;object-fit:cover;display:block" loading="lazy" />
+      <div style="padding:0.5rem;display:flex;justify-content:space-between;align-items:center;gap:4px">
+        <span style="font-size:0.7rem;color:#f5e6d0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">${escapeHtml(img.name)}</span>
+        <button class="btn btn-sm btn-danger" onclick="deleteImage(${i})">Del</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function previewFile() {
+  const file = document.getElementById('imgFile').files[0];
+  const preview = document.getElementById('preview');
+  if (!file) { preview.classList.remove('show'); return; }
+  const reader = new FileReader();
+  reader.onload = e => { preview.src = e.target.result; preview.classList.add('show'); };
+  reader.readAsDataURL(file);
+}
+
+async function uploadImage() {
+  const token = tokenInput.value.trim();
+  const name = document.getElementById('imgName').value.trim();
+  const file = document.getElementById('imgFile').files[0];
+  if (!token) { setStatus('Enter token first.', 'err'); return; }
+  if (!name) { setStatus('Enter an image name.', 'err'); return; }
+  if (!file) { setStatus('Select an image file.', 'err'); return; }
+  if (file.size > 1048576) { setStatus('Image too large (max 1MB).', 'err'); return; }
+
+  const progressBar = document.getElementById('progressBar');
+  document.getElementById('uploadProgress').style.display = 'block';
+
+  setStatus('Converting image...', 'info');
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    const base64 = e.target.result.split(',')[1];
+    const ext = file.name.split('.').pop();
+    const filename = name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now() + '.' + ext;
+    const imgPath = IMG_DIR + filename;
+    const imgUrl = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + imgPath;
+
+    try {
+      progressBar.style.width = '30%';
+      setStatus('Uploading image...', 'info');
+
+      // Check if manifest loaded
+      if (!manifestSha) {
+        const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${MANIFEST_PATH}`);
+        manifestSha = data.sha;
+        images = JSON.parse(atob(data.content.replace(/\n/g, ''))).images || [];
+      }
+
+      progressBar.style.width = '50%';
+
+      // Commit image file
+      await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${imgPath}`, 'PUT', {
+        message: 'Add Muharam image: ' + name,
+        content: base64,
+        branch: BRANCH
+      });
+
+      progressBar.style.width = '70%';
+      setStatus('Updating manifest...', 'info');
+
+      // Add to manifest
+      images.push({ name, url: imgUrl });
+      const manifestContent = btoa(unescape(encodeURIComponent(JSON.stringify({ images }, null, 2) + '\n')));
+      const upData = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${MANIFEST_PATH}`, 'PUT', {
+        message: 'Add Muharam image: ' + name,
+        content: manifestContent,
+        sha: manifestSha,
+        branch: BRANCH
+      });
+      manifestSha = upData.content.sha;
+
+      progressBar.style.width = '100%';
+      setTimeout(() => { document.getElementById('uploadProgress').style.display = 'none'; progressBar.style.width = '0%'; }, 500);
+
+      renderImages();
+      setStatus('Uploaded! Visit /muharam/ to see it.', 'ok');
+      document.getElementById('imgName').value = '';
+      document.getElementById('imgFile').value = '';
+      document.getElementById('preview').classList.remove('show');
+    } catch (e) {
+      document.getElementById('uploadProgress').style.display = 'none';
+      setStatus('Error: ' + e.message, 'err');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+async function deleteImage(index) {
+  if (!confirm('Delete this image? It will be removed from the manifest.')) return;
+  const img = images[index];
+  images.splice(index, 1);
+  setStatus('Saving...', 'info');
+  try {
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify({ images }, null, 2) + '\n')));
+    const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${MANIFEST_PATH}`, 'PUT', {
+      message: 'Delete Muharam image: ' + img.name,
+      content, sha: manifestSha, branch: BRANCH
+    });
+    manifestSha = data.content.sha;
+    renderImages();
+    setStatus('Deleted.', 'ok');
+  } catch (e) {
+    setStatus('Error: ' + e.message, 'err');
+  }
+}
+</script>
+</body>
+</html>
