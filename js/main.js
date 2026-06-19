@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function start() {
       stop();
-      interval = setInterval(next, 5000);
+      interval = setInterval(next, 3000);
     }
 
     function stop() {
