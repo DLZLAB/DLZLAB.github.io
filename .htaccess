@@ -1,36 +1,91 @@
-# SEO & Security
+# SEO & Security — DLZLab.com
 
-# Enable rewrite
 RewriteEngine On
 
-# Redirect to HTTPS (uncomment on production)
+# ============================
+# HTTPS Redirect (uncomment on production)
+# ============================
 # RewriteCond %{HTTPS} off
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
+# ============================
+# WWW to non-WWW (choose one)
+# ============================
+# RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# ============================
 # Remove index.html from URL
+# ============================
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
 RewriteRule ^index\.html$ / [R=301,L]
 
-# Custom 404
-ErrorDocument 404 /index.html
+# ============================
+# Language redirect (browser-based)
+# Uncomment on production — redirects Persian-speaking users to ?lang=fa
+# ============================
+# RewriteCond %{QUERY_STRING} !lang=
+# RewriteCond %{HTTP:Accept-Language} (fa|ps|prs) [NC]
+# RewriteRule ^$ /?lang=fa [L,R=302]
 
-# Cache static assets
-<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff2?)$">
+# ============================
+# Friendly URLs: serve index.html for root
+# ============================
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.html [L]
+
+# ============================
+# Custom Error Pages
+# ============================
+ErrorDocument 404 /index.html
+ErrorDocument 403 /index.html
+
+# ============================
+# Cache Static Assets (1 month)
+# ============================
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff2?|webp|avif)$">
   Header set Cache-Control "max-age=2592000, public"
 </FilesMatch>
 
-# Security headers
+<FilesMatch "\.(html|htm)$">
+  Header set Cache-Control "max-age=3600, public"
+</FilesMatch>
+
+# ============================
+# Security Headers
+# ============================
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "DENY"
   Header set X-XSS-Protection "1; mode=block"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
 
-# Disable directory listing
+# ============================
+# Disable Directory Listing
+# ============================
 Options -Indexes
 
-# Compress text files
+# ============================
+# Gzip / Deflate Compression
+# ============================
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/json application/xml
+  AddOutputFilterByType DEFLATE font/ttf font/otf image/svg+xml
 </IfModule>
+
+# ============================
+# Block bad bots
+# ============================
+RewriteCond %{HTTP_USER_AGENT} (ahrefs|majestic|dotbot|semrush|petalbot|rogerbot|exabot) [NC]
+RewriteRule .* - [F,L]
+
+# ============================
+# Prevent hotlinking (optional)
+# ============================
+# RewriteCond %{HTTP_REFERER} !^$
+# RewriteCond %{HTTP_REFERER} !^https?://(www\.)?dlzlab\.com/ [NC]
+# RewriteRule \.(jpg|jpeg|png|gif|svg)$ - [F,L]

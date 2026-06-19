@@ -2,7 +2,7 @@
 
 const TRANSLATIONS = {
   en: {
-    seo_title: 'Dawood WaliZada | Web Developer & MIS Specialist from Mazar-i-Sharif, Afghanistan',
+    seo_title: 'Dawood WaliZada | Web Developer & MIS Specialist | طراح وبسایت در مزارشریف',
     og_title: 'Dawood WaliZada | Web Developer & MIS Specialist',
     og_desc: 'Professional web developer & MIS specialist from Mazar-i-Sharif, Afghanistan.',
     twitter_title: 'Dawood WaliZada | Web Developer & MIS Specialist',
@@ -65,6 +65,18 @@ const TRANSLATIONS = {
     modal2_desc: 'A comprehensive Management Information System featuring real-time data visualization, user authentication with role-based access control, report generation, and an intuitive admin interface. Built for organizations that need to track and analyze operational data.',
     modal4_title: 'Duas Collection',
     modal4_desc: 'A beautifully designed collection of Islamic prayers (Duas) with full Arabic text, Persian translation, and English transliteration. Includes Duas for daily occasions, gatherings, and spiritual reflection.',
+    faq_title: 'FAQ — Web Development in Mazar-i-Sharif',
+    faq_sub: 'Answers to common questions about web development, database management, and app development in Mazar-i-Sharif.',
+    faq_q1: 'Do you design websites in Mazar-i-Sharif?',
+    faq_a1: 'Yes, I am Dawood WaliZada, a professional web developer based in Mazar-i-Sharif, Afghanistan. With over 5 years of experience in PHP, Laravel, MySQL, and JavaScript, I build business websites, management information systems (MIS), e-commerce stores, and custom web applications. If you need a website or a skilled web developer in Mazar-i-Sharif, I am ready to help.',
+    faq_q2: 'What services do you offer?',
+    faq_a2: 'I offer complete web design and development services including business websites, MIS development, database management, SEO optimization, admin dashboards, and custom web applications.',
+    faq_q3: 'How much does a website cost?',
+    faq_a3: 'The cost depends on your project requirements. I take on small and large projects at fair prices. Contact me for a detailed quote.',
+    faq_q4: 'Do you also do database management?',
+    faq_a4: 'Yes, I specialize in database design, query optimization, data migration, and management of MySQL and PostgreSQL databases.',
+    faq_q5: 'Are you available for freelance projects?',
+    faq_a5: 'Yes, I am available for freelance, remote, and local projects in Mazar-i-Sharif. I typically respond within 24 hours.',
     live_demo: 'Live Demo',
     visit_page: 'Visit Page',
   },
@@ -132,6 +144,18 @@ const TRANSLATIONS = {
     modal2_desc: 'یک سیستم مدیریت اطلاعات جامع با نمایش داده‌های实时، احراز هویت کاربر با کنترل دسترسی مبتنی بر نقش، تولید گزارش و رابط ادمین بصری. ساخته شده برای سازمان‌هایی که نیاز به ردیابی و تحلیل داده‌های عملیاتی دارند.',
     modal4_title: 'مجموعه دعاها',
     modal4_desc: 'مجموعه‌ای زیبا از دعاهای اسلامی با متن کامل عربی، ترجمه فارسی و تلفظ انگلیسی. شامل دعاهای مناسب برای مناسبت‌های روزمره، اجتماعات و تفکر معنوی.',
+    faq_title: 'سوالات متداول — طراحی وبسایت در مزارشریف',
+    faq_sub: 'پاسخ به سوالات رایج درباره طراحی وبسایت، مدیریت دیتابیس و توسعه اپلیکیشن در مزارشریف',
+    faq_q1: 'آیا در مزار شریف وب سایت طراحی می کنید؟',
+    faq_a1: 'بله، من <strong>داود ولی‌زاده</strong> در <strong>مزارشریف</strong> وب‌سایت‌های حرفه‌ای طراحی و توسعه می‌دهم. با بیش از ۵ سال تجربه در PHP، Laravel، MySQL و JavaScript، می‌توانم وب‌سایت تجاری، سیستم مدیریت اطلاعات (MIS)، فروشگاه آنلاین و اپلیکیشن‌های تحت وب را برای شما بسازم. اگر به <strong>طراحی وبسایت</strong> نیاز دارید یا به دنبال یک <strong>طراح وبسایت</strong> خوب در مزارشریف هستید، من آماده کمک هستم.',
+    faq_q2: 'چه خدماتی ارائه می دهید؟',
+    faq_a2: 'من خدمات کامل <strong>طراحی وبسایت</strong>، توسعه سیستم‌های مدیریت اطلاعات (<strong>MIS</strong>)، <strong>مدیریت دیتابیس</strong>، <strong>طراحی دیتا بیس</strong>، بهینه‌سازی SEO، طراحی داشبورد مدیریتی، و <strong>توسعه اپلیکیشن</strong>های وب سفارشی را ارائه می‌دهم. اگر <strong>به وبسایت لازم دارید</strong> یا دنبال یک <strong>کد نویس خوب در مزار شریف</strong> می‌گردید، می‌توانم کمک کنم.',
+    faq_q3: 'هزینه طراحی وبسایت چقدر است؟',
+    faq_a3: 'هزینه <strong>طراحی وبسایت</strong> بستگی به نیازهای پروژه شما دارد. من پروژه‌های کوچک و بزرگ را با قیمت‌های مناسب قبول می‌کنم. برای دریافت قیمت دقیق، لطفاً با من تماس بگیرید. به عنوان یک <strong>کد نویس</strong> حرفه‌ای در مزارشریف، تلاش می‌کنم بهترین کیفیت را با قیمت منصفانه ارائه دهم.',
+    faq_q4: 'آیا مدیریت دیتابیس را هم انجام می دهید؟',
+    faq_a4: 'بله، من در <strong>مدیریت دیتابیس</strong> و <strong>طراحی دیتا بیس</strong> تخصص دارم. طراحی دیتابیس، بهینه‌سازی کوئری‌ها، مهاجرت داده، و مدیریت سیستم‌های دیتابیس MySQL و PostgreSQL را برای پروژه‌های مختلف انجام می‌دهم. اگر به یک متخصص <strong>دیتا بیس</strong> در مزارشریف نیاز دارید، می‌توانم کمک کنم.',
+    faq_q5: 'آیا برای پروژه‌های فریلنسری در دسترس هستید؟',
+    faq_a5: 'بله، من برای پروژه‌های فریلنسری، همکاری از راه دور و پروژه‌های حضوری در <strong>مزار شریف</strong> در دسترس هستم. اگر <strong>کسی در مزار شریف وب سایت میسازه</strong> یا به یک <strong>توسعه‌دهنده اپلیکیشن</strong> نیاز دارید، با من تماس بگیرید. معمولاً ظرف ۲۴ ساعت پاسخ می‌دهم.',
     live_demo: 'دموی زنده',
     visit_page: 'مشاهده صفحه',
   }
@@ -439,61 +463,5 @@ document.addEventListener('DOMContentLoaded', () => {
       tagline.style.opacity = '1';
       tagline.style.transform = 'translateY(0)';
     }, 800);
-  }
-
-  // ---- Contact Form (AJAX) ----
-  const contactForm = document.getElementById('contactForm');
-  const contactAlert = document.getElementById('contactAlert');
-
-  if (contactForm && contactAlert) {
-    const alertIcon = contactAlert.querySelector('.alert-icon i');
-    const alertMsg = contactAlert.querySelector('.alert-message');
-    const alertClose = contactAlert.querySelector('.alert-close');
-
-    function showAlert(type, message) {
-      contactAlert.className = 'contact-alert show ' + type;
-      alertMsg.textContent = message;
-      alertIcon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-      contactAlert.hidden = false;
-
-      setTimeout(() => {
-        contactAlert.classList.remove('show');
-        contactAlert.hidden = true;
-      }, 5000);
-    }
-
-    if (alertClose) {
-      alertClose.addEventListener('click', () => {
-        contactAlert.classList.remove('show');
-        contactAlert.hidden = true;
-      });
-    }
-
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-      try {
-        const res = await fetch(contactForm.action, {
-          method: 'POST',
-          body: new FormData(contactForm),
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          showAlert('success', 'Your message has been sent successfully! I\'ll get back to you soon.');
-          contactForm.reset();
-        } else {
-          showAlert('error', 'Something went wrong. Please try again or email me directly.');
-        }
-      } catch {
-        showAlert('error', 'Network error. Please check your connection and try again.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span data-i18n="form_send">Send Message</span>';
-      }
-    });
   }
 });

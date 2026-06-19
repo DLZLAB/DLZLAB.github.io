@@ -894,62 +894,6 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
   color: var(--accent);
 }
 
-/* Contact alert notification */
-.contact-alert {
-  display: none;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.85rem 1.2rem;
-  border-radius: 12px;
-  margin-bottom: 1.2rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  animation: fadeUp 0.35s ease both;
-}
-
-.contact-alert.show {
-  display: flex;
-}
-
-.contact-alert.success {
-  background: rgba(46, 125, 50, 0.15);
-  border: 1px solid rgba(46, 125, 50, 0.3);
-  color: var(--accent-light);
-}
-
-.contact-alert.error {
-  background: rgba(231, 76, 60, 0.15);
-  border: 1px solid rgba(231, 76, 60, 0.3);
-  color: #e74c3c;
-}
-
-.contact-alert .alert-icon {
-  font-size: 1.2rem;
-  flex-shrink: 0;
-}
-
-.contact-alert .alert-message {
-  flex: 1;
-  line-height: 1.4;
-}
-
-.contact-alert .alert-close {
-  background: transparent;
-  border: 0;
-  font-size: 1.3rem;
-  cursor: pointer;
-  color: inherit;
-  opacity: 0.7;
-  padding: 0 0.25rem;
-  line-height: 1;
-  flex-shrink: 0;
-  transition: opacity 0.2s ease;
-}
-
-.contact-alert .alert-close:hover {
-  opacity: 1;
-}
-
 /* Contact aside */
 .contact-aside {
   display: grid;
@@ -1018,6 +962,96 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
 }
 
 /* ===========================
+   FAQ
+   =========================== */
+.faq {
+  padding: 70px 0;
+}
+
+.faq-grid {
+  max-width: 800px;
+  margin: 2rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item[open] {
+  border-color: var(--accent);
+  box-shadow: var(--glow);
+}
+
+.faq-item summary {
+  padding: 1rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::before {
+  content: '\f078';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 0.7rem;
+  color: var(--accent);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.faq-item[open] summary::before {
+  transform: rotate(180deg);
+}
+
+.faq-item summary:hover {
+  color: var(--accent-light);
+}
+
+.faq-item p {
+  padding: 0 1.4rem 1.2rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.faq-item p strong {
+  color: var(--accent-light);
+}
+
+html[dir="rtl"] .faq-item summary::before {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+@media (max-width: 640px) {
+  .faq-item summary {
+    font-size: 0.88rem;
+    padding: 0.9rem 1rem;
+  }
+  .faq-item p {
+    padding: 0 1rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ===========================
    FOOTER
    =========================== */
 .site-footer {
@@ -1049,6 +1083,22 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
 }
 
 .fa-heart { color: #e74c3c; }
+
+/* Persian SEO keywords — visible to crawlers, minimal to users */
+.seo-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 0.8rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0.35;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  margin-top: 0.5rem;
+}
+.seo-keywords span::before { content: '· '; }
 
 /* ===========================
    MODALS
