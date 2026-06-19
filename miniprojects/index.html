@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mini Projects — Dawood WaliZada</title>
+<meta name="description" content="Collection of mini projects by Dawood WaliZada — songs, poetry, books, and more." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://dlzlab.com/miniprojects/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter','Vazirmatn',system-ui,sans-serif;
+  background:#0d0407;
+  color:#f5e6d0;
+  line-height:1.6;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:2rem 1.5rem;
+  background-image:radial-gradient(ellipse at 20% 50%, rgba(107,29,47,0.3) 0%, transparent 60%),
+                   radial-gradient(ellipse at 80% 50%, rgba(212,160,67,0.08) 0%, transparent 60%);
+}
+.container{max-width:900px;width:100%}
+
+/* header */
+.header{text-align:center;margin-bottom:3.5rem}
+.header .back{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  color:#b8945a;font-size:0.85rem;text-decoration:none;
+  margin-bottom:1rem;transition:color 0.2s;
+}
+.header .back:hover{color:#d4a043}
+.header h1{
+  font-size:2.8rem;font-weight:800;line-height:1.15;
+  background:linear-gradient(135deg,#f5e6d0,#d4a043);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.header p{color:#b8945a;font-size:1rem;margin-top:0.5rem}
+
+/* grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.2rem;
+}
+.card{
+  position:relative;
+  padding:2rem 1.5rem;
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(212,160,67,.12);
+  text-decoration:none;
+  color:inherit;
+  transition:all 0.35s ease;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+}
+.card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(212,160,67,0.06), transparent);
+  opacity:0;
+  transition:opacity 0.35s;
+}
+.card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(212,160,67,.25);
+  box-shadow:0 12px 40px rgba(0,0,0,0.5), 0 0 30px rgba(212,160,67,0.06);
+}
+.card:hover::before{opacity:1}
+.card-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:grid;place-items:center;
+  font-size:1.3rem;
+  background:rgba(212,160,67,0.1);
+  border:1px solid rgba(212,160,67,.15);
+  flex-shrink:0;
+}
+.card h2{
+  font-size:1.15rem;font-weight:700;
+  margin-top:0.3rem;position:relative;z-index:1;
+}
+.card p{
+  font-size:0.85rem;color:#b8945a;
+  position:relative;z-index:1;
+}
+.card .arrow{
+  margin-top:auto;align-self:flex-end;
+  color:#d4a043;font-size:1.1rem;
+  transition:transform 0.3s;position:relative;z-index:1;
+}
+.card:hover .arrow{transform:translateX(4px)}
+
+/* footer */
+.footer{
+  text-align:center;margin-top:3.5rem;
+  font-size:0.8rem;color:#6b5a3a;
+}
+.footer a{color:#b8945a;text-decoration:none}
+.footer a:hover{color:#d4a043}
+
+@media(max-width:500px){
+  .header h1{font-size:2rem}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <a class="back" href="/">&larr; Back to Portfolio</a>
+    <h1>Mini Projects</h1>
+    <p>Small experiments, tools, and creative works by Dawood WaliZada</p>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="/songs/">
+      <div class="card-icon">&#x1F3B5;</div>
+      <h2>Songs</h2>
+      <p>Collection of songs and audio works</p>
+      <span class="arrow">&rarr;</span>
+    </a>
+
+    <a class="card" href="/muharam/">
+      <div class="card-icon">&#x1F54C;</div>
+      <h2>Muharam</h2>
+      <p>Muharam-related content and resources</p>
+      <span class="arrow">&rarr;</span>
+    </a>
+
+    <a class="card" href="/peots/">
+      <div class="card-icon">&#x1F4D6;</div>
+      <h2>Poets</h2>
+      <p>Poetry collection and literary works</p>
+      <span class="arrow">&rarr;</span>
+    </a>
+
+    <a class="card" href="/dlz-booklab/">
+      <div class="card-icon">&#x1F4DA;</div>
+      <h2>DLZ Booklab</h2>
+      <p>Books, reading lists, and literary projects</p>
+      <span class="arrow">&rarr;</span>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <a href="/">&copy; Dawood WaliZada</a>
+  </div>
+
+</div>
+</body>
+</html>
