@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Friends — Dawood WaliZada</title>
+<meta name="description" content="Words and sentences from friends — a collection of shared moments by Dawood WaliZada." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://dlzlab.com/friends/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter','Vazirmatn',system-ui,sans-serif;
+  background:#0d0407;
+  color:#f5e6d0;
+  line-height:1.6;
+  min-height:100vh;
+  padding:2rem 1.5rem;
+  background-image:radial-gradient(ellipse at 20% 50%, rgba(107,29,47,0.3) 0%, transparent 60%),
+                   radial-gradient(ellipse at 80% 50%, rgba(212,160,67,0.08) 0%, transparent 60%);
+}
+.container{max-width:960px;width:100%;margin:0 auto}
+
+/* header */
+.header{text-align:center;margin-bottom:3rem}
+.header .back{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  color:#b8945a;font-size:0.85rem;text-decoration:none;
+  margin-bottom:1rem;transition:color 0.2s;
+}
+.header .back:hover{color:#d4a043}
+.header h1{
+  font-size:2.8rem;font-weight:800;line-height:1.15;
+  background:linear-gradient(135deg,#f5e6d0,#d4a043);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.header p{color:#b8945a;font-size:1rem;margin-top:0.5rem;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* quotes grid */
+.quotes-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.2rem;
+  margin-bottom:3rem;
+}
+.quote-card{
+  padding:1.8rem 1.5rem;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(212,160,67,.12);
+  position:relative;
+  transition:all 0.3s ease;
+}
+.quote-card:hover{
+  border-color:rgba(212,160,67,.25);
+  box-shadow:0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(212,160,67,0.05);
+  transform:translateY(-3px);
+}
+.quote-text{
+  font-family:'Cormorant Garamond','Georgia',serif;
+  font-size:1.25rem;
+  font-style:italic;
+  color:#f5e6d0;
+  line-height:1.5;
+  margin-bottom:1rem;
+  position:relative;
+  padding-left:1.2rem;
+  border-left:2px solid #d4a043;
+}
+.quote-author{
+  font-size:0.85rem;
+  font-weight:600;
+  color:#d4a043;
+}
+.quote-date{
+  font-size:0.7rem;
+  color:#6b5a3a;
+  margin-left:0.5rem;
+}
+.empty-state{
+  grid-column:1/-1;
+  text-align:center;
+  padding:3rem;
+  color:#6b5a3a;
+  font-size:1rem;
+}
+.empty-state .icon{font-size:3rem;margin-bottom:1rem}
+
+/* form section */
+.form-section{
+  max-width:560px;
+  margin:0 auto 3rem;
+}
+.form-section h2{
+  font-size:1.4rem;
+  font-weight:700;
+  margin-bottom:0.5rem;
+  color:#f5e6d0;
+  text-align:center;
+}
+.form-section > p{
+  text-align:center;
+  color:#b8945a;
+  font-size:0.9rem;
+  margin-bottom:1.5rem;
+}
+.form-card{
+  padding:2rem;
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(212,160,67,.12);
+}
+.form-card form{display:flex;flex-direction:column;gap:1rem}
+.form-card label{
+  font-size:0.8rem;
+  font-weight:600;
+  color:#b8945a;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+.form-card input,.form-card textarea{
+  padding:12px 16px;
+  border-radius:10px;
+  border:1px solid rgba(212,160,67,.15);
+  background:rgba(255,255,255,.05);
+  color:#f5e6d0;
+  font-family:inherit;
+  font-size:0.95rem;
+  outline:none;
+  transition:border-color 0.25s,background 0.25s;
+  width:100%;
+}
+.form-card input:focus,.form-card textarea:focus{
+  border-color:#d4a043;
+  background:rgba(212,160,67,.06);
+}
+.form-card textarea{resize:vertical;min-height:100px}
+.form-card .btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 28px;border-radius:40px;
+  font-size:14px;font-weight:600;cursor:pointer;border:none;
+  background:linear-gradient(135deg,#d4a043,#b8862b);
+  color:#0d0407;
+  transition:all 0.3s;
+  font-family:inherit;
+}
+.form-card .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,160,67,.35)}
+.form-card .btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.form-status{
+  margin-top:0.5rem;
+  font-size:0.85rem;
+  text-align:center;
+  padding:8px 12px;
+  border-radius:8px;
+  display:none;
+}
+.form-status.success{display:block;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#10b981}
+.form-status.error{display:block;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+
+/* footer */
+.footer{
+  text-align:center;margin-top:3rem;
+  font-size:0.8rem;color:#6b5a3a;
+}
+.footer a{color:#b8945a;text-decoration:none}
+.footer a:hover{color:#d4a043}
+
+@media(max-width:500px){
+  .header h1{font-size:2rem}
+  .quotes-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <a class="back" href="/miniprojects/">&larr; Back to Mini Projects</a>
+    <h1>Friends</h1>
+    <p>Words and sentences from the people around me — a collection of shared moments, thoughts, and memories</p>
+  </div>
+
+  <!-- quotes display -->
+  <div class="quotes-grid" id="quotesGrid">
+    <div class="empty-state" id="loadingState">
+      <div class="icon">&#x1F4AC;</div>
+      <p>Loading quotes...</p>
+    </div>
+  </div>
+
+  <!-- submission form -->
+  <div class="form-section">
+    <h2>Leave a Word</h2>
+    <p>Write your name and a sentence — it may appear here after review</p>
+    <div class="form-card">
+      <form id="friendForm">
+        <div>
+          <label for="name">Your Name</label>
+          <input id="name" name="name" type="text" placeholder="e.g. Ahmad" required minlength="2" maxlength="50" />
+        </div>
+        <div>
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" placeholder="Write something..." required minlength="3" maxlength="500"></textarea>
+        </div>
+        <button type="submit" class="btn" id="submitBtn">&#x1F4AC; Send</button>
+        <div class="form-status" id="formStatus"></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="/">&copy; Dawood WaliZada</a>
+  </div>
+
+</div>
+
+<script>
+const QUOTES_JSON = 'quotes.json';
+const FORMSPREE_URL = 'https://formspree.io/f/mjgaoayk';
+
+const grid = document.getElementById('quotesGrid');
+const form = document.getElementById('friendForm');
+const submitBtn = document.getElementById('submitBtn');
+const formStatus = document.getElementById('formStatus');
+const loadingState = document.getElementById('loadingState');
+
+async function loadQuotes() {
+  try {
+    const res = await fetch(QUOTES_JSON + '?t=' + Date.now());
+    if (!res.ok) throw new Error('Not found');
+    const data = await res.json();
+    renderQuotes(data.quotes || []);
+  } catch {
+    grid.innerHTML = '<div class="empty-state"><div class="icon">&#x1F4AC;</div><p>No quotes yet. Be the first to leave a word!</p></div>';
+  }
+}
+
+function renderQuotes(quotes) {
+  if (!quotes.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="icon">&#x1F4AC;</div><p>No quotes yet. Be the first to leave a word!</p></div>';
+    return;
+  }
+  grid.innerHTML = quotes.map(q => `
+    <div class="quote-card">
+      <div class="quote-text">${escapeHtml(q.text)}</div>
+      <div class="quote-author">— ${escapeHtml(q.name)}</div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+  formStatus.className = 'form-status';
+
+  const data = {
+    name: form.name.value.trim(),
+    message: form.message.value.trim(),
+    _subject: '[Friends] New message from ' + form.name.value.trim()
+  };
+
+  try {
+    const res = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      formStatus.className = 'form-status success';
+      formStatus.textContent = 'Sent! Your message will appear after review.';
+      form.reset();
+    } else {
+      throw new Error('Server error');
+    }
+  } catch {
+    formStatus.className = 'form-status error';
+    formStatus.textContent = 'Something went wrong. Try again later.';
+  }
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Send';
+});
+
+loadQuotes();
+</script>
+</body>
+</html>
