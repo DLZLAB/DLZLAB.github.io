@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
+  <defs>
+    <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4a043"/>
+      <stop offset="100%" stop-color="#6b1d2f"/>
+    </linearGradient>
+  </defs>
+  <text x="4" y="38" font-family="Inter,'Segoe UI',sans-serif" font-size="36" font-weight="800" fill="url(#lg)" letter-spacing="-1">DLZ</text>
+  <circle cx="130" cy="14" r="4" fill="#d4a043" opacity="0.6"/>
+  <circle cx="144" cy="26" r="3" fill="#6b1d2f" opacity="0.5"/>
+</svg>
