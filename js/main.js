@@ -440,4 +440,60 @@ document.addEventListener('DOMContentLoaded', () => {
       tagline.style.transform = 'translateY(0)';
     }, 800);
   }
+
+  // ---- Contact Form (AJAX) ----
+  const contactForm = document.getElementById('contactForm');
+  const contactAlert = document.getElementById('contactAlert');
+
+  if (contactForm && contactAlert) {
+    const alertIcon = contactAlert.querySelector('.alert-icon i');
+    const alertMsg = contactAlert.querySelector('.alert-message');
+    const alertClose = contactAlert.querySelector('.alert-close');
+
+    function showAlert(type, message) {
+      contactAlert.className = 'contact-alert show ' + type;
+      alertMsg.textContent = message;
+      alertIcon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+      contactAlert.hidden = false;
+
+      setTimeout(() => {
+        contactAlert.classList.remove('show');
+        contactAlert.hidden = true;
+      }, 5000);
+    }
+
+    if (alertClose) {
+      alertClose.addEventListener('click', () => {
+        contactAlert.classList.remove('show');
+        contactAlert.hidden = true;
+      });
+    }
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          showAlert('success', 'Your message has been sent successfully! I\'ll get back to you soon.');
+          contactForm.reset();
+        } else {
+          showAlert('error', 'Something went wrong. Please try again or email me directly.');
+        }
+      } catch {
+        showAlert('error', 'Network error. Please check your connection and try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span data-i18n="form_send">Send Message</span>';
+      }
+    });
+  }
 });

@@ -894,6 +894,62 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
   color: var(--accent);
 }
 
+/* Contact alert notification */
+.contact-alert {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: 12px;
+  margin-bottom: 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: fadeUp 0.35s ease both;
+}
+
+.contact-alert.show {
+  display: flex;
+}
+
+.contact-alert.success {
+  background: rgba(46, 125, 50, 0.15);
+  border: 1px solid rgba(46, 125, 50, 0.3);
+  color: var(--accent-light);
+}
+
+.contact-alert.error {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+}
+
+.contact-alert .alert-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.contact-alert .alert-message {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.contact-alert .alert-close {
+  background: transparent;
+  border: 0;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
+  padding: 0 0.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.contact-alert .alert-close:hover {
+  opacity: 1;
+}
+
 /* Contact aside */
 .contact-aside {
   display: grid;
