@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Friends Admin</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:#0d0407;
+  color:#f5e6d0;
+  line-height:1.6;
+  padding:2rem 1.5rem;
+}
+.container{max-width:720px;width:100%;margin:0 auto}
+h1{font-size:1.8rem;font-weight:800;margin-bottom:0.3rem;background:linear-gradient(135deg,#f5e6d0,#d4a043);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.desc{color:#b8945a;font-size:0.85rem;margin-bottom:2rem}
+.section{background:rgba(255,255,255,.04);border:1px solid rgba(212,160,67,.12);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
+.section h2{font-size:1rem;font-weight:700;margin-bottom:1rem;color:#d4a043}
+
+/* form */
+.form-group{margin-bottom:0.8rem}
+.form-group label{display:block;font-size:0.75rem;font-weight:600;color:#b8945a;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.form-group input,.form-group textarea{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(212,160,67,.15);background:rgba(255,255,255,.05);color:#f5e6d0;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.25s}
+.form-group input:focus,.form-group textarea:focus{border-color:#d4a043;background:rgba(212,160,67,.06)}
+.form-group textarea{resize:vertical;min-height:60px}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:40px;
+  font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;
+  background:linear-gradient(135deg,#d4a043,#b8862b);color:#0d0407;transition:all 0.3s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,160,67,.35)}
+.btn-sm{padding:6px 14px;font-size:11px}
+.btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+.btn-danger:hover{box-shadow:0 6px 20px rgba(239,68,68,.35)}
+.btn-outline{background:transparent;border:1px solid rgba(212,160,67,.25);color:#b8945a}
+.btn-outline:hover{background:rgba(212,160,67,.1);color:#d4a043}
+
+/* quote list */
+.quote-item{display:flex;justify-content:space-between;align-items:center;padding:0.8rem 0;border-bottom:1px solid rgba(212,160,67,.08)}
+.quote-item:last-child{border-bottom:none}
+.quote-item .q-text{flex:1;font-size:0.85rem;color:#f5e6d0;font-style:italic}
+.quote-item .q-name{font-size:0.75rem;color:#d4a043;font-weight:600;white-space:nowrap;margin-left:1rem}
+.quote-item .q-del{background:none;border:none;color:#6b5a3a;cursor:pointer;font-size:1rem;padding:4px 8px;transition:color 0.2s;margin-left:0.5rem}
+.quote-item .q-del:hover{color:#ef4444}
+.empty-msg{color:#6b5a3a;font-size:0.85rem;text-align:center;padding:1rem}
+
+/* output */
+.output{display:none}
+.output.show{display:block}
+.output textarea{width:100%;min-height:200px;padding:12px;border-radius:8px;border:1px solid rgba(212,160,67,.15);background:rgba(255,255,255,.05);color:#10b981;font-family:'Courier New',monospace;font-size:0.8rem;outline:none;resize:vertical;margin-top:0.8rem}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem}
+
+.toast{
+  position:fixed;bottom:20px;right:20px;z-index:999;
+  padding:10px 20px;border-radius:10px;font-size:0.85rem;font-weight:500;
+  background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);
+  color:#10b981;backdrop-filter:blur(12px);
+  transform:translateY(80px);opacity:0;transition:0.4s;pointer-events:none;
+}
+.toast.show{transform:translateY(0);opacity:1}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Friends Admin</h1>
+  <p class="desc">Add or remove quotes. Copy the final JSON and paste into <code style="color:#d4a043">friends/quotes.json</code> on GitHub.</p>
+
+  <!-- add form -->
+  <div class="section">
+    <h2>Add Quote</h2>
+    <div class="form-group">
+      <label>Name</label>
+      <input id="addName" type="text" placeholder="e.g. Ahmad" maxlength="50" />
+    </div>
+    <div class="form-group">
+      <label>Quote</label>
+      <textarea id="addText" placeholder="Write the quote..." maxlength="500"></textarea>
+    </div>
+    <button class="btn" onclick="addQuote()">Add Quote</button>
+  </div>
+
+  <!-- current quotes -->
+  <div class="section">
+    <h2>Current Quotes (<span id="quoteCount">0</span>)</h2>
+    <div id="quoteList"><p class="empty-msg">Loading...</p></div>
+    <div class="btn-row">
+      <button class="btn" onclick="copyJSON()">Copy JSON to Clipboard</button>
+      <a class="btn btn-outline" href="https://github.com/DLZLAB/DLZLAB.github.io/blob/master/friends/quotes.json" target="_blank">Open on GitHub</a>
+    </div>
+    <div class="output" id="output">
+      <textarea id="jsonOutput" readonly></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+let quotes = [];
+
+async function loadQuotes() {
+  try {
+    const res = await fetch('/friends/quotes.json?t=' + Date.now());
+    const data = await res.json();
+    quotes = data.quotes || [];
+  } catch {
+    quotes = [];
+  }
+  renderQuotes();
+}
+
+function renderQuotes() {
+  const list = document.getElementById('quoteList');
+  const count = document.getElementById('quoteCount');
+  count.textContent = quotes.length;
+  if (!quotes.length) {
+    list.innerHTML = '<p class="empty-msg">No quotes yet.</p>';
+    return;
+  }
+  list.innerHTML = quotes.map((q, i) => `
+    <div class="quote-item">
+      <span class="q-text">"${escapeHtml(q.text)}"</span>
+      <span class="q-name">— ${escapeHtml(q.name)}</span>
+      <button class="q-del" onclick="removeQuote(${i})" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function addQuote() {
+  const name = document.getElementById('addName').value.trim();
+  const text = document.getElementById('addText').value.trim();
+  if (!name || !text) return;
+  quotes.push({ name, text });
+  document.getElementById('addName').value = '';
+  document.getElementById('addText').value = '';
+  renderQuotes();
+  showToast('Quote added!');
+}
+
+function removeQuote(index) {
+  quotes.splice(index, 1);
+  renderQuotes();
+  showToast('Quote removed');
+}
+
+function buildJSON() {
+  return JSON.stringify({ quotes }, null, 2);
+}
+
+function copyJSON() {
+  const json = buildJSON();
+  const output = document.getElementById('output');
+  const textarea = document.getElementById('jsonOutput');
+  textarea.value = json;
+  output.classList.add('show');
+  navigator.clipboard.writeText(json).then(() => {
+    showToast('Copied to clipboard!');
+  }).catch(() => {
+    textarea.select();
+    document.execCommand('copy');
+    showToast('Copied!');
+  });
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadQuotes();
+</script>
+</body>
+</html>
