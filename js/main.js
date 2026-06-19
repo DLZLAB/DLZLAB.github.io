@@ -360,9 +360,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (slides.length < 2) return;
     let current = 0;
     let interval;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function show(index) {
-      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+      slides.forEach((s, i) => {
+        const isActive = i === index;
+        s.classList.toggle('active', isActive);
+        // trigger reflow for re-animation
+        if (isActive) {
+          s.style.animation = 'none';
+          s.offsetHeight; // reflow
+          s.style.animation = 'thumbFadeIn 0.6s ease forwards';
+        }
+      });
       dots.forEach((d, i) => d.classList.toggle('active', i === index));
       current = index;
     }
@@ -371,18 +382,37 @@ document.addEventListener('DOMContentLoaded', () => {
       show((current + 1) % slides.length);
     }
 
+    function prev() {
+      show((current - 1 + slides.length) % slides.length);
+    }
+
     function start() {
       stop();
-      interval = setInterval(next, 3000);
+      interval = setInterval(next, 5000);
     }
 
     function stop() {
       clearInterval(interval);
     }
 
+    // Mouse
     card.addEventListener('mouseenter', stop);
     card.addEventListener('mouseleave', start);
-    card.addEventListener('click', stop);
+
+    // Touch swipe
+    card.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      stop();
+    }, { passive: true });
+
+    card.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 40) {
+        diff > 0 ? next() : prev();
+      }
+      start();
+    }, { passive: true });
 
     start();
   });
