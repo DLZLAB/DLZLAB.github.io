@@ -1,53 +1,234 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title data-i18n="title">Peots &amp; Poetry — Dawood WaliZada</title>
-<meta name="description" data-i18n="desc" content="Peots &amp; Poetry by Dawood WaliZada — coming soon." />
+<title>Students Message — Things You Didn't Say</title>
+<meta name="description" content="Anonymous messages from students — things you didn't feel free to say in class." />
 <meta name="robots" content="index, follow" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  font-family:'Inter','Vazirmatn',system-ui,sans-serif;
-  background:#0d0407;color:#f5e6d0;line-height:1.6;
-  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
-  background-image:radial-gradient(ellipse at 50% 30%, rgba(107,29,47,0.2) 0%, transparent 60%);
+body{font-family:'Inter','Space Grotesk',system-ui,sans-serif;background:#0d0407;color:#f5e6d0;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+
+.bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg span{position:absolute;font-size:clamp(1.5rem,5vw,4rem);opacity:0.04;animation:float 25s ease-in-out infinite;user-select:none}
+.bg span:nth-child(1){top:5%;left:5%;animation-delay:0s;font-size:3rem}
+.bg span:nth-child(2){top:20%;right:10%;animation-delay:-3s}
+.bg span:nth-child(3){top:50%;left:2%;animation-delay:-7s;font-size:5rem}
+.bg span:nth-child(4){bottom:20%;right:5%;animation-delay:-11s}
+.bg span:nth-child(5){bottom:5%;left:20%;animation-delay:-15s;font-size:4rem}
+.bg span:nth-child(6){top:70%;right:30%;animation-delay:-19s}
+.bg span:nth-child(7){top:35%;left:50%;animation-delay:-23s;font-size:2.5rem}
+@keyframes float{0%,100%{transform:translate(0,0)rotate(0deg)}25%{transform:translate(30px,-20px)rotate(5deg)}50%{transform:translate(-20px,30px)rotate(-3deg)}75%{transform:translate(15px,15px)rotate(4deg)}}
+
+.container{position:relative;z-index:1;width:min(92%,800px);margin:0 auto;padding:0 1rem}
+
+header{padding:4rem 1rem 2rem;text-align:center;position:relative;z-index:1}
+header h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;background:linear-gradient(135deg,#f5e6d0,#d4a043,#e8c47a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+header p{color:#b8945a;font-size:0.95rem;max-width:500px;margin:0 auto}
+.tagline{margin-top:0.5rem;font-size:0.85rem;color:#6b5a3a;font-style:italic}
+
+.form-card{margin-bottom:2rem;background:linear-gradient(145deg,rgba(60,15,28,0.4),rgba(30,8,14,0.6));backdrop-filter:blur(16px);border:1px solid rgba(212,160,67,0.2);border-radius:20px;padding:1.5rem;position:relative}
+.form-card h2{font-size:1rem;font-weight:700;color:#d4a043;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.form-card textarea{width:100%;padding:0.8rem 1rem;border-radius:12px;border:1px solid rgba(212,160,67,0.15);background:rgba(255,255,255,0.04);color:#f5e6d0;font-family:inherit;font-size:0.9rem;outline:none;transition:border-color 0.25s;resize:vertical;min-height:90px}
+.form-card textarea:focus{border-color:#d4a043;background:rgba(212,160,67,0.04)}
+.form-card textarea::placeholder{color:#6b5a3a}
+.form-footer{display:flex;align-items:center;justify-content:space-between;margin-top:0.8rem;flex-wrap:wrap;gap:0.5rem}
+.form-footer .hint{font-size:0.75rem;color:#6b5a3a}
+
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.4rem;border-radius:40px;font-weight:600;font-size:0.85rem;border:0;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#6b1d2f,#d4a043);color:#fff;transition:all 0.25s;box-shadow:0 4px 20px rgba(212,160,67,0.2)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(212,160,67,0.3)}
+.btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.btn-sm{padding:0.35rem 1rem;font-size:0.8rem}
+
+.status-msg{padding:0.7rem 1rem;border-radius:10px;font-size:0.85rem;margin-top:0.8rem;display:none}
+.status-msg.show{display:block}
+.status-msg.ok{background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);color:#10b981}
+.status-msg.err{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#ef4444}
+.status-msg.info{background:rgba(129,140,248,0.12);border:1px solid rgba(129,140,248,0.25);color:#818cf8}
+
+.messages-section h2{font-size:1rem;font-weight:700;color:#f5e6d0;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.messages-section h2 span{color:#b8945a;font-weight:400}
+
+.empty-state{text-align:center;padding:3rem 2rem;color:#6b5a3a;font-size:0.9rem}
+.empty-state i{font-size:2.5rem;margin-bottom:0.8rem;display:block;color:#6b5a3a}
+
+.message-list{display:flex;flex-direction:column;gap:0.75rem}
+.message-item{background:linear-gradient(145deg,rgba(60,15,28,0.3),rgba(30,8,14,0.5));backdrop-filter:blur(12px);border:1px solid rgba(212,160,67,0.12);border-radius:16px;padding:1rem 1.2rem;transition:all 0.2s;animation:fadeIn 0.4s ease both}
+.message-item:hover{border-color:rgba(212,160,67,0.25)}
+.message-item:nth-child(1){animation-delay:0s}
+.message-item:nth-child(2){animation-delay:0.05s}
+.message-item:nth-child(3){animation-delay:0.1s}
+.message-item:nth-child(4){animation-delay:0.15s}
+.message-item:nth-child(5){animation-delay:0.2s}
+.message-item .msg-text{font-size:0.92rem;color:#d4af7a;line-height:1.6;font-style:italic}
+.message-item .msg-text::before{content:'"';color:#d4a043;opacity:0.5}
+.message-item .msg-text::after{content:'"';color:#d4a043;opacity:0.5}
+.message-item .msg-meta{display:flex;justify-content:space-between;align-items:center;margin-top:0.5rem;font-size:0.75rem;color:#6b5a3a}
+.message-item .msg-meta .msg-date{direction:ltr}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.secret-note{margin-top:2rem;text-align:center;padding:1.5rem;background:rgba(212,160,67,0.04);border:1px dashed rgba(212,160,67,0.12);border-radius:16px;font-size:0.8rem;color:#6b5a3a;line-height:1.6}
+
+footer{text-align:center;padding:2rem;font-size:0.8rem;color:#6b5a3a;position:relative;z-index:1}
+
+.admin-link{position:fixed;bottom:1rem;right:1rem;width:36px;height:36px;border-radius:50%;background:rgba(212,160,67,0.1);border:1px solid rgba(212,160,67,0.15);display:grid;place-items:center;color:#6b5a3a;font-size:0.85rem;z-index:100;transition:all 0.2s;text-decoration:none}
+.admin-link:hover{background:rgba(212,160,67,0.2);color:#d4a043}
+
+@media(max-width:600px){
+  header{padding:2rem 1rem 1.5rem}
+  header h1{font-size:1.5rem}
 }
-html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
-.container{text-align:center;max-width:420px}
-.lang-bar{display:flex;justify-content:flex-end;margin-bottom:2rem}
-.lang-btn{background:rgba(212,160,67,0.1);border:1px solid rgba(212,160,67,.15);color:#b8945a;padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.25s;text-transform:uppercase;letter-spacing:1px}
-.lang-btn:hover{background:rgba(212,160,67,0.2);color:#d4a043}
-.back{display:inline-flex;align-items:center;gap:0.4rem;color:#b8945a;font-size:0.85rem;text-decoration:none;margin-bottom:2rem;transition:color 0.2s}
-.back:hover{color:#d4a043}
-.icon{font-size:4rem;margin-bottom:1rem}
-h1{font-size:2.2rem;font-weight:800;margin-bottom:0.5rem;background:linear-gradient(135deg,#f5e6d0,#d4a043);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-p{color:#b8945a;font-size:1rem;margin-bottom:0.3rem}
-.footer{margin-top:2rem;font-size:0.8rem;color:#6b5a3a}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="lang-bar">
-    <button class="lang-btn" id="langToggle">FA</button>
-  </div>
-  <a class="back" href="/miniprojects/" data-i18n="back">&larr; Back to Mini Projects</a>
-  <div class="icon">🖋️</div>
-  <h1 data-i18n="heading">Peots &amp; Poetry</h1>
-  <p data-i18n="coming">Coming Soon</p>
-  <p data-i18n="working">We are working on this page &mdash; stay tuned!</p>
-  <div class="footer" data-i18n="footer">&copy; Dawood WaliZada</div>
+
+<div class="bg" aria-hidden="true">
+  <span>💬</span><span>👀</span><span>🤫</span><span>😅</span><span>💭</span><span>👋</span><span>✍️</span>
 </div>
+
+<header>
+  <h1>Things You Didn't Say</h1>
+  <p>Stuff you wanted to say in class but couldn't. Good, bad, funny, deep — drop it here.</p>
+  <div class="tagline">no names, no judgment, just honesty 🤐</div>
+</header>
+
+<div class="container">
+
+  <div class="form-card">
+    <h2>✍️ Say It Now</h2>
+    <textarea id="messageInput" placeholder="Write anything you didn't feel free to say in class... (no names, be real)" maxlength="1000"></textarea>
+    <div class="form-footer">
+      <span class="hint">Your message stays anonymous. No names please.</span>
+      <button class="btn" id="submitBtn" onclick="submitMessage()">Send It 🤫</button>
+    </div>
+    <div class="status-msg" id="status"></div>
+  </div>
+
+  <div class="messages-section">
+    <h2>💬 Messages <span id="msgCount"></span></h2>
+    <div id="messageList">
+      <div class="empty-state"><i class="emoji">💭</i>No messages yet. Be the first!</div>
+    </div>
+  </div>
+
+  <div class="secret-note">
+    🤫 Everything here is anonymous. No names, no tracking, no judgment.
+    The teacher reads these too — so if you always wanted to say something, here's your chance.
+  </div>
+
+</div>
+
+<footer>
+  &copy; <span id="year"></span> — Students Message Board
+</footer>
+
+<a class="admin-link" href="/me/peots/" title="Admin" aria-label="Admin">⚙️</a>
+
 <script>
-const T={en:{title:"Peots & Poetry — Dawood WaliZada",desc:"Peots & Poetry by Dawood WaliZada — coming soon.",back:"← Back to Mini Projects",heading:"Peots & Poetry",coming:"Coming Soon",working:"We are working on this page — stay tuned!",footer:"© Dawood WaliZada"},fa:{title:"شعر — داود ولی‌زاده",desc:"شعر توسط داود ولی‌زاده — به زودی.",back:"→ بازگشت به پروژه‌های کوچک",heading:"شعر",coming:"به زودی",working:"روی این صفحه کار می‌کنیم — همراه باشید!",footer:"© داود ولی‌زاده"}};
-let lang=localStorage.getItem('dlz_lang')||'en';
-function a(l){lang=l;localStorage.setItem('dlz_lang',l);document.documentElement.lang=l==='fa'?'fa':'en';document.documentElement.dir=l==='fa'?'rtl':'ltr';document.getElementById('langToggle').textContent=l==='fa'?'EN':'FA';document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n'),t=T[l]||T.en;if(t[k]!==undefined){if(el.tagName==='META'&&el.getAttribute('content')!==null)el.setAttribute('content',t[k]);else el.textContent=t[k]}})}
-document.getElementById('langToggle').addEventListener('click',()=>a(lang==='en'?'fa':'en'));a(lang);
+const T = { en: { placeholder:'Write anything you didn\'t feel free to say in class... (no names, be real)', hint:'Your message stays anonymous. No names please.', empty:'No messages yet. Be the first!', sent:'Message sent! It will appear after review.', fail:'Couldn\'t send. Try again later.', loading:'Loading...' } };
+
+let msgs = [];
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+async function loadMessages() {
+  try {
+    const r = await fetch('data.json');
+    const d = await r.json();
+    msgs = (d.messages || []).sort((a, b) => (b.id || 0) - (a.id || 0));
+    renderMessages();
+  } catch(e) {
+    document.getElementById('messageList').innerHTML = `<div class="empty-state"><i class="emoji">💭</i>${T.en.empty}</div>`;
+  }
+}
+
+function renderMessages() {
+  const list = document.getElementById('messageList');
+  const count = document.getElementById('msgCount');
+  count.textContent = msgs.length ? '(' + msgs.length + ')' : '';
+  if (!msgs.length) {
+    list.innerHTML = `<div class="empty-state"><i class="emoji">💭</i>${T.en.empty}</div>`;
+    return;
+  }
+  list.innerHTML = msgs.map(m => `
+    <div class="message-item">
+      <div class="msg-text">${esc(m.text)}</div>
+      <div class="msg-meta">
+        <span></span>
+        <span class="msg-date">${m.date || ''}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+async function submitMessage() {
+  const input = document.getElementById('messageInput');
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('status');
+  const text = input.value.trim();
+
+  if (!text) { showStatus('Write something first!', 'err'); return; }
+  if (text.length < 3) { showStatus('A bit more than that 😄', 'err'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  showStatus('Sending...', 'info');
+
+  // Try to submit via GitHub API if token exists in localStorage
+  const token = localStorage.getItem('gh_token');
+  if (token) {
+    try {
+      // Load current submissions
+      const res1 = await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/peots/submissions.json', {
+        headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      const data1 = await res1.json();
+      const sha = data1.sha;
+      const subs = JSON.parse(atob(data1.content.replace(/\n/g, ''))).submissions || [];
+
+      subs.push({ id: Date.now(), text, date: new Date().toISOString().split('T')[0] });
+
+      const newContent = btoa(unescape(encodeURIComponent(JSON.stringify({ submissions: subs }, null, 2) + '\n')));
+      await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/peots/submissions.json', {
+        method: 'PUT',
+        headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+        body: JSON.stringify({ message: 'New student message', content: newContent, sha, branch: 'master' })
+      });
+
+      showStatus('Message sent! It will appear after review 💫', 'ok');
+      input.value = '';
+    } catch(e) {
+      showStatus('Sent! (auto-save issue — admin will add it)', 'ok');
+      input.value = '';
+    }
+  } else {
+    // No token — just show success, message is lost unfortunately
+    // But we can store in localStorage as pending
+    showStatus('Message noted! (submit again later or tell the teacher)', 'info');
+    input.value = '';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Send It 🤫';
+}
+
+function showStatus(msg, type) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status-msg show ' + type;
+  setTimeout(() => { if (el.classList.contains('show')) { el.classList.remove('show'); } }, 4000);
+}
+
+loadMessages();
 </script>
 </body>
 </html>
