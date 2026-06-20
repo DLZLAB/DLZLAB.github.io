@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>مدیریت دعاها | Dua Admin</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Tajawal','Inter',system-ui,sans-serif;background:#0d0407;color:#f5e6d0;line-height:1.6;padding:2rem 1.5rem}
+.container{max-width:900px;margin:0 auto}
+h1{font-size:1.8rem;font-weight:800;margin-bottom:0.3rem;background:linear-gradient(135deg,#f5e6d0,#d4a043);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.desc{color:#b8945a;font-size:0.85rem;margin-bottom:2rem}
+.section{background:rgba(255,255,255,.04);border:1px solid rgba(212,160,67,.12);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
+.section h2{font-size:1rem;font-weight:700;margin-bottom:1rem;color:#d4a043}
+.form-group{margin-bottom:0.8rem}
+.form-group label{display:block;font-size:0.75rem;font-weight:600;color:#b8945a;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(212,160,67,.15);background:rgba(255,255,255,.05);color:#f5e6d0;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.25s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:#d4a043;background:rgba(212,160,67,.06)}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-group select option{background:#0d0407;color:#f5e6d0}
+.form-row{display:flex;gap:0.8rem;flex-wrap:wrap}
+.form-row .form-group{flex:1;min-width:160px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:40px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;background:linear-gradient(135deg,#d4a043,#b8862b);color:#0d0407;transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,160,67,.35)}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-sm{padding:6px 14px;font-size:11px}
+.btn-outline{background:transparent;border:1px solid rgba(212,160,67,.25);color:#b8945a}
+.btn-outline:hover{background:rgba(212,160,67,.1);color:#d4a043}
+.btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+.btn-danger:hover{box-shadow:0 6px 20px rgba(239,68,68,.35)}
+.status{padding:10px 14px;border-radius:8px;font-size:0.8rem;margin-top:0.8rem;display:none}
+.status.show{display:block}
+.status.ok{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#10b981}
+.status.err{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+.status.info{background:rgba(129,140,248,.15);border:1px solid rgba(129,140,248,.3);color:#818cf8}
+a{color:#d4a043;text-decoration:none}
+small{color:#6b5a3a;font-size:0.75rem}
+
+.section-card{background:rgba(255,255,255,.03);border:1px solid rgba(212,160,67,.1);border-radius:12px;padding:1rem;margin-bottom:1rem}
+.section-card h3{font-size:0.9rem;font-weight:700;color:#d4a043;margin-bottom:0.5rem}
+
+.dua-row{display:flex;align-items:center;gap:8px;padding:0.6rem 0;border-bottom:1px solid rgba(212,160,67,.06)}
+.dua-row:last-child{border-bottom:none}
+.dua-row .d-main{flex:1;min-width:0}
+.dua-row .d-title{font-size:0.85rem;color:#f5e6d0;font-weight:600;display:block}
+.dua-row .d-meta{font-size:0.75rem;color:#b8945a;display:block;margin-top:2px}
+.dua-row .d-actions{display:flex;gap:4px;flex-shrink:0}
+.empty-msg{color:#6b5a3a;font-size:0.85rem;text-align:center;padding:1rem}
+.loading-msg{color:#6b5a3a;font-size:0.85rem;text-align:center;padding:1rem}
+.tag{display:inline-block;padding:1px 8px;border-radius:8px;font-size:0.65rem;font-weight:600;background:rgba(212,160,67,.1);color:#d4a043;margin-left:4px}
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="/" style="color:#b8945a;font-size:0.85rem;margin-bottom:1rem;display:inline-flex;align-items:center;gap:0.4rem"><span>←</span> بازگشت</a>
+  <h1>مدیریت دعاها</h1>
+  <p class="desc">Add, edit, or delete duas. Data commits directly to GitHub.</p>
+
+  <div class="section">
+    <h2>GitHub Token</h2>
+    <div class="form-group">
+      <label>Personal Access Token</label>
+      <input id="tokenInput" type="password" placeholder="ghp_... or github_pat_..." />
+    </div>
+    <p><small>Saved in your browser. Generate at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> (needs <code>repo</code> scope).</small></p>
+    <button class="btn btn-sm" onclick="loadData()">بارگذاری</button>
+  </div>
+
+  <div class="section">
+    <h2>Add New Dua</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Section</label>
+        <select id="duaSection">
+          <option value="food">دسترخوان (Food)</option>
+          <option value="majlis">ختم مجلس (Gathering)</option>
+          <option value="prog">ختم برنامه (Program)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select id="duaType">
+          <option value="short">کوتاه (Short)</option>
+          <option value="long">مفصّل (Long)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Title (FA)</label>
+        <input id="duaTitle" type="text" placeholder="e.g. شکرگزاری سفره" />
+      </div>
+      <div class="form-group">
+        <label>Title (EN)</label>
+        <input id="duaTitleEn" type="text" placeholder="e.g. Gratitude for the Meal" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Arabic Text *</label>
+      <textarea id="duaArabic" placeholder="Arabic text with diacritics..." style="font-family:'Tajawal',sans-serif;direction:rtl;text-align:right"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Persian Translation *</label>
+      <textarea id="duaFa" placeholder="ترجمه فارسی..." style="font-family:'Tajawal',sans-serif;direction:rtl;text-align:right"></textarea>
+    </div>
+    <div class="form-group">
+      <label>English Translation *</label>
+      <textarea id="duaEn" placeholder="English translation..."></textarea>
+    </div>
+    <button class="btn" onclick="addDua()">Add & Publish</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="section">
+    <h2>Current Duas</h2>
+    <div id="duaList"><p class="loading-msg">Enter token and click بارگذاری</p></div>
+  </div>
+</div>
+
+<script>
+const OWNER = 'DLZLAB', REPO = 'DLZLAB.github.io', BRANCH = 'master';
+const DATA_PATH = 'dua/data.json';
+
+let sections = [];
+let dataSha = null;
+
+const tokenInput = document.getElementById('tokenInput');
+tokenInput.value = localStorage.getItem('gh_token') || '';
+tokenInput.addEventListener('input', () => localStorage.setItem('gh_token', tokenInput.value));
+
+function setStatus(msg, type) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status show ' + type;
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+async function api(url, method, body) {
+  const token = tokenInput.value.trim();
+  const opts = { method, headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }};
+  if (body) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+  const res = await fetch(url, opts);
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message); }
+  return res.json();
+}
+
+async function loadData() {
+  const token = tokenInput.value.trim();
+  if (!token) { setStatus('Enter token first.', 'err'); return; }
+  setStatus('Loading...', 'info');
+  try {
+    const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
+    dataSha = data.sha;
+    sections = JSON.parse(atob(data.content.replace(/\n/g, ''))).sections || [];
+    renderList();
+    setStatus('Loaded ' + sections.reduce((a, s) => a + s.duas.length, 0) + ' duas.', 'ok');
+  } catch (e) {
+    setStatus('Error: ' + e.message, 'err');
+  }
+}
+
+function renderList() {
+  const list = document.getElementById('duaList');
+  if (!sections.length) { list.innerHTML = '<p class="empty-msg">No data loaded.</p>'; return; }
+  list.innerHTML = sections.map(s => `
+    <div class="section-card">
+      <h3 style="color:${s.color}">${esc(s.title)} (${s.duas.length})</h3>
+      ${s.duas.length ? s.duas.map((d, i) => `
+        <div class="dua-row">
+          <div class="d-main">
+            <span class="d-title">${esc(d.title)}</span>
+            <span class="d-meta"><span class="tag">${d.type === 'short' ? 'کوتاه' : 'مفصّل'}</span> ID: ${d.id}</span>
+          </div>
+          <div class="d-actions">
+            <button class="btn btn-sm btn-danger" onclick="deleteDua('${s.id}', ${i})">حذف</button>
+          </div>
+        </div>
+      `).join('') : '<p class="empty-msg">No duas in this section.</p>'}
+    </div>
+  `).join('');
+}
+
+async function addDua() {
+  const token = tokenInput.value.trim();
+  const sectionId = document.getElementById('duaSection').value;
+  const type = document.getElementById('duaType').value;
+  const title = document.getElementById('duaTitle').value.trim();
+  const titleEn = document.getElementById('duaTitleEn').value.trim() || title;
+  const arabic = document.getElementById('duaArabic').value.trim();
+  const fa = document.getElementById('duaFa').value.trim();
+  const en = document.getElementById('duaEn').value.trim();
+
+  if (!token) { setStatus('Enter token first.', 'err'); return; }
+  if (!arabic) { setStatus('Arabic text is required.', 'err'); return; }
+  if (!fa) { setStatus('Persian translation is required.', 'err'); return; }
+  if (!en) { setStatus('English translation is required.', 'err'); return; }
+
+  setStatus('Saving...', 'info');
+  try {
+    if (!dataSha) {
+      const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
+      dataSha = data.sha;
+      sections = JSON.parse(atob(data.content.replace(/\n/g, ''))).sections || [];
+    }
+
+    const section = sections.find(s => s.id === sectionId);
+    if (!section) { setStatus('Section not found.', 'err'); return; }
+
+    const allIds = sections.flatMap(s => s.duas.map(d => d.id));
+    const newId = allIds.length ? Math.max(...allIds) + 1 : 1;
+
+    section.duas.push({
+      id: newId, type, title, title_en: titleEn, arabic,
+      translations: [
+        { lang: 'fa', text: fa },
+        { lang: 'en', text: en }
+      ]
+    });
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify({ sections }, null, 2) + '\n')));
+    const upData = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, 'PUT', {
+      message: 'Add dua: ' + title,
+      content, sha: dataSha, branch: BRANCH
+    });
+    dataSha = upData.content.sha;
+
+    renderList();
+    setStatus('Published! Visit /dua/ to see it.', 'ok');
+    document.getElementById('duaTitle').value = '';
+    document.getElementById('duaTitleEn').value = '';
+    document.getElementById('duaArabic').value = '';
+    document.getElementById('duaFa').value = '';
+    document.getElementById('duaEn').value = '';
+  } catch (e) {
+    setStatus('Error: ' + e.message, 'err');
+  }
+}
+
+async function deleteDua(sectionId, index) {
+  if (!confirm('Delete this dua?')) return;
+  const section = sections.find(s => s.id === sectionId);
+  if (!section) return;
+  const title = section.duas[index].title;
+  section.duas.splice(index, 1);
+  setStatus('Saving...', 'info');
+  try {
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify({ sections }, null, 2) + '\n')));
+    const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, 'PUT', {
+      message: 'Delete dua: ' + title,
+      content, sha: dataSha, branch: BRANCH
+    });
+    dataSha = data.content.sha;
+    renderList();
+    setStatus('Deleted.', 'ok');
+  } catch (e) {
+    setStatus('Error: ' + e.message, 'err');
+  }
+}
+</script>
+</body>
+</html>

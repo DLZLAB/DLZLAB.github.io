@@ -1,0 +1,103 @@
+{
+  "sections": [
+    {
+      "id": "food",
+      "title": "دعای دسترخوان",
+      "title_en": "Food Prayer",
+      "subtitle": "دعای ختم غذا — هنگام برخاستن از سفره",
+      "subtitle_en": "Upon rising from the dining spread",
+      "icon": "🍽️",
+      "color": "#34d399",
+      "duas": [
+        {
+          "id": 1,
+          "type": "short",
+          "title": "شکرگزاری سفره",
+          "title_en": "Gratitude for the Meal",
+          "arabic": "اَللّٰهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا، وَقِنَا عَذَابَ النَّارِ",
+          "translations": [
+            { "lang": "fa", "text": "خداوندا، آنچه را روزی‌مان کردی برای ما مبارک گردان و از عذاب آتش نگهمان دار." },
+            { "lang": "en", "text": "O Allah, bless us in what You have provided us and protect us from the punishment of the Fire." }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "long",
+          "title": "حمد و سپاس پس از طعام",
+          "title_en": "Praise and Thanks After Food",
+          "arabic": "اَلْحَمْدُ لِلّٰهِ الَّذِي أَطْعَمَنَا وَسَقَانَا، وَجَعَلَنَا مِنَ الْمُسْلِمِينَ، وَكَفَانَا وَآوَانَا، وَلَمْ يَجْعَلْنَا مِمَّنْ يَجُوعُ أَوْ يَظْمَأُ. اَللّٰهُمَّ اجْزِ مَنْ أَطْعَمَنَا خَيْرًا، وَأَدِمْ عَلَيْنَا نِعَمَكَ يَا كَرِيمُ.",
+          "translations": [
+            { "lang": "fa", "text": "ستایش خداوندی را که به ما خوراک و نوشاک داد، از مسلمانان قرارمان داد، کفایتمان کرد و پناهمان داد، و ما را از گرسنگان و تشنگان نگردانید. خداوندا، به کسی که به ما غذا داد نیکی عطا کن و نعمت‌هایت را بر ما پایدار بدار، ای کریم." },
+            { "lang": "en", "text": "All praise to Allah who fed us, gave us drink, made us Muslims, sufficed and sheltered us, and kept us from hunger and thirst. O Allah, reward those who fed us, and make Your blessings upon us enduring, O Most Generous." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "majlis",
+      "title": "دعای ختم مجلس",
+      "title_en": "End of Gathering Prayer",
+      "subtitle": "هنگام ترک مجلس و وداع با حاضران",
+      "subtitle_en": "Upon leaving a gathering and bidding farewell",
+      "icon": "🕌",
+      "color": "#a78bfa",
+      "duas": [
+        {
+          "id": 3,
+          "type": "short",
+          "title": "کفّاره مجلس",
+          "title_en": "Expiation for the Gathering",
+          "arabic": "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
+          "translations": [
+            { "lang": "fa", "text": "پاکی از آنِ توست خداوندا و ستایشت سزاوار. گواهی می‌دهم معبودی جز تو نیست. از تو آمرزش خواسته و به سویت توبه می‌کنم." },
+            { "lang": "en", "text": "Glory be to You, O Allah, and praise. I bear witness there is no deity but You. I seek Your forgiveness and turn to You in repentance." }
+          ]
+        },
+        {
+          "id": 4,
+          "type": "long",
+          "title": "وداع با مجلس و سپردن به خدا",
+          "title_en": "Farewell to the Gathering",
+          "arabic": "اَللّٰهُمَّ إِنَّا نَسْأَلُكَ أَنْ تُصْلِحَ مَا أَفْسَدْنَاهُ، وَتَتَقَبَّلَ مَا أَحْسَنَّاهُ، وَتَعْفُوَ عَمَّا جَهِلْنَاهُ. سُبْحَانَكَ لَا نُحْصِي ثَنَاءً عَلَيْكَ أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ، وَصَلِّ اللَّهُمَّ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ.",
+          "translations": [
+            { "lang": "fa", "text": "خداوندا، از تو می‌خواهیم آنچه تباه کردیم اصلاح کنی، آنچه نیکو انجام دادیم بپذیری، و از آنچه نادانسته کردیم درگذری. پاکی از آنِ توست، توان شمارش ستایشت را نداریم؛ تو همان‌گونه‌ای که خود را ستوده‌ای. درود فرست بر پیامبرمان محمد و بر آل و یارانش همه." },
+            { "lang": "en", "text": "O Allah, mend what we have spoiled, accept what we did well, and pardon what we did in ignorance. Glory be to You — we cannot count Your praises; You are as You have praised Yourself. Send Your blessings upon our Prophet Muhammad and all his family and companions." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prog",
+      "title": "دعای ختم برنامه",
+      "title_en": "End of Program Prayer",
+      "subtitle": "ختم جلسه آموزشی، فراغت، یا هر گردهمایی",
+      "subtitle_en": "Closing a study session, graduation, or any gathering",
+      "icon": "📖",
+      "color": "#fbbf24",
+      "duas": [
+        {
+          "id": 5,
+          "type": "short",
+          "title": "توفیق در آنچه آموختیم",
+          "title_en": "Success in What We Learned",
+          "arabic": "اَللّٰهُمَّ انْفَعْنَا بِمَا عَلَّمْتَنَا، وَعَلِّمْنَا مَا يَنْفَعُنَا، وَزِدْنَا عِلْمًا وَفَهْمًا",
+          "translations": [
+            { "lang": "fa", "text": "خداوندا، از آنچه به ما آموختی بهره‌مند کن، آنچه سود دارد به ما بیاموز، و بر دانش و فهممان بیفزا." },
+            { "lang": "en", "text": "O Allah, benefit us by what You have taught us, teach us what benefits us, and increase us in knowledge and understanding." }
+          ]
+        },
+        {
+          "id": 6,
+          "type": "long",
+          "title": "ختم جلسه و طلب توفیق",
+          "title_en": "Closing and Seeking Success",
+          "arabic": "اَللّٰهُمَّ اجْعَلْ مَا سَمِعْنَاهُ نُورًا فِي قُلُوبِنَا، وَزَادًا لِأَعْمَالِنَا، وَمَا تَعَلَّمْنَاهُ حُجَّةً لَنَا لَا عَلَيْنَا. وَوَفِّقْنَا لِلْعَمَلِ بِمَا عَلِمْنَا، وَلَا تَجْعَلْنَا مِمَّنْ يَعْلَمُ وَلَا يَعْمَلُ. اَللّٰهُمَّ تَقَبَّلْ مِنَّا هٰذَا الْجَمْعَ، وَبَارِكْ فِي أَوْقَاتِنَا وَأَعْمَارِنَا.",
+          "translations": [
+            { "lang": "fa", "text": "خداوندا، آنچه شنیدیم را نوری در دل‌هایمان و توشه‌ای برای کارهایمان قرار ده، و آنچه آموختیم حجّتی برای ما باشد نه علیه ما. توفیق عمل به دانسته‌هایمان عطا کن و از عالمان بی‌عمل نگردانمان. خداوندا، این گردهمایی را از ما بپذیر و در وقت‌ها و عمرهایمان برکت بگذار." },
+            { "lang": "en", "text": "O Allah, make what we heard a light in our hearts and a provision for our deeds, and make what we learned a proof for us, not against us. Grant us the ability to act on our knowledge, and do not make us those who know yet do not act. O Allah, accept this gathering from us and bless our time and lives." }
+          ]
+        }
+      ]
+    }
+  ]
+}

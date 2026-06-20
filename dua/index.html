@@ -16,16 +16,16 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg1: #0a0e1a;
-    --glass-bg: rgba(255,255,255,0.05);
-    --glass-border: rgba(255,255,255,0.10);
-    --glass-hover: rgba(255,255,255,0.09);
-    --accent-green: #34d399;
-    --accent-purple: #a78bfa;
+    --bg1: #0d0407;
+    --glass-bg: rgba(60, 15, 28, 0.35);
+    --glass-border: rgba(212, 160, 67, 0.2);
+    --glass-hover: rgba(120, 30, 55, 0.25);
+    --accent-green: #d4a043;
+    --accent-purple: #e8c47a;
     --accent-gold: #fbbf24;
-    --text-primary: #f0f4ff;
-    --text-secondary: rgba(240,244,255,0.65);
-    --text-muted: rgba(240,244,255,0.38);
+    --text-primary: #f5e6d0;
+    --text-secondary: #d4af7a;
+    --text-muted: #b8945a;
   }
 
   html { scroll-behavior: smooth; }
@@ -39,10 +39,10 @@
   }
 
   .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.18; animation: drift 20s ease-in-out infinite alternate; }
-  .orb-1 { width: 500px; height: 500px; background: #3b82f6; top: -150px; right: -100px; animation-duration: 22s; }
-  .orb-2 { width: 400px; height: 400px; background: #8b5cf6; bottom: 10%; left: -100px; animation-duration: 18s; animation-delay: -7s; }
-  .orb-3 { width: 300px; height: 300px; background: #10b981; top: 40%; right: 15%; animation-duration: 25s; animation-delay: -12s; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.10; animation: drift 20s ease-in-out infinite alternate; }
+  .orb-1 { width: 500px; height: 500px; background: #6b1d2f; top: -150px; right: -100px; animation-duration: 22s; }
+  .orb-2 { width: 400px; height: 400px; background: #d4a043; bottom: 10%; left: -100px; animation-duration: 18s; animation-delay: -7s; }
+  .orb-3 { width: 300px; height: 300px; background: #8a2740; top: 40%; right: 15%; animation-duration: 25s; animation-delay: -12s; }
   @keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(40px,60px) scale(1.1); } }
 
   .container { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.25rem; }
@@ -50,7 +50,7 @@
   header { position: relative; z-index: 1; text-align: center; padding: 4rem 1.25rem 3rem; }
   .header-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(212, 160, 67, 0.08); border: 1px solid rgba(212, 160, 67, 0.15);
     border-radius: 100px; padding: 6px 16px; font-size: 12px; color: var(--text-muted);
     letter-spacing: 0.08em; margin-bottom: 1.5rem; backdrop-filter: blur(10px);
   }
@@ -58,29 +58,16 @@
   .header-title {
     font-family: 'Noto Naskh Arabic', serif;
     font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem;
-    background: linear-gradient(135deg, #f0f4ff 30%, #a78bfa 70%, #34d399 100%);
+    background: linear-gradient(135deg, #f5e6d0 30%, #d4a043 70%, #e8c47a 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .header-sub { font-size: 14px; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 2rem; }
 
-  .share-bar { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .share-btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 9px 18px; border-radius: 100px; font-size: 13px;
-    font-family: 'Tajawal', sans-serif; font-weight: 500; cursor: pointer;
-    border: 1px solid var(--glass-border); background: var(--glass-bg);
-    color: var(--text-secondary); backdrop-filter: blur(12px);
-    transition: all 0.2s ease; text-decoration: none;
-  }
-  .share-btn:hover { background: var(--glass-hover); color: var(--text-primary); border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }
-  .share-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
-  .share-btn.site-btn { color: var(--accent-green); border-color: rgba(52,211,153,0.25); }
-  .share-btn.site-btn:hover { border-color: rgba(52,211,153,0.5); }
-
   .nav-wrap {
     position: sticky; top: 0; z-index: 10; padding: 0.75rem 1.25rem;
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(13, 4, 7, 0.7);
+    border-bottom: 1px solid rgba(212, 160, 67, 0.1);
   }
   .nav-tabs { display: flex; gap: 6px; justify-content: center; max-width: 900px; margin: 0 auto; overflow-x: auto; scrollbar-width: none; }
   .nav-tabs::-webkit-scrollbar { display: none; }
@@ -100,6 +87,7 @@
   .section-icon {
     width: 40px; height: 40px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+    background: rgba(212, 160, 67, 0.12); border: 1px solid rgba(212, 160, 67, 0.25);
   }
   .section-title-wrap { flex: 1; }
   .section-title { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
@@ -109,25 +97,25 @@
   @media (max-width: 620px) { .cards-grid { grid-template-columns: 1fr; } }
 
   .dua-card {
-    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    background: rgba(60, 15, 28, 0.3); border: 1px solid rgba(212, 160, 67, 0.15);
     border-radius: 20px; padding: 1.25rem; backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px); transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     position: relative; overflow: hidden;
   }
   .dua-card::before {
     content: ''; position: absolute; inset: 0; border-radius: 20px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 60%);
+    background: linear-gradient(135deg, rgba(212, 160, 67, 0.06) 0%, rgba(212, 160, 67, 0) 60%);
     pointer-events: none;
   }
-  .dua-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.18); background: var(--glass-hover); }
+  .dua-card:hover { transform: translateY(-3px); border-color: rgba(212, 160, 67, 0.25); background: rgba(60, 15, 28, 0.45); }
 
   .card-badge {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 3px 10px; border-radius: 100px; font-size: 11px;
     font-weight: 600; letter-spacing: 0.04em; margin-bottom: 1rem; border: 1px solid;
   }
-  .badge-short { color: #34d399; border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.08); }
-  .badge-long  { color: #a78bfa; border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.08); }
+  .badge-short { color: #d4a043; border-color: rgba(212, 160, 67, 0.3); background: rgba(212, 160, 67, 0.08); }
+  .badge-long  { color: #e8c47a; border-color: rgba(232, 196, 122, 0.3); background: rgba(232, 196, 122, 0.08); }
 
   .card-title { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem; }
 
@@ -165,26 +153,26 @@
   .copy-btn {
     position: absolute; top: 1rem; left: 1rem;
     width: 30px; height: 30px; border-radius: 8px;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(212, 160, 67, 0.08); border: 1px solid rgba(212, 160, 67, 0.15);
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     transition: all 0.15s; color: var(--text-muted);
   }
-  .copy-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-secondary); }
-  .copy-btn.copied { color: var(--accent-green); border-color: rgba(52,211,153,0.4); }
+  .copy-btn:hover { background: rgba(212, 160, 67, 0.15); color: var(--text-secondary); }
+  .copy-btn.copied { color: var(--accent-green); border-color: rgba(212, 160, 67, 0.4); }
   .copy-btn svg { width: 13px; height: 13px; }
 
   .copy-trans-btn {
     position: absolute; top: 0.5rem; left: 0.5rem;
     width: 24px; height: 24px; border-radius: 6px;
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(212, 160, 67, 0.06); border: 1px solid rgba(212, 160, 67, 0.1);
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     transition: all 0.15s; color: var(--text-muted);
   }
-  .copy-trans-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-secondary); }
-  .copy-trans-btn.copied { color: var(--accent-green); border-color: rgba(52,211,153,0.4); }
+  .copy-trans-btn:hover { background: rgba(212, 160, 67, 0.12); color: var(--text-secondary); }
+  .copy-trans-btn.copied { color: var(--accent-green); border-color: rgba(212, 160, 67, 0.4); }
   .copy-trans-btn svg { width: 11px; height: 11px; }
 
-  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); margin: 0 1.25rem; }
+  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 160, 67, 0.12), transparent); margin: 0 1.25rem; }
 
   .section-title-link {
     color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
@@ -193,14 +181,18 @@
   .section-title-link .anchor-icon { opacity: 0; transition: opacity 0.15s; font-size: 14px; color: var(--text-muted); }
   .section-title-link:hover .anchor-icon { opacity: 1; }
 
-  footer { position: relative; z-index: 1; text-align: center; padding: 2.5rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 2rem; }
+  footer { position: relative; z-index: 1; text-align: center; padding: 2.5rem 1.25rem; border-top: 1px solid rgba(212, 160, 67, 0.1); margin-top: 2rem; }
   .footer-logo { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 0.4rem; }
   .footer-logo span { color: var(--accent-green); }
   .footer-note { font-size: 12px; color: var(--text-muted); opacity: 0.7; }
+  .footer-note a { color: var(--accent-green); text-decoration: none; }
 
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   @media (prefers-reduced-motion: reduce) { .orb, .reveal, .dua-card { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--text-muted); font-size: 0.85rem; text-decoration: none; margin-bottom: 1rem; position: relative; z-index: 1; justify-content: center; }
+  .back-link:hover { color: var(--accent-green); }
 </style>
 </head>
 <body>
@@ -211,6 +203,8 @@
   <div class="orb orb-3"></div>
 </div>
 
+<a class="back-link" href="/" style="display:inline-flex;margin-top:1.5rem;margin-left:auto;margin-right:auto;width:fit-content"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg> بازگشت</a>
+
 <header>
   <div class="header-badge">
     <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
@@ -218,248 +212,86 @@
   </div>
   <h1 class="header-title">مجموعه دعاهای اسلامی</h1>
   <p class="header-sub">Islamic Supplications · دعاهای روزانه با اعراب کامل و ترجمه</p>
-
-  <div class="share-bar">
-    <a class="share-btn site-btn" href="https://dlzlab.com" target="_blank" rel="noopener">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
-      DLZLAB.COM
-    </a>
-    <a class="share-btn" href="https://wa.me/93791415631" target="_blank" rel="noopener" id="whatsappBtn">
-      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.526 5.847L.057 23.93l6.235-1.635A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.896 0-3.673-.512-5.2-1.4l-.374-.222-3.853 1.011 1.028-3.751-.244-.387A9.943 9.943 0 012 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
-      واتساپ
-    </a>
-    <a class="share-btn" href="https://t.me/R01029785" target="_blank" rel="noopener" id="telegramBtn">
-      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.247l-2.01 9.469c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L6.196 14.06l-2.938-.92c-.638-.197-.651-.638.136-.944l11.498-4.433c.53-.194.995.131.67.484z"/></svg>
-      تلگرام
-    </a>
-  </div>
 </header>
 
-<nav class="nav-wrap" aria-label="بخش‌های صفحه">
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="scrollToSection('food')" data-section="food">
-      <span class="nav-dot" style="background:#34d399"></span>دسترخوان
-    </button>
-    <button class="nav-tab" onclick="scrollToSection('majlis')" data-section="majlis">
-      <span class="nav-dot" style="background:#a78bfa"></span>ختم مجلس
-    </button>
-    <button class="nav-tab" onclick="scrollToSection('prog')" data-section="prog">
-      <span class="nav-dot" style="background:#fbbf24"></span>ختم برنامه
-    </button>
-  </div>
+<nav class="nav-wrap" aria-label="بخش‌های صفحه" id="navWrap">
+  <div class="nav-tabs" id="navTabs"></div>
 </nav>
 
-<div class="container">
-
-  <!-- ══ SECTION 1 ══ -->
-  <section class="section reveal" id="food">
-    <div class="section-header">
-      <div class="section-icon" style="background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);">🍽️</div>
-      <div class="section-title-wrap">
-        <div class="section-title" style="color:#34d399">
-          <a class="section-title-link" href="#food">دعای دسترخوان <span class="anchor-icon">#</span></a>
-        </div>
-        <div class="section-subtitle">دعای ختم غذا — هنگام برخاستن از سفره</div>
-      </div>
-    </div>
-    <div class="cards-grid">
-
-      <div class="dua-card">
-        <button class="copy-btn" onclick="copyText(this,'اَللّٰهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا، وَقِنَا عَذَابَ النَّارِ')" title="کپی متن عربی">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-        </button>
-        <div class="card-badge badge-short">کوتاه</div>
-        <div class="card-title">شکرگزاری سفره</div>
-        <div class="arabic-block" style="border-right-color:#34d399">اَللّٰهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا، وَقِنَا عَذَابَ النَّارِ</div>
-        <button class="trans-toggle" onclick="toggleTrans(this)">ترجمه <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
-        <div class="trans-body">
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'خداوندا، آنچه را روزی‌مان کردی برای ما مبارک گردان و از عذاب آتش نگهمان دار.')" title="کپی"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">فارسی</div>
-            <div class="trans-text rtl">خداوندا، آنچه را روزی‌مان کردی برای ما مبارک گردان و از عذاب آتش نگهمان دار.</div>
-          </div>
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'O Allah, bless us in what You have provided us and protect us from the punishment of the Fire.')" title="Copy"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">English</div>
-            <div class="trans-text">O Allah, bless us in what You have provided us and protect us from the punishment of the Fire.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dua-card">
-        <button class="copy-btn" onclick="copyText(this,'اَلْحَمْدُ لِلّٰهِ الَّذِي أَطْعَمَنَا وَسَقَانَا، وَجَعَلَنَا مِنَ الْمُسْلِمِينَ، وَكَفَانَا وَآوَانَا، وَلَمْ يَجْعَلْنَا مِمَّنْ يَجُوعُ أَوْ يَظْمَأُ. اَللّٰهُمَّ اجْزِ مَنْ أَطْعَمَنَا خَيْرًا، وَأَدِمْ عَلَيْنَا نِعَمَكَ يَا كَرِيمُ.')" title="کپی متن عربی">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-        </button>
-        <div class="card-badge badge-long">مفصّل</div>
-        <div class="card-title">حمد و سپاس پس از طعام</div>
-        <div class="arabic-block" style="border-right-color:#a78bfa;font-size:17px;">اَلْحَمْدُ لِلّٰهِ الَّذِي أَطْعَمَنَا وَسَقَانَا، وَجَعَلَنَا مِنَ الْمُسْلِمِينَ، وَكَفَانَا وَآوَانَا، وَلَمْ يَجْعَلْنَا مِمَّنْ يَجُوعُ أَوْ يَظْمَأُ. اَللّٰهُمَّ اجْزِ مَنْ أَطْعَمَنَا خَيْرًا، وَأَدِمْ عَلَيْنَا نِعَمَكَ يَا كَرِيمُ.</div>
-        <button class="trans-toggle" onclick="toggleTrans(this)">ترجمه <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
-        <div class="trans-body">
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'ستایش خداوندی را که به ما خوراک و نوشاک داد، از مسلمانان قرارمان داد، کفایتمان کرد و پناهمان داد، و ما را از گرسنگان و تشنگان نگردانید. خداوندا، به کسی که به ما غذا داد نیکی عطا کن و نعمت‌هایت را بر ما پایدار بدار، ای کریم.')" title="کپی"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">فارسی</div>
-            <div class="trans-text rtl">ستایش خداوندی را که به ما خوراک و نوشاک داد، از مسلمانان قرارمان داد، کفایتمان کرد و پناهمان داد، و ما را از گرسنگان و تشنگان نگردانید. خداوندا، به کسی که به ما غذا داد نیکی عطا کن و نعمت‌هایت را بر ما پایدار بدار، ای کریم.</div>
-          </div>
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'All praise to Allah who fed us, gave us drink, made us Muslims, sufficed and sheltered us, and kept us from hunger and thirst. O Allah, reward those who fed us, and make Your blessings upon us enduring, O Most Generous.')" title="Copy"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">English</div>
-            <div class="trans-text">All praise to Allah who fed us, gave us drink, made us Muslims, sufficed and sheltered us, and kept us from hunger and thirst. O Allah, reward those who fed us, and make Your blessings upon us enduring, O Most Generous.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ══ SECTION 2 ══ -->
-  <section class="section reveal" id="majlis">
-    <div class="section-header">
-      <div class="section-icon" style="background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25);">🕌</div>
-      <div class="section-title-wrap">
-        <div class="section-title" style="color:#a78bfa">
-          <a class="section-title-link" href="#majlis">دعای ختم مجلس <span class="anchor-icon">#</span></a>
-        </div>
-        <div class="section-subtitle">هنگام ترک مجلس و وداع با حاضران</div>
-      </div>
-    </div>
-    <div class="cards-grid">
-
-      <div class="dua-card">
-        <button class="copy-btn" onclick="copyText(this,'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ')" title="کپی متن عربی">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-        </button>
-        <div class="card-badge badge-short">کوتاه</div>
-        <div class="card-title">کفّاره مجلس</div>
-        <div class="arabic-block" style="border-right-color:#34d399">سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ</div>
-        <button class="trans-toggle" onclick="toggleTrans(this)">ترجمه <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
-        <div class="trans-body">
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'پاکی از آنِ توست خداوندا و ستایشت سزاوار. گواهی می‌دهم معبودی جز تو نیست. از تو آمرزش خواسته و به سویت توبه می‌کنم.')" title="کپی"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">فارسی</div>
-            <div class="trans-text rtl">پاکی از آنِ توست خداوندا و ستایشت سزاوار. گواهی می‌دهم معبودی جز تو نیست. از تو آمرزش خواسته و به سویت توبه می‌کنم.</div>
-          </div>
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'Glory be to You, O Allah, and praise. I bear witness there is no deity but You. I seek Your forgiveness and turn to You in repentance.')" title="Copy"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">English</div>
-            <div class="trans-text">Glory be to You, O Allah, and praise. I bear witness there is no deity but You. I seek Your forgiveness and turn to You in repentance.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dua-card">
-        <button class="copy-btn" onclick="copyText(this,'اَللّٰهُمَّ إِنَّا نَسْأَلُكَ أَنْ تُصْلِحَ مَا أَفْسَدْنَاهُ، وَتَتَقَبَّلَ مَا أَحْسَنَّاهُ، وَتَعْفُوَ عَمَّا جَهِلْنَاهُ. سُبْحَانَكَ لَا نُحْصِي ثَنَاءً عَلَيْكَ أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ، وَصَلِّ اللَّهُمَّ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ.')" title="کپی متن عربی">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-        </button>
-        <div class="card-badge badge-long">مفصّل</div>
-        <div class="card-title">وداع با مجلس و سپردن به خدا</div>
-        <div class="arabic-block" style="border-right-color:#a78bfa;font-size:16px;">اَللّٰهُمَّ إِنَّا نَسْأَلُكَ أَنْ تُصْلِحَ مَا أَفْسَدْنَاهُ، وَتَتَقَبَّلَ مَا أَحْسَنَّاهُ، وَتَعْفُوَ عَمَّا جَهِلْنَاهُ. سُبْحَانَكَ لَا نُحْصِي ثَنَاءً عَلَيْكَ أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ، وَصَلِّ اللَّهُمَّ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ.</div>
-        <button class="trans-toggle" onclick="toggleTrans(this)">ترجمه <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
-        <div class="trans-body">
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'خداوندا، از تو می‌خواهیم آنچه تباه کردیم اصلاح کنی، آنچه نیکو انجام دادیم بپذیری، و از آنچه نادانسته کردیم درگذری. پاکی از آنِ توست، توان شمارش ستایشت را نداریم؛ تو همان‌گونه‌ای که خود را ستوده‌ای. درود فرست بر پیامبرمان محمد و بر آل و یارانش همه.')" title="کپی"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">فارسی</div>
-            <div class="trans-text rtl">خداوندا، از تو می‌خواهیم آنچه تباه کردیم اصلاح کنی، آنچه نیکو انجام دادیم بپذیری، و از آنچه نادانسته کردیم درگذری. پاکی از آنِ توست، توان شمارش ستایشت را نداریم؛ تو همان‌گونه‌ای که خود را ستوده‌ای. درود فرست بر پیامبرمان محمد و بر آل و یارانش همه.</div>
-          </div>
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'O Allah, mend what we have spoiled, accept what we did well, and pardon what we did in ignorance. Glory be to You — we cannot count Your praises; You are as You have praised Yourself. Send Your blessings upon our Prophet Muhammad and all his family and companions.')" title="Copy"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">English</div>
-            <div class="trans-text">O Allah, mend what we have spoiled, accept what we did well, and pardon what we did in ignorance. Glory be to You — we cannot count Your praises; You are as You have praised Yourself. Send Your blessings upon our Prophet Muhammad and all his family and companions.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ══ SECTION 3 ══ -->
-  <section class="section reveal" id="prog">
-    <div class="section-header">
-      <div class="section-icon" style="background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.25);">📖</div>
-      <div class="section-title-wrap">
-        <div class="section-title" style="color:#fbbf24">
-          <a class="section-title-link" href="#prog">دعای ختم برنامه <span class="anchor-icon">#</span></a>
-        </div>
-        <div class="section-subtitle">ختم جلسه آموزشی، فراغت، یا هر گردهمایی</div>
-      </div>
-    </div>
-    <div class="cards-grid">
-
-      <div class="dua-card">
-        <button class="copy-btn" onclick="copyText(this,'اَللّٰهُمَّ انْفَعْنَا بِمَا عَلَّمْتَنَا، وَعَلِّمْنَا مَا يَنْفَعُنَا، وَزِدْنَا عِلْمًا وَفَهْمًا')" title="کپی متن عربی">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-        </button>
-        <div class="card-badge badge-short">کوتاه</div>
-        <div class="card-title">توفیق در آنچه آموختیم</div>
-        <div class="arabic-block" style="border-right-color:#34d399">اَللّٰهُمَّ انْفَعْنَا بِمَا عَلَّمْتَنَا، وَعَلِّمْنَا مَا يَنْفَعُنَا، وَزِدْنَا عِلْمًا وَفَهْمًا</div>
-        <button class="trans-toggle" onclick="toggleTrans(this)">ترجمه <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
-        <div class="trans-body">
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'خداوندا، از آنچه به ما آموختی بهره‌مند کن، آنچه سود دارد به ما بیاموز، و بر دانش و فهممان بیفزا.')" title="کپی"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">فارسی</div>
-            <div class="trans-text rtl">خداوندا، از آنچه به ما آموختی بهره‌مند کن، آنچه سود دارد به ما بیاموز، و بر دانش و فهممان بیفزا.</div>
-          </div>
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'O Allah, benefit us by what You have taught us, teach us what benefits us, and increase us in knowledge and understanding.')" title="Copy"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">English</div>
-            <div class="trans-text">O Allah, benefit us by what You have taught us, teach us what benefits us, and increase us in knowledge and understanding.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dua-card">
-        <button class="copy-btn" onclick="copyText(this,'اَللّٰهُمَّ اجْعَلْ مَا سَمِعْنَاهُ نُورًا فِي قُلُوبِنَا، وَزَادًا لِأَعْمَالِنَا، وَمَا تَعَلَّمْنَاهُ حُجَّةً لَنَا لَا عَلَيْنَا. وَوَفِّقْنَا لِلْعَمَلِ بِمَا عَلِمْنَا، وَلَا تَجْعَلْنَا مِمَّنْ يَعْلَمُ وَلَا يَعْمَلُ. اَللّٰهُمَّ تَقَبَّلْ مِنَّا هٰذَا الْجَمْعَ، وَبَارِكْ فِي أَوْقَاتِنَا وَأَعْمَارِنَا.')" title="کپی متن عربی">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-        </button>
-        <div class="card-badge badge-long">مفصّل</div>
-        <div class="card-title">ختم جلسه و طلب توفیق</div>
-        <div class="arabic-block" style="border-right-color:#a78bfa;font-size:16px;">اَللّٰهُمَّ اجْعَلْ مَا سَمِعْنَاهُ نُورًا فِي قُلُوبِنَا، وَزَادًا لِأَعْمَالِنَا، وَمَا تَعَلَّمْنَاهُ حُجَّةً لَنَا لَا عَلَيْنَا. وَوَفِّقْنَا لِلْعَمَلِ بِمَا عَلِمْنَا، وَلَا تَجْعَلْنَا مِمَّنْ يَعْلَمُ وَلَا يَعْمَلُ. اَللّٰهُمَّ تَقَبَّلْ مِنَّا هٰذَا الْجَمْعَ، وَبَارِكْ فِي أَوْقَاتِنَا وَأَعْمَارِنَا.</div>
-        <button class="trans-toggle" onclick="toggleTrans(this)">ترجمه <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
-        <div class="trans-body">
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'خداوندا، آنچه شنیدیم را نوری در دل‌هایمان و توشه‌ای برای کارهایمان قرار ده، و آنچه آموختیم حجّتی برای ما باشد نه علیه ما. توفیق عمل به دانسته‌هایمان عطا کن و از عالمان بی‌عمل نگردانمان. خداوندا، این گردهمایی را از ما بپذیر و در وقت‌ها و عمرهایمان برکت بگذار.')" title="کپی"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">فارسی</div>
-            <div class="trans-text rtl">خداوندا، آنچه شنیدیم را نوری در دل‌هایمان و توشه‌ای برای کارهایمان قرار ده، و آنچه آموختیم حجّتی برای ما باشد نه علیه ما. توفیق عمل به دانسته‌هایمان عطا کن و از عالمان بی‌عمل نگردانمان. خداوندا، این گردهمایی را از ما بپذیر و در وقت‌ها و عمرهایمان برکت بگذار.</div>
-          </div>
-          <div class="trans-item">
-            <button class="copy-trans-btn" onclick="copyText(this,'O Allah, make what we heard a light in our hearts and a provision for our deeds, and make what we learned a proof for us, not against us. Grant us the ability to act on our knowledge, and do not make us those who know yet do not act. O Allah, accept this gathering from us and bless our time and lives.')" title="Copy"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
-            <div class="trans-lang">English</div>
-            <div class="trans-text">O Allah, make what we heard a light in our hearts and a provision for our deeds, and make what we learned a proof for us, not against us. Grant us the ability to act on our knowledge, and do not make us those who know yet do not act. O Allah, accept this gathering from us and bless our time and lives.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</div>
+<div class="container" id="sectionsContainer"></div>
 
 <footer>
   <div class="footer-logo">DLZ<span>LAB</span></div>
-  <div class="footer-note">گردآوری و طراحی · compiled with care · <a href="https://dlzlab.com" style="color:var(--accent-green);text-decoration:none;">dlzlab.com</a></div>
+  <div class="footer-note">گردآوری و طراحی · compiled with care · <a href="https://dlzlab.com">dlzlab.com</a></div>
 </footer>
 
 <script>
-  function copyText(btn, text) {
-    navigator.clipboard.writeText(text).then(() => {
-      btn.classList.add('copied');
-      const orig = btn.innerHTML;
-      btn.innerHTML = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
-      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
-    });
-  }
+let data = null;
 
-  function toggleTrans(btn) {
-    btn.classList.toggle('open');
-    btn.nextElementSibling.classList.toggle('open');
+async function loadData() {
+  try {
+    const r = await fetch('data.json');
+    data = await r.json();
+    render();
+  } catch(e) {
+    document.getElementById('sectionsContainer').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:4rem">Failed to load duas.</p>';
   }
+}
 
-  const sections = ['food','majlis','prog'];
-  const navTabs = document.querySelectorAll('.nav-tab');
+function render() {
+  const navTabs = document.getElementById('navTabs');
+  const container = document.getElementById('sectionsContainer');
+
+  navTabs.innerHTML = data.sections.map(s => `
+    <button class="nav-tab${s === data.sections[0] ? ' active' : ''}" onclick="scrollToSection('${s.id}')" data-section="${s.id}">
+      <span class="nav-dot" style="background:${s.color}"></span>${s.title}
+    </button>
+  `).join('');
+
+  container.innerHTML = data.sections.map((s, si) => `
+    <section class="section reveal" id="${s.id}">
+      <div class="section-header">
+        <div class="section-icon">${s.icon}</div>
+        <div class="section-title-wrap">
+          <div class="section-title" style="color:${s.color}">
+            <a class="section-title-link" href="#${s.id}">${s.title} <span class="anchor-icon">#</span></a>
+          </div>
+          <div class="section-subtitle">${s.subtitle}</div>
+        </div>
+      </div>
+      <div class="cards-grid">
+        ${s.duas.map(d => `
+          <div class="dua-card">
+            <button class="copy-btn" onclick="copyText(this,'${escAttr(d.arabic)}')" title="کپی متن عربی">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+            <div class="card-badge ${d.type === 'short' ? 'badge-short' : 'badge-long'}">${d.type === 'short' ? 'کوتاه' : 'مفصّل'}</div>
+            <div class="card-title">${escHtml(d.title)}</div>
+            <div class="arabic-block" style="border-right-color:${s.color};${d.type === 'long' ? 'font-size:17px;' : ''}">${d.arabic}</div>
+            <button class="trans-toggle" onclick="toggleTrans(this)">ترجمه <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+            <div class="trans-body">
+              ${d.translations.map(t => `
+                <div class="trans-item">
+                  <button class="copy-trans-btn" onclick="copyText(this,'${escAttr(t.text)}')" title="${t.lang === 'fa' ? 'کپی' : 'Copy'}"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg></button>
+                  <div class="trans-lang">${t.lang === 'fa' ? 'فارسی' : 'English'}</div>
+                  <div class="trans-text${t.lang === 'fa' ? ' rtl' : ''}">${escHtml(t.text)}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+    ${si < data.sections.length - 1 ? '<div class="section-divider"></div>' : ''}
+  `).join('');
+
+  // Observer for active nav tab
+  const sections = data.sections.map(s => s.id);
+  const navTabEls = document.querySelectorAll('.nav-tab');
   const secObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        navTabs.forEach(t => t.classList.remove('active'));
+        navTabEls.forEach(t => t.classList.remove('active'));
         const m = document.querySelector('[data-section="' + e.target.id + '"]');
         if (m) m.classList.add('active');
       }
@@ -467,16 +299,37 @@
   }, { threshold: 0.35 });
   sections.forEach(id => { const el = document.getElementById(id); if (el) secObserver.observe(el); });
 
-  function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
+  // Reveal observer
   const revEls = document.querySelectorAll('.reveal');
   const revObs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
   }, { threshold: 0.1 });
   revEls.forEach(el => revObs.observe(el));
+}
+
+function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function escAttr(s) { return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+  });
+}
+
+function toggleTrans(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+loadData();
 </script>
 </body>
 </html>
