@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Messages Admin</title>
+<title>Students Words Admin</title>
 <meta name="robots" content="noindex, nofollow" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -20,7 +20,9 @@ h1{font-size:1.8rem;font-weight:800;margin-bottom:0.3rem;background:linear-gradi
 .form-group label{display:block;font-size:0.75rem;font-weight:600;color:#b8945a;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
 .form-group input,.form-group textarea{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(212,160,67,.15);background:rgba(255,255,255,.05);color:#f5e6d0;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.25s}
 .form-group input:focus,.form-group textarea:focus{border-color:#d4a043;background:rgba(212,160,67,.06)}
-.form-group textarea{resize:vertical;min-height:80px}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-row{display:flex;gap:0.8rem;flex-wrap:wrap}
+.form-row .form-group{flex:1;min-width:140px}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:40px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;background:linear-gradient(135deg,#d4a043,#b8862b);color:#0d0407;transition:all 0.3s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,160,67,.35)}
 .btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
@@ -43,22 +45,21 @@ small{color:#6b5a3a;font-size:0.75rem}
 .msg-item{display:flex;align-items:flex-start;gap:8px;padding:0.8rem 0;border-bottom:1px solid rgba(212,160,67,.08)}
 .msg-item:last-child{border-bottom:none}
 .msg-item .m-main{flex:1;min-width:0}
-.msg-item .m-text{font-size:0.85rem;color:#f5e6d0;font-style:italic;display:block;line-height:1.5}
+.msg-item .m-name{font-size:0.85rem;color:#f5e6d0;font-weight:600;display:block}
+.msg-item .m-class{font-size:0.7rem;background:rgba(212,160,67,0.08);border:1px solid rgba(212,160,67,0.1);padding:1px 8px;border-radius:10px;color:#b8945a;display:inline-block;margin-left:4px}
+.msg-item .m-text{font-size:0.82rem;color:#d4af7a;font-style:italic;display:block;line-height:1.5;margin-top:4px}
 .msg-item .m-date{font-size:0.72rem;color:#6b5a3a;display:block;margin-top:4px}
-.msg-item .m-actions{display:flex;gap:4px;flex-shrink:0;margin-top:4px}
-.badge{padding:2px 8px;border-radius:8px;font-size:0.65rem;font-weight:600;display:inline-block;margin-right:4px}
-.badge-pending{background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid rgba(251,191,36,0.2)}
-.badge-published{background:rgba(16,185,129,0.1);color:#10b981;border:1px solid rgba(16,185,129,0.2)}
+.msg-item .m-actions{display:flex;gap:4px;flex-shrink:0;margin-top:6px}
 </style>
 </head>
 <body>
 <div class="container">
   <a href="/" style="color:#b8945a;font-size:0.85rem;margin-bottom:1rem;display:inline-flex;align-items:center;gap:0.4rem">← Back</a>
-  <h1>Messages Admin</h1>
-  <p class="desc">Review student messages and publish them to the board.</p>
+  <h1>Students Words Admin</h1>
+  <p class="desc">Review student messages — name, class, and message. Publish the good ones.</p>
 
   <div class="section">
-    <h2>GitHub Token</h2>
+    <h2>🔑 GitHub Token</h2>
     <div class="form-group">
       <label>Personal Access Token</label>
       <input id="tokenInput" type="password" placeholder="ghp_... or github_pat_..." />
@@ -79,8 +80,19 @@ small{color:#6b5a3a;font-size:0.75rem}
 
   <div class="section">
     <h2>✏️ Add Message Directly</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Name</label>
+        <input id="manualName" type="text" placeholder="Student name or Anonymous" />
+      </div>
+      <div class="form-group">
+        <label>Class</label>
+        <input id="manualClass" type="text" placeholder="e.g. 10th Grade" />
+      </div>
+    </div>
     <div class="form-group">
-      <textarea id="manualText" placeholder="Write a message to publish directly..."></textarea>
+      <label>Message</label>
+      <textarea id="manualText" placeholder="Write the message..."></textarea>
     </div>
     <button class="btn btn-success" onclick="addDirect()">Publish Directly</button>
     <div class="status" id="status"></div>
@@ -103,7 +115,7 @@ function setStatus(msg, type) {
   const el = document.getElementById('status');
   el.textContent = msg;
   el.className = 'status show ' + type;
-  setTimeout(() => { if (el.classList.contains('show')) el.classList.remove('show'); }, 3000);
+  setTimeout(() => { el.classList.remove('show'); }, 3000);
 }
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -122,18 +134,14 @@ async function loadAll() {
   if (!token) { setStatus('Enter token first.', 'err'); return; }
   setStatus('Loading...', 'info');
   try {
-    // Load data.json
     const d = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
     dataSha = d.sha;
     messages = JSON.parse(atob(d.content.replace(/\n/g, ''))).messages || [];
-
-    // Load submissions.json
     try {
       const s = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${SUB_PATH}`);
       subSha = s.sha;
       submissions = JSON.parse(atob(s.content.replace(/\n/g, ''))).submissions || [];
     } catch(e) { submissions = []; subSha = null; }
-
     render();
     setStatus('Loaded ' + messages.length + ' published, ' + submissions.length + ' pending.', 'ok');
   } catch (e) {
@@ -142,7 +150,6 @@ async function loadAll() {
 }
 
 function render() {
-  // Pending
   const pendingList = document.getElementById('pendingList');
   const pendingCount = document.getElementById('pendingCount');
   pendingCount.textContent = '(' + submissions.length + ')';
@@ -152,6 +159,7 @@ function render() {
     pendingList.innerHTML = submissions.map((s, i) => `
       <div class="msg-item">
         <div class="m-main">
+          <span class="m-name">${esc(s.name || 'Anonymous')} <span class="m-class">${esc(s.class || '')}</span></span>
           <span class="m-text">"${esc(s.text)}"</span>
           <span class="m-date">${s.date || ''}</span>
         </div>
@@ -163,7 +171,6 @@ function render() {
     `).join('');
   }
 
-  // Published
   const pubList = document.getElementById('pubList');
   const pubCount = document.getElementById('pubCount');
   pubCount.textContent = '(' + messages.length + ')';
@@ -173,6 +180,7 @@ function render() {
     pubList.innerHTML = messages.map((m, i) => `
       <div class="msg-item">
         <div class="m-main">
+          <span class="m-name">${esc(m.name || 'Anonymous')} ${m.class ? '<span class="m-class">' + esc(m.class) + '</span>' : ''}</span>
           <span class="m-text">"${esc(m.text)}"</span>
           <span class="m-date">${m.date || ''}</span>
         </div>
@@ -216,7 +224,7 @@ async function commitSubmissions() {
 async function approve(index) {
   const sub = submissions[index];
   const newId = messages.length ? Math.max(...messages.map(m => m.id)) + 1 : 1;
-  messages.push({ id: newId, text: sub.text, date: sub.date || new Date().toISOString().split('T')[0] });
+  messages.push({ id: newId, name: sub.name, class: sub.class, text: sub.text, date: sub.date || new Date().toISOString().split('T')[0] });
   submissions.splice(index, 1);
   setStatus('Publishing...', 'info');
   try {
@@ -233,38 +241,32 @@ async function reject(index) {
   if (!confirm('Delete this submission?')) return;
   submissions.splice(index, 1);
   setStatus('Deleting...', 'info');
-  try {
-    await commitSubmissions();
-    render();
-    setStatus('Deleted.', 'ok');
-  } catch (e) {
-    setStatus('Error: ' + e.message, 'err');
-  }
+  try { await commitSubmissions(); render(); setStatus('Deleted.', 'ok'); }
+  catch (e) { setStatus('Error: ' + e.message, 'err'); }
 }
 
 async function deleteMsg(index) {
   if (!confirm('Delete this published message?')) return;
   messages.splice(index, 1);
   setStatus('Deleting...', 'info');
-  try {
-    await commitData();
-    render();
-    setStatus('Deleted.', 'ok');
-  } catch (e) {
-    setStatus('Error: ' + e.message, 'err');
-  }
+  try { await commitData(); render(); setStatus('Deleted.', 'ok'); }
+  catch (e) { setStatus('Error: ' + e.message, 'err'); }
 }
 
 async function addDirect() {
+  const name = document.getElementById('manualName').value.trim() || 'Anonymous';
+  const cls = document.getElementById('manualClass').value.trim();
   const text = document.getElementById('manualText').value.trim();
   if (!text) { setStatus('Write a message first.', 'err'); return; }
   const newId = messages.length ? Math.max(...messages.map(m => m.id)) + 1 : 1;
-  messages.push({ id: newId, text, date: new Date().toISOString().split('T')[0] });
+  messages.push({ id: newId, name, class: cls, text, date: new Date().toISOString().split('T')[0] });
   setStatus('Saving...', 'info');
   try {
     await commitData();
     render();
     setStatus('Published!', 'ok');
+    document.getElementById('manualName').value = '';
+    document.getElementById('manualClass').value = '';
     document.getElementById('manualText').value = '';
   } catch (e) {
     setStatus('Error: ' + e.message, 'err');
