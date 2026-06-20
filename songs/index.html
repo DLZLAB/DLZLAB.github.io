@@ -4,50 +4,58 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title data-i18n="title">Songs — Dawood WaliZada</title>
-<meta name="description" data-i18n="desc" content="Songs by Dawood WaliZada — coming soon." />
+<meta name="description" data-i18n="desc" content="Songs by Dawood WaliZada" />
 <meta name="robots" content="index, follow" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Inter','Vazirmatn',system-ui,sans-serif;
-  background:#0d0407;color:#f5e6d0;line-height:1.6;
-  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
-  background-image:radial-gradient(ellipse at 50% 30%, rgba(107,29,47,0.2) 0%, transparent 60%);
-}
-html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
-.container{text-align:center;max-width:420px}
-.lang-bar{display:flex;justify-content:flex-end;margin-bottom:2rem}
-.lang-btn{background:rgba(212,160,67,0.1);border:1px solid rgba(212,160,67,.15);color:#b8945a;padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.25s;text-transform:uppercase;letter-spacing:1px}
-.lang-btn:hover{background:rgba(212,160,67,0.2);color:#d4a043}
-.back{display:inline-flex;align-items:center;gap:0.4rem;color:#b8945a;font-size:0.85rem;text-decoration:none;margin-bottom:2rem;transition:color 0.2s}
-.back:hover{color:#d4a043}
-.icon{font-size:4rem;margin-bottom:1rem}
-h1{font-size:2.2rem;font-weight:800;margin-bottom:0.5rem;background:linear-gradient(135deg,#f5e6d0,#d4a043);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-p{color:#b8945a;font-size:1rem;margin-bottom:0.3rem}
-.footer{margin-top:2rem;font-size:0.8rem;color:#6b5a3a}
-</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="../css/songs.css" />
 </head>
 <body>
-<div class="container">
-  <div class="lang-bar">
-    <button class="lang-btn" id="langToggle">FA</button>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a class="brand" href="/">
+      <img src="../images/logo.svg" alt="DLZ" class="logo-svg" width="80" height="28" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="back">← Back to Home</a></li>
+      <li>
+        <button id="langToggle" class="lang-btn" aria-label="Switch language">
+          <span class="lang-icon">FA</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main class="songs-page">
+  <div class="container">
+    <div class="page-header">
+      <h1><i class="fas fa-music"></i> <span data-i18n="heading">Songs</span></h1>
+      <p data-i18n="sub">Listen to songs created by Dawood WaliZada</p>
+    </div>
+
+    <div id="songList">
+      <div class="empty-state">
+        <i class="fas fa-music"></i>
+        <p data-i18n="empty">Loading...</p>
+      </div>
+    </div>
   </div>
-  <a class="back" href="/miniprojects/" data-i18n="back">&larr; Back to Mini Projects</a>
-  <div class="icon">🎵</div>
-  <h1 data-i18n="heading">Songs</h1>
-  <p data-i18n="coming">Coming Soon</p>
-  <p data-i18n="working">We are working on this page &mdash; stay tuned!</p>
-  <div class="footer" data-i18n="footer">&copy; Dawood WaliZada</div>
-</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    &copy; <span id="year"></span> Dawood WaliZada
+  </div>
+</footer>
+
 <script>
-const T={en:{title:"Songs — Dawood WaliZada",desc:"Songs by Dawood WaliZada — coming soon.",back:"← Back to Mini Projects",heading:"Songs",coming:"Coming Soon",working:"We are working on this page — stay tuned!",footer:"© Dawood WaliZada"},fa:{title:"آهنگ‌ها — داود ولی‌زاده",desc:"آهنگ‌ها توسط داود ولی‌زاده — به زودی.",back:"→ بازگشت به پروژه‌های کوچک",heading:"آهنگ‌ها",coming:"به زودی",working:"روی این صفحه کار می‌کنیم — همراه باشید!",footer:"© داود ولی‌زاده"}};
-let lang=localStorage.getItem('dlz_lang')||'en';
-function a(l){lang=l;localStorage.setItem('dlz_lang',l);document.documentElement.lang=l==='fa'?'fa':'en';document.documentElement.dir=l==='fa'?'rtl':'ltr';document.getElementById('langToggle').textContent=l==='fa'?'EN':'FA';document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n'),t=T[l]||T.en;if(t[k]!==undefined){if(el.tagName==='META'&&el.getAttribute('content')!==null)el.setAttribute('content',t[k]);else el.textContent=t[k]}})}
-document.getElementById('langToggle').addEventListener('click',()=>a(lang==='en'?'fa':'en'));a(lang);
+document.getElementById('year').textContent=new Date().getFullYear()
 </script>
+<script src="../js/songs.js"></script>
 </body>
 </html>
