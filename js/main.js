@@ -178,15 +178,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (themeBtn) {
     themeBtn.addEventListener('click', () => {
-      theme = wrapper.classList.contains('theme-wine') ? 'green' : 'wine';
+      theme = wrapper.classList.contains('theme-wine') ? 'blue' : 'wine';
       applyTheme(theme);
       localStorage.setItem('dlz-theme', theme);
     });
   }
 
   function applyTheme(t) {
-    wrapper.classList.remove('theme-wine', 'theme-green');
-    wrapper.classList.add(t === 'green' ? 'theme-green' : 'theme-wine');
+    wrapper.classList.remove('theme-wine', 'theme-blue');
+    wrapper.classList.add(t === 'blue' ? 'theme-blue' : 'theme-wine');
   }
 
   // ---- Language Switcher ----
