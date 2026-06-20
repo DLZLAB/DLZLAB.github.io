@@ -30,11 +30,14 @@ async function loadSongs(){
   try{
     const r=await fetch('data.json')
     const d=await r.json()
-    renderSongs(d.songs||[])
+    const sorted=(d.songs||[]).sort((a,b)=>(b.id||0)-(a.id||0))
+    renderSongs(sorted)
   }catch(e){
     document.getElementById('songList').innerHTML=`<div class="empty-state"><i class="fas fa-music"></i><p data-i18n="empty">${TRANSLATIONS[lang].empty}</p></div>`
   }
 }
+
+function audioUrl(s){return s.audio_url||'/'+s.audio}
 
 function renderSongs(songs){
   const container=document.getElementById('songList')
@@ -51,15 +54,15 @@ function renderSongs(songs){
           <span class="artist">${TRANSLATIONS[lang].by} ${esc(s.artist||TRANSLATIONS[lang].s_unknown)}</span>
         </div>
         <div class="song-actions">
-          <button onclick="event.stopPropagation();playSong(this,'${escAttr(s.audio)}',${i})" title="${TRANSLATIONS[lang].play}" aria-label="${TRANSLATIONS[lang].play}"><i class="fas fa-play"></i></button>
-          <a href="${escAttr(s.audio)}" download class="download-btn" onclick="event.stopPropagation()" title="${TRANSLATIONS[lang].download}"><i class="fas fa-download"></i></a>
+          <button onclick="event.stopPropagation();playSong(this,'${escAttr(audioUrl(s))}',${i})" title="${TRANSLATIONS[lang].play}" aria-label="${TRANSLATIONS[lang].play}"><i class="fas fa-play"></i></button>
+          <a href="${escAttr(audioUrl(s))}" download class="download-btn" onclick="event.stopPropagation()" title="${TRANSLATIONS[lang].download}"><i class="fas fa-download"></i></a>
         </div>
       </div>
       <div class="song-body">
         <div class="song-body-inner">
           <div class="player-wrapper">
             <div class="player-controls">
-              <button onclick="event.stopPropagation();playSong(this,'${escAttr(s.audio)}',${i})"><i class="fas fa-play"></i></button>
+              <button onclick="event.stopPropagation();playSong(this,'${escAttr(audioUrl(s))}',${i})"><i class="fas fa-play"></i></button>
             </div>
             <div class="progress-wrap">
               <span class="time-display">0:00</span>
@@ -70,7 +73,7 @@ function renderSongs(songs){
               <i class="fas fa-volume-up"></i>
               <input type="range" min="0" max="1" step="0.05" value="1" oninput="setVolume(this)">
             </div>
-            <a href="${escAttr(s.audio)}" download class="download-btn"><i class="fas fa-download"></i> ${TRANSLATIONS[lang].download}</a>
+            <a href="${escAttr(audioUrl(s))}" download class="download-btn"><i class="fas fa-download"></i> ${TRANSLATIONS[lang].download}</a>
           </div>
           ${s.poet?`<div class="poet-box"><h4><i class="fas fa-feather"></i> ${TRANSLATIONS[lang].lyrics}</h4><div class="poet-text">${esc(s.poet)}</div></div>`:''}
         </div>

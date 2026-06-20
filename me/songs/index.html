@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Songs Admin</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:#0d0407;color:#f5e6d0;line-height:1.6;padding:2rem 1.5rem}
+.container{max-width:800px;width:100%;margin:0 auto}
+h1{font-size:1.8rem;font-weight:800;margin-bottom:0.3rem;background:linear-gradient(135deg,#f5e6d0,#d4a043);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.desc{color:#b8945a;font-size:0.85rem;margin-bottom:2rem}
+.section{background:rgba(255,255,255,.04);border:1px solid rgba(212,160,67,.12);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
+.section h2{font-size:1rem;font-weight:700;margin-bottom:1rem;color:#d4a043}
+.form-group{margin-bottom:0.8rem}
+.form-group label{display:block;font-size:0.75rem;font-weight:600;color:#b8945a;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.form-group input,.form-group textarea{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(212,160,67,.15);background:rgba(255,255,255,.05);color:#f5e6d0;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.25s}
+.form-group input:focus,.form-group textarea:focus{border-color:#d4a043;background:rgba(212,160,67,.06)}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-group input[type="file"]{padding:8px;color:#b8945a}
+.form-group input[type="file"]::file-selector-button{background:rgba(212,160,67,0.1);border:1px solid rgba(212,160,67,.2);color:#d4a043;padding:6px 14px;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:inherit;margin-right:10px;transition:all 0.25s}
+.form-group input[type="file"]::file-selector-button:hover{background:rgba(212,160,67,0.2)}
+.form-row{display:flex;gap:0.8rem}
+.form-row .form-group{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:40px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;background:linear-gradient(135deg,#d4a043,#b8862b);color:#0d0407;transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,160,67,.35)}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-sm{padding:6px 14px;font-size:11px}
+.btn-outline{background:transparent;border:1px solid rgba(212,160,67,.25);color:#b8945a}
+.btn-outline:hover{background:rgba(212,160,67,.1);color:#d4a043}
+.btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+.btn-danger:hover{box-shadow:0 6px 20px rgba(239,68,68,.35)}
+.status{padding:10px 14px;border-radius:8px;font-size:0.8rem;margin-top:0.8rem;display:none}
+.status.show{display:block}
+.status.ok{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#10b981}
+.status.err{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+.status.info{background:rgba(129,140,248,.15);border:1px solid rgba(129,140,248,.3);color:#818cf8}
+a{color:#d4a043}
+small{color:#6b5a3a;font-size:0.75rem}
+.song-item{display:flex;align-items:center;gap:8px;padding:0.8rem 0;border-bottom:1px solid rgba(212,160,67,.08)}
+.song-item:last-child{border-bottom:none}
+.song-item .s-main{flex:1;min-width:0}
+.song-item .s-title{font-size:0.85rem;color:#f5e6d0;font-weight:600;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.song-item .s-meta{font-size:0.75rem;color:#b8945a;display:block;margin-top:2px}
+.song-item .s-tags{display:flex;gap:4px;margin-top:4px}
+.song-item .s-tags span{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.65rem;background:rgba(212,160,67,.1);color:#d4a043}
+.song-item .s-actions{display:flex;gap:4px;flex-shrink:0}
+.empty-msg{color:#6b5a3a;font-size:0.85rem;text-align:center;padding:1rem}
+.loading-msg{color:#6b5a3a;font-size:0.85rem;text-align:center;padding:1rem}
+.preview{max-width:200px;margin-top:0.5rem;border-radius:8px;display:none}
+.preview.show{display:block}
+#uploadProgress{width:100%;height:4px;background:rgba(212,160,67,.1);border-radius:2px;margin-top:0.5rem;overflow:hidden;display:none}
+#uploadProgress .bar{height:100%;width:0%;background:linear-gradient(90deg,#d4a043,#b8862b);border-radius:2px;transition:width 0.3s}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Songs Admin</h1>
+  <p class="desc">Add and manage songs. Audio files and data commit directly to GitHub.</p>
+
+  <div class="section">
+    <h2>GitHub Token</h2>
+    <div class="form-group">
+      <label>Personal Access Token</label>
+      <input id="tokenInput" type="password" placeholder="ghp_... or github_pat_..." />
+    </div>
+    <p><small>Saved in your browser. Generate at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> (needs <code>repo</code> scope).</small></p>
+    <button class="btn btn-sm" onclick="loadSongs()">Load Songs</button>
+  </div>
+
+  <div class="section">
+    <h2>Add Song</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Song Name</label>
+        <input id="songTitle" type="text" placeholder="e.g. My Song" maxlength="100" />
+      </div>
+      <div class="form-group">
+        <label>Artist</label>
+        <input id="songArtist" type="text" placeholder="Dawood WaliZada" maxlength="100" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Poet / Lyrics</label>
+      <textarea id="songPoet" placeholder="Enter the song lyrics or poem text..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Audio File (MP3, WAV, OGG, M4A — max 15MB)</label>
+      <input id="audioFile" type="file" accept="audio/*" />
+    </div>
+    <div id="uploadProgress"><div class="bar" id="progressBar"></div></div>
+    <button class="btn" onclick="addSong()">Add & Publish</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="section">
+    <h2>Current Songs (<span id="songCount">0</span>)</h2>
+    <div id="songList"><p class="loading-msg">Enter token and click Load Songs</p></div>
+  </div>
+</div>
+
+<script>
+const OWNER = 'DLZLAB', REPO = 'DLZLAB.github.io', BRANCH = 'master';
+const DATA_PATH = 'songs/data.json';
+const AUDIO_DIR = 'songs/audio/';
+
+let songs = [];
+let dataSha = null;
+
+const tokenInput = document.getElementById('tokenInput');
+tokenInput.value = localStorage.getItem('gh_token') || '';
+tokenInput.addEventListener('input', () => localStorage.setItem('gh_token', tokenInput.value));
+
+function setStatus(msg, type) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status show ' + type;
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+async function api(url, method, body) {
+  const token = tokenInput.value.trim();
+  const opts = { method, headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }};
+  if (body) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+  const res = await fetch(url, opts);
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message); }
+  return res.json();
+}
+
+async function loadSongs() {
+  const token = tokenInput.value.trim();
+  if (!token) { setStatus('Enter token first.', 'err'); return; }
+  setStatus('Loading songs...', 'info');
+  try {
+    const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
+    dataSha = data.sha;
+    songs = JSON.parse(atob(data.content.replace(/\n/g, ''))).songs || [];
+    renderSongs();
+    setStatus('Loaded ' + songs.length + ' songs.', 'ok');
+  } catch (e) {
+    setStatus('Error: ' + e.message, 'err');
+  }
+}
+
+function renderSongs() {
+  const list = document.getElementById('songList');
+  document.getElementById('songCount').textContent = songs.length;
+  if (!songs.length) { list.innerHTML = '<p class="empty-msg">No songs yet.</p>'; return; }
+  list.innerHTML = songs.map((s, i) => {
+    const tags = s.poet ? '<span>Lyrics</span>' : '';
+    return `
+      <div class="song-item">
+        <div class="s-main">
+          <span class="s-title">${escapeHtml(s.title)}</span>
+          <span class="s-meta">${escapeHtml(s.artist || 'Dawood WaliZada')}</span>
+          <div class="s-tags">${tags}<span>Audio</span></div>
+        </div>
+        <div class="s-actions">
+          <a href="${s.audio_url || 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + s.audio}" class="btn btn-sm btn-outline" download target="_blank">DL</a>
+          <button class="btn btn-sm btn-danger" onclick="deleteSong(${i})">Del</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function addSong() {
+  const token = tokenInput.value.trim();
+  const title = document.getElementById('songTitle').value.trim();
+  const artist = document.getElementById('songArtist').value.trim() || 'Dawood WaliZada';
+  const poet = document.getElementById('songPoet').value.trim();
+  const file = document.getElementById('audioFile').files[0];
+
+  if (!token) { setStatus('Enter token first.', 'err'); return; }
+  if (!title) { setStatus('Enter a song name.', 'err'); return; }
+  if (!file) { setStatus('Select an audio file.', 'err'); return; }
+  if (file.size > 15728640) { setStatus('File too large (max 15MB).', 'err'); return; }
+
+  const progressBar = document.getElementById('progressBar');
+  document.getElementById('uploadProgress').style.display = 'block';
+  progressBar.style.width = '10%';
+
+  setStatus('Reading audio file...', 'info');
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    const base64 = e.target.result.split(',')[1];
+    const ext = file.name.split('.').pop();
+    const filename = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' + Date.now() + '.' + ext;
+    const audioPath = AUDIO_DIR + filename;
+    const audioUrl = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + audioPath;
+
+    try {
+      progressBar.style.width = '30%';
+      setStatus('Uploading audio file...', 'info');
+
+      // Load data if needed
+      if (!dataSha) {
+        const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
+        dataSha = data.sha;
+        songs = JSON.parse(atob(data.content.replace(/\n/g, ''))).songs || [];
+      }
+
+      progressBar.style.width = '50%';
+
+      // Commit audio file
+      await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${audioPath}`, 'PUT', {
+        message: 'Add song audio: ' + title,
+        content: base64,
+        branch: BRANCH
+      });
+
+      progressBar.style.width = '70%';
+      setStatus('Updating data file...', 'info');
+
+      // Update data.json
+      const newId = songs.length ? Math.max(...songs.map(s => s.id)) + 1 : 1;
+      songs.push({
+        id: newId,
+        title,
+        artist,
+        poet,
+        audio: audioPath,
+        audio_url: audioUrl,
+        date_added: new Date().toISOString().split('T')[0]
+      });
+      songs.sort((a, b) => b.id - a.id); // newest first
+
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify({ songs }, null, 2) + '\n')));
+      const upData = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, 'PUT', {
+        message: 'Add song: ' + title,
+        content,
+        sha: dataSha,
+        branch: BRANCH
+      });
+      dataSha = upData.content.sha;
+
+      progressBar.style.width = '100%';
+      setTimeout(() => { document.getElementById('uploadProgress').style.display = 'none'; progressBar.style.width = '0%'; }, 500);
+
+      renderSongs();
+      setStatus('Published! Visit /songs/ to see it.', 'ok');
+      document.getElementById('songTitle').value = '';
+      document.getElementById('songArtist').value = '';
+      document.getElementById('songPoet').value = '';
+      document.getElementById('audioFile').value = '';
+    } catch (e) {
+      document.getElementById('uploadProgress').style.display = 'none';
+      setStatus('Error: ' + e.message, 'err');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+async function deleteSong(index) {
+  if (!confirm('Delete "' + songs[index].title + '"? This removes it from the data file.')) return;
+  const song = songs[index];
+  songs.splice(index, 1);
+  setStatus('Saving...', 'info');
+  try {
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify({ songs }, null, 2) + '\n')));
+    const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, 'PUT', {
+      message: 'Delete song: ' + song.title,
+      content, sha: dataSha, branch: BRANCH
+    });
+    dataSha = data.content.sha;
+    renderSongs();
+    setStatus('Deleted.', 'ok');
+  } catch (e) {
+    setStatus('Error: ' + e.message, 'err');
+  }
+}
+</script>
+</body>
+</html>
