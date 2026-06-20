@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyTheme(t) {
     wrapper.classList.remove('theme-wine', 'theme-blue');
     wrapper.classList.add(t === 'blue' ? 'theme-blue' : 'theme-wine');
+    document.body.classList.toggle('theme-blue', t === 'blue');
   }
 
   // ---- Language Switcher ----

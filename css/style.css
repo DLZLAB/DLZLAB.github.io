@@ -83,6 +83,7 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
   color: var(--text-primary);
   transition: background 0.5s ease, color 0.5s ease;
 }
+body.theme-blue { background: #080c1a; }
 
 #theme-wrapper {
   position: relative;
@@ -203,13 +204,20 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
   border-color: rgba(14, 165, 233, 0.25);
   box-shadow: 0 8px 40px rgba(79, 70, 229, 0.06), 0 0 80px rgba(14, 165, 233, 0.04);
 }
+.theme-blue .name .highlight { color: #06b6d4; }
 .theme-blue .hero-badge {
   background: rgba(79, 70, 229, 0.08);
   border-color: rgba(14, 165, 233, 0.25);
   color: #0ea5e9;
 }
 .theme-blue .section-title {
-  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.theme-blue .section-title i {
+  -webkit-text-fill-color: #06b6d4;
 }
 .theme-blue .project-card:hover {
   border-color: rgba(14, 165, 233, 0.3);

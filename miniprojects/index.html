@@ -226,6 +226,6 @@ function applyLang(l){lang=l;localStorage.setItem('dlz_lang',l);document.documen
 document.getElementById('langToggle').addEventListener('click',()=>applyLang(lang==='en'?'fa':'en'));
 applyLang(lang);
 </script>
-<script>(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();</script>
+<script>(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue');document.body.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');document.body.classList.toggle('theme-blue',!b);localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();</script>
 </body>
 </html>
