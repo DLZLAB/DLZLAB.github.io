@@ -223,7 +223,6 @@ html[dir="rtl"] .quote-text{border-left:none;border-right:2px solid #d4a043;padd
 
   <div class="lang-bar">
     <button class="lang-btn" id="langToggle">FA</button>
-    <button class="lang-btn" id="themeToggle" style="margin-left:8px" title="Theme">🎨</button>
   </div>
 
   <div class="header">
@@ -300,7 +299,7 @@ loadQuotes();
 </script>
 
 <script>
-(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue');document.body.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');document.body.classList.toggle('theme-blue',!b);localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();
+(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue');document.body.classList.add('theme-blue')}})();
 </script>
 </body>
 </html>

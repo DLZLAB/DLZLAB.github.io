@@ -28,9 +28,6 @@
           <span class="lang-icon">FA</span>
         </button>
       </li>
-      <li>
-        <button id="themeToggle" class="lang-btn" aria-label="Switch theme" title="Theme">🎨</button>
-      </li>
     </ul>
   </nav>
 </header>
@@ -142,7 +139,7 @@ function toggleBook(header){
 </script>
 
 <script>
-(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue');document.body.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');document.body.classList.toggle('theme-blue',!b);localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();
+(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue');document.body.classList.add('theme-blue')}})();
 </script>
 </div>
 </body>

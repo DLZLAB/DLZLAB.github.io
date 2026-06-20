@@ -69,7 +69,6 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
 <div class="container">
   <div class="lang-bar">
     <button class="lang-btn" id="langToggle">FA</button>
-    <button class="lang-btn" id="themeToggle" style="margin-left:8px" title="Theme">🎨</button>
   </div>
   <div class="header">
     <a class="back" href="/miniprojects/" data-i18n="back">&larr; Back to Mini Projects</a>
@@ -93,7 +92,7 @@ const t=TRANSLATIONS[lang]||TRANSLATIONS.en;g.innerHTML=imgs.map(i=>`<div class=
 function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 loadGallery();
 </script>
-<script>(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue');document.body.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');document.body.classList.toggle('theme-blue',!b);localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();
+<script>(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue');document.body.classList.add('theme-blue')}})();
 </script>
 </div>
 </body>
