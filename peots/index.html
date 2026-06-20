@@ -99,9 +99,29 @@ html[dir="rtl"] .form-group label{text-transform:none;letter-spacing:0}
   header h1{font-size:1.5rem}
   .form-row .form-group{min-width:100%}
 }
+.theme-blue body,.theme-blue{background:#080c1a!important;color:#f0f4ff!important}
+.theme-blue .lang-btn{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .lang-btn:hover{background:rgba(79,70,229,0.15)!important;color:#06b6d4!important}
+.theme-blue .form-card{background:linear-gradient(145deg,rgba(79,70,229,0.15),rgba(15,23,42,0.5))!important;border-color:rgba(14,165,233,0.25)!important}
+.theme-blue .form-card h2,.theme-blue .messages-section h2{color:#0ea5e9!important}
+.theme-blue label{color:#7dd3fc!important}
+.theme-blue input,.theme-blue textarea{background:rgba(15,23,42,0.6)!important;border-color:rgba(14,165,233,0.25)!important;color:#f0f4ff!important}
+.theme-blue input:focus,.theme-blue textarea:focus{border-color:#0ea5e9!important}
+.theme-blue .btn{background:linear-gradient(135deg,#4f46e5,#0ea5e9)!important}
+.theme-blue .message-item{background:rgba(79,70,229,0.12)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .message-item:hover{border-color:rgba(14,165,233,0.35)!important}
+.theme-blue .msg-name{color:#f0f4ff!important}
+.theme-blue .msg-class{background:rgba(79,70,229,0.1)!important;border-color:rgba(14,165,233,0.25)!important;color:#7dd3fc!important}
+.theme-blue .msg-text{color:#c7d2fe!important}
+.theme-blue .msg-meta,.theme-blue .hint,.theme-blue footer,.theme-blue .about{color:#64748b!important}
+.theme-blue header p{color:#7dd3fc!important}
+.theme-blue .tagline{color:#64748b!important}
+.theme-blue .admin-link{background:rgba(79,70,229,0.1)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .admin-link:hover{background:rgba(79,70,229,0.2)!important;color:#06b6d4!important}
 </style>
 </head>
 <body>
+<div id="theme-wrapper" class="theme-wine">
 
 <div class="bg" aria-hidden="true">
   <span>💬</span><span>👀</span><span>🤫</span><span>😅</span><span>💭</span><span>👋</span><span>✍️</span>
@@ -110,6 +130,7 @@ html[dir="rtl"] .form-group label{text-transform:none;letter-spacing:0}
 <div class="container">
   <div class="lang-bar">
     <button class="lang-btn" id="langToggle">دری</button>
+    <button class="lang-btn" id="themeToggle" style="margin-left:8px" title="Theme">🎨</button>
   </div>
 
   <header>
@@ -160,6 +181,7 @@ html[dir="rtl"] .form-group label{text-transform:none;letter-spacing:0}
 </div>
 
 <a class="admin-link" href="/me/peots/" title="Admin" aria-label="Admin">⚙️</a>
+</div>
 
 <script>
 const TRANSLATIONS={
@@ -339,5 +361,6 @@ function showStatus(msg, type) {
 
 loadMessages();
 </script>
+<script>(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();</script>
 </body>
 </html>

@@ -60,3 +60,19 @@ html[dir="rtl"] .summary-text{font-family:'Vazirmatn','Inter',sans-serif}
   .book-info .book-meta{font-size:0.75rem;gap:0 0.5rem}
   .page-header h1{font-size:1.5rem}
 }
+
+.theme-blue body,.theme-blue{background:#080c1a!important;color:#f0f4ff!important}
+.theme-blue .site-header{background:rgba(8,12,26,0.85)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .lang-btn{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .lang-btn:hover{background:rgba(79,70,229,0.15)!important;color:#06b6d4!important}
+.theme-blue .book-item{background:rgba(79,70,229,0.12)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .book-item:hover{border-color:rgba(14,165,233,0.35)!important}
+.theme-blue .book-title{color:#f0f4ff!important}
+.theme-blue .book-author{color:#7dd3fc!important}
+.theme-blue .book-summary{color:#c7d2fe!important}
+.theme-blue .book-meta{color:#64748b!important}
+.theme-blue .empty-state{background:rgba(79,70,229,0.08)!important;color:#64748b!important}
+.theme-blue .section-title{color:#0ea5e9!important}
+.theme-blue .admin-link{background:rgba(79,70,229,0.1)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .admin-link:hover{background:rgba(79,70,229,0.2)!important;color:#06b6d4!important}
+.theme-blue footer,.theme-blue .footer{color:#64748b!important}

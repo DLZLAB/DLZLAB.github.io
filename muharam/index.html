@@ -47,12 +47,29 @@ html[dir="rtl"] body{font-family:'Vazirmatn','Inter',system-ui,sans-serif}
 .footer a{color:#b8945a;text-decoration:none}
 .footer a:hover{color:#d4a043}
 @media(max-width:500px){.header h1{font-size:2rem}}
+.theme-blue body,.theme-blue{background:#080c1a!important;color:#f0f4ff!important}
+.theme-blue .lang-btn{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .lang-btn:hover{background:rgba(79,70,229,0.15)!important;color:#06b6d4!important}
+.theme-blue .gallery-item{background:rgba(79,70,229,0.12)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .gallery-item:hover{border-color:rgba(14,165,233,0.35)!important}
+.theme-blue .gallery-title{color:#f0f4ff!important}
+.theme-blue .gallery-img{border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .section-title,header h1{color:#0ea5e9!important}
+.theme-blue header p,.theme-blue .section-sub{color:#64748b!important}
+.theme-blue .empty-state{color:#64748b!important}
+.theme-blue .admin-link{background:rgba(79,70,229,0.1)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .admin-link:hover{background:rgba(79,70,229,0.2)!important;color:#06b6d4!important}
+.theme-blue footer,.theme-blue .footer{color:#64748b!important}
+.theme-blue a:not(.admin-link){color:#7dd3fc!important}
+.theme-blue a:not(.admin-link):hover{color:#06b6d4!important}
 </style>
 </head>
 <body>
+<div id="theme-wrapper" class="theme-wine">
 <div class="container">
   <div class="lang-bar">
     <button class="lang-btn" id="langToggle">FA</button>
+    <button class="lang-btn" id="themeToggle" style="margin-left:8px" title="Theme">🎨</button>
   </div>
   <div class="header">
     <a class="back" href="/miniprojects/" data-i18n="back">&larr; Back to Mini Projects</a>
@@ -76,5 +93,8 @@ const t=TRANSLATIONS[lang]||TRANSLATIONS.en;g.innerHTML=imgs.map(i=>`<div class=
 function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 loadGallery();
 </script>
+<script>(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();
+</script>
+</div>
 </body>
 </html>

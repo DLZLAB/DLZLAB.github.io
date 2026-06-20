@@ -76,3 +76,23 @@ html[dir="rtl"] .poet-text{font-family:'Vazirmatn','Inter',sans-serif}
   .volume-wrap{justify-content:flex-end}
   .page-header h1{font-size:1.5rem}
 }
+.theme-blue body,.theme-blue{background:#080c1a!important;color:#f0f4ff!important}
+.theme-blue .site-header{background:rgba(8,12,26,0.85)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .lang-btn{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .lang-btn:hover{background:rgba(79,70,229,0.15)!important;color:#06b6d4!important}
+.theme-blue .song-item{background:rgba(79,70,229,0.12)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .song-item:hover{border-color:rgba(14,165,233,0.35)!important}
+.theme-blue .song-title{color:#f0f4ff!important}
+.theme-blue .song-artist{color:#7dd3fc!important}
+.theme-blue .empty-state{background:rgba(79,70,229,0.08)!important;color:#64748b!important}
+.theme-blue .audio-player{background:rgba(79,70,229,0.12)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .audio-btn{background:linear-gradient(135deg,#4f46e5,#0ea5e9)!important}
+.theme-blue .lyrics{color:#c7d2fe!important}
+.theme-blue .lyrics-btn{color:#0ea5e9!important}
+.theme-blue .section-title{color:#0ea5e9!important}
+.theme-blue .song-date{color:#64748b!important}
+.theme-blue footer,.theme-blue .footer{color:#64748b!important}
+.theme-blue a{color:#7dd3fc!important}
+.theme-blue a:hover{color:#06b6d4!important}
+.theme-blue .admin-link{background:rgba(79,70,229,0.1)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .admin-link:hover{background:rgba(79,70,229,0.2)!important;color:#06b6d4!important}

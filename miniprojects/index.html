@@ -135,13 +135,28 @@ html[dir="rtl"] .card:hover .arrow{transform:scaleX(-1) translateX(-4px)}
   .header h1{font-size:2rem}
   .grid{grid-template-columns:1fr}
 }
+/* Blue theme */
+.theme-blue body,
+.theme-blue{background:#080c1a!important;color:#f0f4ff!important}
+.theme-blue .card{background:rgba(79,70,229,0.12)!important;border-color:rgba(14,165,233,0.25)!important}
+.theme-blue .card:hover{border-color:rgba(14,165,233,0.4)!important;box-shadow:0 12px 40px rgba(79,70,229,0.08)!important}
+.theme-blue .card-icon{background:rgba(79,70,229,0.15)!important;border-color:rgba(14,165,233,0.25)!important}
+.theme-blue .card p,.theme-blue .lang-btn{color:#7dd3fc!important}
+.theme-blue .lang-btn{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .lang-btn:hover{background:rgba(79,70,229,0.15)!important;color:#06b6d4!important}
+.theme-blue .card .arrow{color:#0ea5e9!important}
+.theme-blue .header p{color:#64748b!important}
+.theme-blue a.back{color:#64748b!important}
+.theme-blue a.back:hover{color:#0ea5e9!important}
 </style>
 </head>
 <body>
+<div id="theme-wrapper" class="theme-wine">
 <div class="container">
 
   <div class="lang-bar">
     <button class="lang-btn" id="langToggle">FA</button>
+    <button class="lang-btn" id="themeToggle" style="margin-left:8px" title="Theme">🎨</button>
   </div>
 
   <div class="header">
@@ -202,6 +217,8 @@ html[dir="rtl"] .card:hover .arrow{transform:scaleX(-1) translateX(-4px)}
 
 </div>
 
+</div>
+
 <script>
 const TRANSLATIONS={en:{title:"Mini Projects — Dawood WaliZada",desc:"Collection of mini projects by Dawood WaliZada — Muharam, Dua, DLZ BookLab, Students Words, Friends, Songs, and more.",back:"← Back to Portfolio",heading:"Mini Projects",subtitle:"Small experiments, tools, and creative works by Dawood WaliZada",proj_muharam:"Muharam",desc_muharam:"Muharam-related content and resources",proj_dua:"Dua",desc_dua:"Islamic prayer collection with Arabic text, Persian translation, and English transliteration",proj_booklab:"DLZ Booklab",desc_booklab:"Books, reading lists, and literary projects",proj_poets:"Students Words",desc_poets:"Anonymous messages from students",proj_friends:"Friends",desc_friends:"Words and sentences from friends — a collection of shared moments",proj_songs:"Songs",desc_songs:"Collection of songs and audio works"},fa:{title:"پروژه‌های کوچک — داود ولی‌زاده",desc:"مجموعه‌ای از پروژه‌های کوچک توسط داود ولی‌زاده — محرم، دعا، DLZ BookLab، صحبت‌های دانش‌آموزان، دوستان، آهنگ‌ها و بیشتر.",back:"→ بازگشت به پورتفولیو",heading:"پروژه‌های کوچک",subtitle:"آزمایش‌ها، ابزارها و آثار خلاقانه توسط داود ولی‌زاده",proj_muharam:"محرم",desc_muharam:"مطالب و منابع مرتبط با محرم",proj_dua:"دعا",desc_dua:"مجموعه دعاهای اسلامی با متن عربی، ترجمه فارسی و تلفظ انگلیسی",proj_booklab:"کتاب‌خانه DLZ",desc_booklab:"کتاب‌ها، فهرست‌های مطالعه و پروژه‌های ادبی",proj_poets:"صحبت‌های دانش‌آموزان",desc_poets:"پیام‌های ناشناس دانش‌آموزان",proj_friends:"دوستان",desc_friends:"کلمات و جملات دوستان — مجموعه‌ای از لحظات مشترک",proj_songs:"آهنگ‌ها",desc_songs:"مجموعه آهنگ‌ها و آثار صوتی"}};
 let lang=localStorage.getItem('dlz_lang')||'en';
@@ -209,5 +226,6 @@ function applyLang(l){lang=l;localStorage.setItem('dlz_lang',l);document.documen
 document.getElementById('langToggle').addEventListener('click',()=>applyLang(lang==='en'?'fa':'en'));
 applyLang(lang);
 </script>
+<script>(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();</script>
 </body>
 </html>

@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="../css/songs.css" />
 </head>
 <body>
+<div id="theme-wrapper" class="theme-wine">
 
 <header class="site-header">
   <nav class="nav container">
@@ -26,6 +27,9 @@
         <button id="langToggle" class="lang-btn" aria-label="Switch language">
           <span class="lang-icon">FA</span>
         </button>
+      </li>
+      <li>
+        <button id="themeToggle" class="lang-btn" aria-label="Switch theme" title="Theme">🎨</button>
       </li>
     </ul>
   </nav>
@@ -52,10 +56,14 @@
     &copy; <span id="year"></span> Dawood WaliZada
   </div>
 </footer>
+</div>
 
 <script>
 document.getElementById('year').textContent=new Date().getFullYear()
 </script>
 <script src="../js/songs.js"></script>
+<script>
+(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();
+</script>
 </body>
 </html>

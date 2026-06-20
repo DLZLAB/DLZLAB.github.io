@@ -193,9 +193,25 @@
 
   .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--text-muted); font-size: 0.85rem; text-decoration: none; margin-bottom: 1rem; position: relative; z-index: 1; justify-content: center; }
   .back-link:hover { color: var(--accent-green); }
+.theme-blue body,.theme-blue{background:#080c1a!important;color:#f0f4ff!important}
+.theme-blue .theme-blue{--bg1:#080c1a!important;--glass-bg:rgba(79,70,229,0.15)!important;--glass-border:rgba(14,165,233,0.35)!important;--text-primary:#f0f4ff!important;--text-secondary:#7dd3fc!important;--text-muted:#64748b!important;--accent-green:#0ea5e9!important;--accent-purple:#06b6d4!important;--accent-gold:#4f46e5!important}
+.theme-blue .lang-btn{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .lang-btn:hover{background:rgba(79,70,229,0.15)!important;color:#06b6d4!important}
+.theme-blue .dua-card{background:rgba(79,70,229,0.12)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .dua-card:hover{border-color:rgba(14,165,233,0.35)!important}
+.theme-blue .arabic{color:#f0f4ff!important}
+.theme-blue .translation,.theme-blue .transliteration{color:#c7d2fe!important}
+.theme-blue h1,.theme-blue h2{color:#0ea5e9!important}
+.theme-blue .subtitle{color:#64748b!important}
+.theme-blue .nav-wrap{background:rgba(8,12,26,0.85)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .nav-wrap a{color:#7dd3fc!important}
+.theme-blue .nav-wrap a:hover{color:#06b6d4!important}
+.theme-blue .badge{background:rgba(79,70,229,0.15)!important;border-color:rgba(14,165,233,0.25)!important;color:#7dd3fc!important}
+.theme-blue footer,.theme-blue .footer{color:#64748b!important}
 </style>
 </head>
 <body>
+<div id="theme-wrapper" class="theme-wine">
 
 <div class="bg-orbs" aria-hidden="true">
   <div class="orb orb-1"></div>
@@ -216,6 +232,9 @@
 
 <nav class="nav-wrap" aria-label="بخش‌های صفحه" id="navWrap">
   <div class="nav-tabs" id="navTabs"></div>
+  <div style="display:flex;justify-content:center;gap:6px;margin-top:6px">
+    <button id="themeToggle" class="lang-btn" style="margin-right:8px">🎨</button>
+  </div>
 </nav>
 
 <div class="container" id="sectionsContainer"></div>
@@ -330,6 +349,12 @@ function scrollToSection(id) {
 }
 
 loadData();
+</script>
+
+</div><!-- /theme-wrapper -->
+
+<script>
+(function(){var w=document.getElementById('theme-wrapper'),s=localStorage.getItem('dlz-theme');if(s==='blue'&&w){w.classList.add('theme-blue')}var t=document.getElementById('themeToggle');if(t){t.addEventListener('click',function(){var b=w.classList.contains('theme-blue');w.classList.remove('theme-wine','theme-blue');w.classList.add(b?'theme-wine':'theme-blue');localStorage.setItem('dlz-theme',b?'wine':'blue')})}})();
 </script>
 </body>
 </html>
