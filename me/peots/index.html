@@ -195,6 +195,10 @@ function render() {
 async function commitData() {
   messages.sort((a, b) => (b.id || 0) - (a.id || 0));
   const content = btoa(unescape(encodeURIComponent(JSON.stringify({ messages }, null, 2) + '\n')));
+  if (!dataSha) {
+    try { const d = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`); dataSha = d.sha; }
+    catch(e) {}
+  }
   const d = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, 'PUT', {
     message: 'Update messages: ' + messages.length + ' published',
     content, sha: dataSha, branch: BRANCH
