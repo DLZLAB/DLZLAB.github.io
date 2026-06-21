@@ -215,6 +215,11 @@ html[dir="rtl"] .quote-text{border-left:none;border-right:2px solid #d4a043;padd
 .theme-blue .section-sub{color:#64748b!important}
 .theme-blue .nav-bar a{color:#64748b!important}
 .theme-blue .nav-bar a:hover{color:#0ea5e9!important}
+.admin-link{position:fixed;bottom:1rem;right:1rem;width:36px;height:36px;border-radius:50%;background:rgba(212,160,67,0.1);border:1px solid rgba(212,160,67,0.15);display:grid;place-items:center;color:#6b5a3a;font-size:0.85rem;z-index:100;transition:all 0.2s;text-decoration:none}
+.admin-link:hover{background:rgba(212,160,67,0.2);color:#d4a043}
+html[dir="rtl"] .admin-link{right:auto;left:1rem}
+.theme-blue .admin-link{background:rgba(79,70,229,0.1)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .admin-link:hover{background:rgba(79,70,229,0.2)!important;color:#06b6d4!important}
 </style>
 </head>
 <body>
@@ -270,6 +275,8 @@ html[dir="rtl"] .quote-text{border-left:none;border-right:2px solid #d4a043;padd
     <a href="/">&copy; Dawood WaliZada</a>
   </div>
 
+  <a class="admin-link" href="/me/friends/words/" title="Admin" aria-label="Admin">⚙️</a>
+
 </div>
 
 </div><!-- /theme-wrapper -->
@@ -293,7 +300,7 @@ function renderEmpty(){const t=TRANSLATIONS[lang]||TRANSLATIONS.en;grid.innerHTM
 function renderQuotes(quotes){if(!quotes.length){renderEmpty();return}grid.innerHTML=quotes.map(q=>`<div class="quote-card"><div class="quote-text">${escapeHtml(q.text)}</div><div class="quote-author">— ${escapeHtml(q.name)}</div></div>`).join('')}
 function escapeHtml(str){const div=document.createElement('div');div.textContent=str;return div.innerHTML}
 
-form.addEventListener('submit',async function(e){e.preventDefault();const t=TRANSLATIONS[lang]||TRANSLATIONS.en;submitBtn.disabled=true;submitBtn.innerHTML=t.sending;formStatus.className='form-status';const data={name:form.name.value.trim(),message:form.message.value.trim(),_subject:'[Friends] New message from '+form.name.value.trim()};try{const res=await fetch(FORMSPREE_URL,{method:'POST',body:JSON.stringify(data),headers:{'Content-Type':'application/json','Accept':'application/json'}});if(res.ok){formStatus.className='form-status success';formStatus.textContent=t.success;form.reset()}else{throw new Error('Server error')}}catch{formStatus.className='form-status error';formStatus.textContent=t.error}submitBtn.disabled=false;submitBtn.innerHTML=t.form_send});
+form.addEventListener('submit',async function(e){e.preventDefault();const t=TRANSLATIONS[lang]||TRANSLATIONS.en;submitBtn.disabled=true;submitBtn.innerHTML=t.sending;formStatus.className='form-status';const name=form.name.value.trim();const msg=form.message.value.trim();try{const data={name,message:msg,_subject:'[Friends] New message from '+name};const res=await fetch(FORMSPREE_URL,{method:'POST',body:JSON.stringify(data),headers:{'Content-Type':'application/json','Accept':'application/json'}});if(res.ok){formStatus.className='form-status success';formStatus.textContent=t.success;form.reset()}else{throw new Error('Server error')}}catch{formStatus.className='form-status error';formStatus.textContent=t.error}const token=localStorage.getItem('gh_token');if(token){try{const r=await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/friends/submissions.json',{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});const d=await r.json();const sha=d.sha;const subs=JSON.parse(atob(d.content.replace(/\n/g,''))).submissions||[];subs.push({id:Date.now(),name,text:msg,date:new Date().toISOString().split('T')[0]});const c=btoa(unescape(encodeURIComponent(JSON.stringify({submissions:subs},null,2)+'\n')));await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/friends/submissions.json',{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'New friend message from '+name,content:c,sha,branch:'master'})})}catch(e){}}submitBtn.disabled=false;submitBtn.innerHTML=t.form_send});
 
 loadQuotes();
 </script>
