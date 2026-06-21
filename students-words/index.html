@@ -179,7 +179,7 @@ html[dir="rtl"] .form-group label{text-transform:none;letter-spacing:0}
   </footer>
 </div>
 
-<a class="admin-link" href="/me/peots/" title="Admin" aria-label="Admin">⚙️</a>
+<a class="admin-link" href="/me/students-words/" title="Admin" aria-label="Admin">⚙️</a>
 </div>
 
 <script>
@@ -340,7 +340,7 @@ async function submitMessage() {
   const token = localStorage.getItem('gh_token');
   if (token) {
     try {
-      const res1 = await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/peots/submissions.json', {
+      const res1 = await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/students-words/submissions.json', {
         headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
       });
       const data1 = await res1.json();
@@ -348,7 +348,7 @@ async function submitMessage() {
       const subs = JSON.parse(atob(data1.content.replace(/\n/g, ''))).submissions || [];
       subs.push({ id: Date.now(), name, class: cls, text, date: new Date().toISOString().split('T')[0] });
       const newContent = btoa(unescape(encodeURIComponent(JSON.stringify({ submissions: subs }, null, 2) + '\n')));
-      await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/peots/submissions.json', {
+      await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/students-words/submissions.json', {
         method: 'PUT',
         headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
         body: JSON.stringify({ message: 'New student message from ' + name, content: newContent, sha, branch: 'master' })
