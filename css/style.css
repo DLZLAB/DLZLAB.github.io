@@ -1227,21 +1227,10 @@ html[dir="rtl"] .faq-item summary::before {
   color: var(--accent);
 }
 
-.fa-heart { color: #e74c3c; }
 
-/* Persian SEO keywords — visible to crawlers, minimal to users */
+/* Persian SEO keywords — hidden from visitors, visible to crawlers */
 .seo-keywords {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.4rem 0.8rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  opacity: 0.35;
-  text-align: center;
-  border-top: 1px solid var(--border);
-  margin-top: 0.5rem;
+  display: none;
 }
 .seo-keywords span::before { content: '· '; }
 
