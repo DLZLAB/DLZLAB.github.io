@@ -321,6 +321,22 @@ async function submitMessage() {
   btn.innerHTML = t.sending + '...';
   showStatus(t.sending + '...', 'info');
 
+  // Send to Formspree
+  try {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('class', cls);
+    formData.append('message', text);
+    await fetch('https://formspree.io/f/meebjzrq', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+    showStatus(t.sent_ok, 'ok');
+    document.getElementById('msgName').value = '';
+    document.getElementById('msgClass').value = '';
+    document.getElementById('msgText').value = '';
+  } catch(e) {
+    showStatus(t.sent_ok, 'ok');
+  }
+
+  // Also push to GitHub if token exists
   const token = localStorage.getItem('gh_token');
   if (token) {
     try {
@@ -337,16 +353,9 @@ async function submitMessage() {
         headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
         body: JSON.stringify({ message: 'New student message from ' + name, content: newContent, sha, branch: 'master' })
       });
-      showStatus(t.sent_ok, 'ok');
-      document.getElementById('msgName').value = '';
-      document.getElementById('msgClass').value = '';
-      document.getElementById('msgText').value = '';
-    } catch(e) {
-      showStatus(t.sent_ok, 'ok');
-    }
-  } else {
-    showStatus(t.sent_fb, 'info');
+    } catch(e) {}
   }
+
   btn.disabled = false;
   btn.innerHTML = t.submit_btn + ' 🤫';
 }
