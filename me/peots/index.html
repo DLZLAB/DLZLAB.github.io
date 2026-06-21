@@ -208,21 +208,15 @@ async function commitData() {
 
 async function commitSubmissions() {
   const content = btoa(unescape(encodeURIComponent(JSON.stringify({ submissions }, null, 2) + '\n')));
-  if (subSha) {
-    const d = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${SUB_PATH}`, 'PUT', {
-      message: 'Update submissions: ' + submissions.length + ' pending',
-      content, sha: subSha, branch: BRANCH
-    });
-    subSha = d.content.sha;
-  } else {
-    try {
-      const d = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${SUB_PATH}`, 'PUT', {
-        message: 'Init submissions',
-        content, branch: BRANCH
-      });
-      subSha = d.content.sha;
-    } catch(e) {}
+  if (!subSha) {
+    try { const s = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${SUB_PATH}`); subSha = s.sha; }
+    catch(e) {}
   }
+  const d = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${SUB_PATH}`, 'PUT', {
+    message: 'Update submissions: ' + submissions.length + ' pending',
+    content, sha: subSha, branch: BRANCH
+  });
+  subSha = d.content.sha;
 }
 
 async function approve(index) {
