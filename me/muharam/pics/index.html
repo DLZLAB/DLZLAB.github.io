@@ -250,14 +250,21 @@ async function editImage(index) {
 }
 
 async function deleteImage(index) {
-  if (!confirm('Delete this image from the manifest? The file will remain in the repo.')) return;
+  if (!confirm('Delete this image permanently?')) return;
   const img = images[index];
-  images.splice(index, 1);
-  setStatus('Saving...', 'info');
+  const imgRepoPath = 'muharam/' + img.url;
+  setStatus('Deleting...', 'info');
   try {
-    await saveManifest('Delete Muharam image: ' + img.name);
+    const fileData = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${imgRepoPath}`);
+    await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${imgRepoPath}`, 'DELETE', {
+      message: 'Delete Muharam image file: ' + img.name,
+      sha: fileData.sha,
+      branch: BRANCH
+    });
+    images.splice(index, 1);
+    await saveManifest('Delete Muharam image manifest entry: ' + img.name);
     renderImages();
-    setStatus('Deleted from manifest.', 'ok');
+    setStatus('Deleted image and manifest entry.', 'ok');
   } catch (e) {
     setStatus('Error: ' + e.message, 'err');
   }
