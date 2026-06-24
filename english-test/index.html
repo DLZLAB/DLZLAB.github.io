@@ -129,8 +129,6 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg-
 .tf-options .option{flex:1;justify-content:center;text-align:center}
 .tf-options .option .opt-label{font-weight:600;font-size:1rem}
 .btns{display:flex;gap:1rem;margin-top:1.5rem;justify-content:flex-end}
-.listening-wrap{background:var(--bg-glass);border-radius:12px;padding:1.2rem;margin-bottom:1.5rem;border:1px solid var(--border)}
-.listening-wrap .listen-text{font-size:0.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem;padding:1rem;background:rgba(0,0,0,0.2);border-radius:10px}
 .listening-controls{display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem}
 .listen-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--bg-glass);color:var(--accent);font-size:1.1rem;cursor:pointer;transition:all 0.3s ease;display:grid;place-items:center;flex-shrink:0}
 .listen-btn:hover{background:var(--accent);color:#fff}
@@ -139,6 +137,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg-
 .listen-status{font-size:0.8rem;color:var(--text-muted)}
 .fill-input{width:100%;padding:0.75rem 1rem;border-radius:10px;border:1px solid var(--border);background:var(--bg-glass);color:var(--text-primary);font-size:0.95rem;outline:none;transition:all 0.2s ease;font-family:inherit}
 .fill-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(212,160,67,0.12)}
+.fill-hint{font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;padding:0.5rem 0.75rem;background:var(--bg-glass);border-radius:8px;border:1px dashed var(--border);display:inline-block}
 .score-wrap{text-align:center;padding:2rem 1rem}
 .score-circle{width:120px;height:120px;border-radius:50%;background:var(--gradient-accent);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.5rem}
 .score-circle .score-num{font-size:2.5rem;font-weight:800;line-height:1}
@@ -306,83 +305,40 @@ const LEVEL_NAMES = { beginner: 'Beginner', medium: 'Medium', expert: 'Expert' }
 
 const DEFAULT_QUESTIONS = {
   beginner: [
-    {
-      id: 'b1', type: 'listening',
-      passage: 'Hi, my name is Sara. I am from Egypt. I am 22 years old. I study English at the university. I have two brothers and one sister. I like reading books and watching movies. Every morning, I drink tea and eat bread for breakfast.',
-      questions: [
-        { text: 'What is her name?', options: ['Sara', 'Maria', 'Aisha', 'Lina'], correct: 0 },
-        { text: 'Where is she from?', options: ['Saudi Arabia', 'Egypt', 'Jordan', 'Morocco'], correct: 1 },
-        { text: 'How many siblings does she have?', options: ['Two', 'Three', 'Four', 'One'], correct: 1 }
-      ]
-    },
-    { id: 'b2', type: 'vocabulary', text: 'What does the word "happy" mean?', options: ['Sad', 'Angry', 'Glad', 'Tired'], correct: 2 },
-    { id: 'b3', type: 'vocabulary', text: 'Choose the correct opposite of "big".', options: ['Large', 'Huge', 'Small', 'Tall'], correct: 2 },
-    { id: 'b4', type: 'truefalse', text: 'The sun rises in the west.', correctAnswer: false },
-    { id: 'b5', type: 'truefalse', text: 'Water freezes at 0 degrees Celsius.', correctAnswer: true },
-    { id: 'b6', type: 'multiple', text: 'What is the past tense of "go"?', options: ['Goed', 'Went', 'Gone', 'Going'], correct: 1 },
-    { id: 'b7', type: 'multiple', text: 'Choose the correct sentence:', options: ['He go to school', 'He goes to school', 'He going to school', 'He gone to school'], correct: 1 },
+    { id: 'b1', type: 'listening', passage: 'Hi, my name is Sara. I am from Egypt. I am 22 years old. I study English at the university. I have two brothers and one sister.', text: 'What is her name?', options: ['Sara', 'Maria', 'Aisha', 'Lina'], correct: 0 },
+    { id: 'b2', type: 'listening', passage: 'Ali gets up at six o\'clock every morning. He washes his face, brushes his teeth, and gets dressed. Then he eats breakfast with his family. He leaves home at seven thirty and goes to school by bus.', text: 'What time does Ali get up?', options: ['5:00', '6:00', '7:00', '7:30'], correct: 1 },
+    { id: 'b3', type: 'vocabulary', text: 'What does the word "happy" mean?', options: ['Sad', 'Angry', 'Glad', 'Tired'], correct: 2 },
+    { id: 'b4', type: 'vocabulary', text: 'Choose the correct opposite of "big".', options: ['Large', 'Huge', 'Small', 'Tall'], correct: 2 },
+    { id: 'b5', type: 'truefalse', text: 'The sun rises in the west.', correctAnswer: false },
+    { id: 'b6', type: 'truefalse', text: 'Water freezes at 0 degrees Celsius.', correctAnswer: true },
+    { id: 'b7', type: 'multiple', text: 'What is the past tense of "go"?', options: ['Goed', 'Went', 'Gone', 'Going'], correct: 1 },
     { id: 'b8', type: 'multi-answer', text: 'Which of these are fruits? (Select all that apply)', options: ['Apple', 'Carrot', 'Banana', 'Orange'], correct: [0, 2, 3] },
-    { id: 'b9', type: 'fill', text: 'I ___ a student. (am/is/are)', correctAnswer: 'am', acceptable: ['am'] },
-    { id: 'b10', type: 'listening',
-      passage: 'Ali gets up at six o\'clock every morning. He washes his face, brushes his teeth, and gets dressed. Then he eats breakfast with his family. He leaves home at seven thirty and goes to school by bus.',
-      questions: [
-        { text: 'What time does Ali get up?', options: ['5:00', '6:00', '7:00', '7:30'], correct: 1 },
-        { text: 'How does Ali go to school?', options: ['By car', 'By bus', 'On foot', 'By bike'], correct: 1 }
-      ]
-    }
+    { id: 'b9', type: 'fill', text: 'I ___ a student.', correctAnswer: 'am', acceptable: ['am'], hint: 'Use the correct form of "to be"' },
+    { id: 'b10', type: 'fill', text: 'She ___ to school every day.', correctAnswer: 'goes', acceptable: ['goes'], hint: 'Third person singular present tense' }
   ],
   medium: [
-    {
-      id: 'm1', type: 'listening',
-      passage: 'Last weekend, my family and I went to the beach. The weather was sunny and warm. We swam in the sea and built a sandcastle. My little sister collected seashells. My father cooked fish on a small fire. We stayed there until sunset. It was a wonderful day.',
-      questions: [
-        { text: 'Where did the family go last weekend?', options: ['To the park', 'To the beach', 'To the mountains', 'To the river'], correct: 1 },
-        { text: 'What did the father do?', options: ['Swam in the sea', 'Built a sandcastle', 'Cooked fish', 'Collected seashells'], correct: 2 },
-        { text: 'When did they leave?', options: ['At noon', 'In the afternoon', 'At sunset', 'At midnight'], correct: 2 }
-      ]
-    },
-    { id: 'm2', type: 'vocabulary', text: 'What is the synonym of "quick"?', options: ['Slow', 'Fast', 'Heavy', 'Light'], correct: 1 },
-    { id: 'm3', type: 'vocabulary', text: 'What does "generous" mean?', options: ['Selfish', 'Kind and giving', 'Angry', 'Lazy'], correct: 1 },
-    { id: 'm4', type: 'truefalse', text: 'The Earth revolves around the Moon.', correctAnswer: false },
-    { id: 'm5', type: 'truefalse', text: 'Shakespeare wrote Romeo and Juliet.', correctAnswer: true },
-    { id: 'm6', type: 'multiple', text: 'Choose the correct form: "If I ___ rich, I would travel the world."', options: ['am', 'was', 'were', 'be'], correct: 2 },
-    { id: 'm7', type: 'multiple', text: 'Which sentence uses the present perfect correctly?', options: ['I have saw that movie', 'I have seen that movie', 'I have see that movie', 'I have seeing that movie'], correct: 1 },
-    { id: 'm8', type: 'multi-answer', text: 'Which of these are correct ways to ask for help? (Select all that apply)', options: ['Can you help me?', 'Could you help me?', 'Help me must you', 'Would you mind helping me?'], correct: [0, 1, 3] },
-    { id: 'm9', type: 'fill', text: 'She ___ to the market yesterday. (go/went/gone)', correctAnswer: 'went', acceptable: ['went'] },
-    { id: 'm10', type: 'listening',
-      passage: 'There are many benefits to reading books. First, reading improves your vocabulary and writing skills. Second, it helps you understand different cultures and ideas. Third, reading reduces stress and improves concentration. Experts recommend reading for at least 30 minutes every day.',
-      questions: [
-        { text: 'How many benefits of reading are mentioned?', options: ['Two', 'Three', 'Four', 'Five'], correct: 1 },
-        { text: 'How long do experts recommend reading daily?', options: ['15 minutes', '20 minutes', '30 minutes', '1 hour'], correct: 2 }
-      ]
-    }
+    { id: 'm1', type: 'listening', passage: 'Last weekend, my family and I went to the beach. The weather was sunny and warm. We swam in the sea and built a sandcastle. My little sister collected seashells. My father cooked fish on a small fire.', text: 'Where did the family go?', options: ['To the park', 'To the beach', 'To the mountains', 'To the river'], correct: 1 },
+    { id: 'm2', type: 'listening', passage: 'There are many benefits to reading books. First, reading improves your vocabulary and writing skills. Second, it helps you understand different cultures. Third, reading reduces stress and improves concentration.', text: 'How many benefits of reading are mentioned?', options: ['Two', 'Three', 'Four', 'Five'], correct: 1 },
+    { id: 'm3', type: 'vocabulary', text: 'What is the synonym of "quick"?', options: ['Slow', 'Fast', 'Heavy', 'Light'], correct: 1 },
+    { id: 'm4', type: 'vocabulary', text: 'What does "generous" mean?', options: ['Selfish', 'Kind and giving', 'Angry', 'Lazy'], correct: 1 },
+    { id: 'm5', type: 'truefalse', text: 'The Earth revolves around the Moon.', correctAnswer: false },
+    { id: 'm6', type: 'truefalse', text: 'Shakespeare wrote Romeo and Juliet.', correctAnswer: true },
+    { id: 'm7', type: 'multiple', text: 'Choose the correct form: "If I ___ rich, I would travel the world."', options: ['am', 'was', 'were', 'be'], correct: 2 },
+    { id: 'm8', type: 'multi-answer', text: 'Which are correct ways to ask for help? (Select all that apply)', options: ['Can you help me?', 'Could you help me?', 'Help me must you', 'Would you mind helping me?'], correct: [0, 1, 3] },
+    { id: 'm9', type: 'fill', text: 'She ___ to the market yesterday.', correctAnswer: 'went', acceptable: ['went'], hint: 'Past tense of "go"' },
+    { id: 'm10', type: 'fill', text: 'They ___ playing football right now.', correctAnswer: 'are', acceptable: ['are'], hint: 'Present continuous with "they"' }
   ],
   expert: [
-    {
-      id: 'e1', type: 'listening',
-      passage: 'Climate change is one of the most pressing challenges facing humanity today. Scientists warn that rising global temperatures could lead to catastrophic consequences, including extreme weather events, rising sea levels, and loss of biodiversity. Governments around the world are being urged to reduce carbon emissions and invest in renewable energy sources. However, meaningful progress requires collective action from individuals, corporations, and policymakers alike.',
-      questions: [
-        { text: 'What is described as one of the most pressing challenges?', options: ['Poverty', 'Climate change', 'War', 'Disease'], correct: 1 },
-        { text: 'Which of these is NOT mentioned as a consequence?', options: ['Extreme weather', 'Rising sea levels', 'Loss of biodiversity', 'Economic collapse'], correct: 3 },
-        { text: 'What is required for meaningful progress?', options: ['Government action only', 'Individual action only', 'Collective action from all', 'Corporate action only'], correct: 2 }
-      ]
-    },
-    { id: 'e2', type: 'vocabulary', text: 'What does "ubiquitous" mean?', options: ['Rare', 'Everywhere', 'Dangerous', 'Beautiful'], correct: 1 },
-    { id: 'e3', type: 'vocabulary', text: 'Choose the best synonym for "meticulous".', options: ['Careless', 'Thorough', 'Slow', 'Loud'], correct: 1 },
-    { id: 'e4', type: 'truefalse', text: 'The Industrial Revolution began in the 18th century.', correctAnswer: true },
-    { id: 'e5', type: 'truefalse', text: 'Photosynthesis occurs in animal cells.', correctAnswer: false },
-    { id: 'e6', type: 'multiple', text: 'Choose the correct form: "Had I known earlier, I ___ things differently."', options: ['would do', 'would have done', 'will do', 'did'], correct: 1 },
-    { id: 'e7', type: 'multiple', text: 'Which sentence uses the subjunctive mood correctly?', options: ['I wish I was there', 'I wish I were there', 'I wish I am there', 'I wish I be there'], correct: 1 },
-    { id: 'e8', type: 'multi-answer', text: 'Which words are examples of cohesive devices? (Select all that apply)', options: ['However', 'Therefore', 'Beautiful', 'Furthermore'], correct: [0, 1, 3] },
-    { id: 'e9', type: 'fill', text: 'By next year, I ___ here for ten years. (will work / will have worked / worked)', correctAnswer: 'will have worked', acceptable: ['will have worked'] },
-    { id: 'e10', type: 'listening',
-      passage: 'The concept of artificial intelligence dates back to the mid-20th century when Alan Turing proposed the question, "Can machines think?" Since then, AI has evolved from simple rule-based systems to sophisticated neural networks capable of natural language processing, image recognition, and autonomous decision-making. While AI offers enormous potential for advancements in healthcare, education, and industry, it also raises ethical concerns about privacy, job displacement, and algorithmic bias.',
-      questions: [
-        { text: 'Who proposed the question "Can machines think?"', options: ['Einstein', 'Turing', 'Newton', 'Hawking'], correct: 1 },
-        { text: 'Which is NOT mentioned as a capability of modern AI?', options: ['Natural language processing', 'Image recognition', 'Emotional feelings', 'Autonomous decision-making'], correct: 2 },
-        { text: 'What ethical concern about AI is mentioned?', options: ['Cost of development', 'Job displacement', 'Internet speed', 'Electricity usage'], correct: 1 }
-      ]
-    }
+    { id: 'e1', type: 'listening', passage: 'Climate change is one of the most pressing challenges facing humanity today. Scientists warn that rising global temperatures could lead to catastrophic consequences, including extreme weather events, rising sea levels, and loss of biodiversity.', text: 'What is described as one of the most pressing challenges?', options: ['Poverty', 'Climate change', 'War', 'Disease'], correct: 1 },
+    { id: 'e2', type: 'listening', passage: 'The concept of artificial intelligence dates back to the mid-20th century when Alan Turing proposed the question, "Can machines think?" Since then, AI has evolved from simple rule-based systems to sophisticated neural networks capable of natural language processing, image recognition, and autonomous decision-making.', text: 'Who proposed the question "Can machines think?"', options: ['Einstein', 'Turing', 'Newton', 'Hawking'], correct: 1 },
+    { id: 'e3', type: 'vocabulary', text: 'What does "ubiquitous" mean?', options: ['Rare', 'Everywhere', 'Dangerous', 'Beautiful'], correct: 1 },
+    { id: 'e4', type: 'vocabulary', text: 'Choose the best synonym for "meticulous".', options: ['Careless', 'Thorough', 'Slow', 'Loud'], correct: 1 },
+    { id: 'e5', type: 'truefalse', text: 'The Industrial Revolution began in the 18th century.', correctAnswer: true },
+    { id: 'e6', type: 'truefalse', text: 'Photosynthesis occurs in animal cells.', correctAnswer: false },
+    { id: 'e7', type: 'multiple', text: 'Choose the correct form: "Had I known earlier, I ___ things differently."', options: ['would do', 'would have done', 'will do', 'did'], correct: 1 },
+    { id: 'e8', type: 'multi-answer', text: 'Which words are cohesive devices? (Select all that apply)', options: ['However', 'Therefore', 'Beautiful', 'Furthermore'], correct: [0, 1, 3] },
+    { id: 'e9', type: 'fill', text: 'By next year, I ___ here for ten years.', correctAnswer: 'will have worked', acceptable: ['will have worked'], hint: 'Future perfect tense' },
+    { id: 'e10', type: 'fill', text: 'If I ___ you, I would apologize.', correctAnswer: 'were', acceptable: ['were'], hint: 'Subjunctive mood for hypotheticals' }
   ]
 };
 
@@ -484,19 +440,7 @@ document.getElementById('startTest').addEventListener('click', async () => {
 // BUILD FLAT QUESTION LIST
 // ====================
 function buildQuestionList(levelQs) {
-  const list = [];
-  const renderedPassages = {};
-  levelQs.forEach(q => {
-    if (q.type === 'listening') {
-      q.questions.forEach((sq, idx) => {
-        list.push({ parentId: q.id, subIndex: idx, text: sq.text, options: sq.options, correct: sq.correct, type: 'mc', passage: idx === 0 ? q.passage : null, passageId: idx === 0 ? q.id : null });
-      });
-      renderedPassages[q.id] = true;
-    } else {
-      list.push(q);
-    }
-  });
-  return list;
+  return levelQs.slice();
 }
 
 function getTotalQuestions() {
@@ -541,16 +485,8 @@ function renderQuestions(stepNum) {
   const container = stepEls[stepNum];
   let html = '<div class="card"><h2><i class="fas fa-pencil-alt"></i> Part ' + stepNum + '</h2><p class="subtitle">Answer the following questions.</p>';
 
-  let lastPassageId = null;
   qs.forEach((q, idx) => {
     const globalIdx = startIdx + idx;
-    if (q.passageId && q.passageId !== lastPassageId) {
-      lastPassageId = q.passageId;
-      html += '<div class="listening-wrap" style="margin:1rem 0;"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem;">';
-      html += '<button class="listen-btn" id="playBtn-' + q.passageId + '" onclick="playListening(\'' + q.passageId + '\')"><i class="fas fa-play"></i></button>';
-      html += '<span><strong style="color:var(--accent);"><i class="fas fa-headphones"></i> Listening</strong><br><span class="listen-status" id="status-' + q.passageId + '" style="font-size:0.8rem;color:var(--text-muted);">Click play to listen</span></span>';
-      html += '</div><div class="listen-text" id="passageText-' + q.passageId + '"><em style="color:var(--text-muted);font-size:0.85rem;">' + q.passage + '</em></div></div>';
-    }
     html += renderQuestion(q, globalIdx);
   });
 
@@ -620,6 +556,10 @@ function renderQuestion(q, idx) {
     return html;
   }
 
+  if (q.type === 'listening') {
+    return '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> <span class="q-type">LISTENING</span></p><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;"><button class="listen-btn" id="playBtn-' + q.id + '" onclick="playListening(\'' + q.id + '\')"><i class="fas fa-play"></i></button><span><span class="listen-status" id="status-' + q.id + '" style="font-size:0.85rem;color:var(--text-muted);">Click play to hear the passage</span></span></div><p style="margin-bottom:0.8rem;">' + q.text + '</p><div class="options">' + q.options.map((opt, oi) => '<label class="option"><input type="radio" name="' + name + '" value="' + oi + '" /><span class="opt-label">' + opt + '</span></label>').join('') + '</div></div>';
+  }
+
   if (q.type === 'multiple') {
     let html = '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">MC</span></p><div class="options">';
     q.options.forEach((opt, oi) => {
@@ -653,7 +593,12 @@ function renderQuestion(q, idx) {
   }
 
   if (q.type === 'fill') {
-    return '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">FILL</span></p><input class="fill-input" type="text" name="' + name + '" placeholder="Type your answer..." /></div>';
+    let html = '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">FILL</span></p><input class="fill-input" type="text" name="' + name + '" placeholder="Type your answer..." />';
+    if (q.hint) {
+      html += '<div class="fill-hint"><i class="fas fa-lightbulb"></i> ' + q.hint + '</div>';
+    }
+    html += '</div>';
+    return html;
   }
 
   return '';
@@ -743,7 +688,7 @@ function validateStep(n) {
     const name = 'q' + globalIdx;
     const q = qs[i];
 
-    if (q.type === 'mc' || q.type === 'multiple' || q.type === 'vocabulary') {
+    if (q.type === 'mc' || q.type === 'listening' || q.type === 'multiple' || q.type === 'vocabulary') {
       if (!state.answers[name] && state.answers[name] !== 0) {
         alert('Please answer question ' + (globalIdx + 1));
         return false;
@@ -794,7 +739,7 @@ function showResults() {
     let correctAnswer = '';
     let userDisplay = '';
 
-    if (q.type === 'mc') {
+    if (q.type === 'mc' || q.type === 'listening') {
       const ci = q.correct;
       correctAnswer = q.options[ci];
       userDisplay = q.options[userAns] || '—';
