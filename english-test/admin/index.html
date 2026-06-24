@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Admin — English Test | DLZLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<style>
+:root {
+  --bg-primary: #0d0407;
+  --bg-secondary: #1a080e;
+  --bg-card: rgba(60, 15, 28, 0.35);
+  --bg-glass: rgba(120, 30, 55, 0.15);
+  --text-primary: #f5e6d0;
+  --text-secondary: #d4af7a;
+  --text-muted: #b8945a;
+  --accent: #d4a043;
+  --accent-light: #e8c47a;
+  --border: rgba(212, 160, 67, 0.2);
+  --shadow: 0 8px 32px rgba(0,0,0,0.6);
+  --gradient-accent: linear-gradient(135deg, #6b1d2f, #d4a043);
+  --gradient-card: linear-gradient(145deg, rgba(60,15,28,0.4), rgba(30,8,14,0.6));
+  --success: #2ecc71;
+  --error: #e74c3c;
+  --warning: #f39c12;
+  --nav-bg: rgba(13,4,7,0.8);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.site-header{width:100%;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);position:fixed;top:0;z-index:100}
+.brand{font-size:1.3rem;font-weight:700;color:var(--accent);display:flex;align-items:center;gap:0.5rem}
+.header-actions{display:flex;align-items:center;gap:1rem}
+.main-content{max-width:1100px;margin:0 auto;padding:5rem 1.5rem 3rem}
+.tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0.5rem}
+.tab{padding:0.6rem 1.2rem;border-radius:8px 8px 0 0;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.2s;color:var(--text-muted);border:1px solid transparent;border-bottom:none}
+.tab:hover{color:var(--text-secondary);background:var(--bg-glass)}
+.tab.active{color:var(--accent);border-color:var(--border);background:var(--bg-card)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.section{margin-bottom:2rem}
+.section h3{font-size:1.1rem;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.question-card{border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem;background:var(--gradient-card);position:relative;animation:fadeUp 0.3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.question-card .q-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem}
+.question-card .q-type{font-size:0.7rem;font-weight:600;padding:0.2rem 0.5rem;border-radius:6px;background:var(--bg-glass);border:1px solid var(--border);color:var(--accent);text-transform:uppercase}
+.question-card .q-actions{display:flex;gap:0.4rem}
+.q-actions button{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg-glass);color:var(--text-secondary);cursor:pointer;transition:all 0.2s;display:grid;place-items:center;font-size:0.85rem}
+.q-actions button:hover{background:var(--border);color:var(--accent)}
+.q-actions .delete-btn:hover{background:rgba(231,76,60,0.2);border-color:var(--error);color:var(--error)}
+.question-card .q-text{font-size:0.9rem;margin-bottom:0.3rem;color:var(--text-primary)}
+.question-card .q-meta{font-size:0.8rem;color:var(--text-muted)}
+.edit-form{display:grid;gap:0.8rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.edit-form label{font-weight:600;font-size:0.8rem;color:var(--text-secondary)}
+.edit-form input,.edit-form textarea,.edit-form select{padding:0.6rem 0.8rem;border-radius:8px;border:1px solid var(--border);background:var(--bg-glass);color:var(--text-primary);font-size:0.9rem;outline:none;font-family:inherit}
+.edit-form input:focus,.edit-form textarea:focus{border-color:var(--accent)}
+.edit-form textarea{min-height:60px;resize:vertical}
+.edit-form .form-row{display:grid;grid-template-columns:1fr;gap:0.3rem}
+.edit-form .options-edit{display:grid;gap:0.5rem}
+.edit-form .option-row{display:flex;gap:0.5rem;align-items:center}
+.edit-form .option-row input{flex:1}
+.edit-form .option-row .is-correct{width:20px;height:20px;accent-color:var(--accent);cursor:pointer}
+.edit-form .btns{display:flex;gap:0.5rem;margin-top:0.5rem}
+.btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;border-radius:8px;font-weight:600;font-size:0.85rem;border:0;cursor:pointer;transition:all 0.2s ease;font-family:inherit}
+.btn-primary{background:var(--gradient-accent);color:#fff}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:var(--bg-glass);border:1px solid var(--border);color:var(--text-secondary)}
+.btn-ghost:hover{background:var(--border);color:var(--accent-light)}
+.btn-danger{background:rgba(231,76,60,0.2);border:1px solid rgba(231,76,60,0.4);color:var(--error)}
+.btn-danger:hover{background:rgba(231,76,60,0.3)}
+.btn-sm{padding:0.35rem 0.7rem;font-size:0.8rem}
+table{width:100%;border-collapse:collapse;font-size:0.85rem}
+th,td{padding:0.7rem 0.8rem;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--accent);font-weight:600;background:var(--bg-glass);position:sticky;top:0;z-index:1}
+td{color:var(--text-secondary)}
+tr:hover td{background:var(--bg-glass)}
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+.badge{padding:0.2rem 0.5rem;border-radius:6px;font-size:0.7rem;font-weight:600}
+.badge-beginner{background:rgba(46,204,113,0.15);color:#2ecc71}
+.badge-medium{background:rgba(243,156,18,0.15);color:#f39c12}
+.badge-expert{background:rgba(231,76,60,0.15);color:#e74c3c}
+.score-high{color:var(--success);font-weight:700}
+.score-mid{color:var(--warning);font-weight:700}
+.score-low{color:var(--error);font-weight:700}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--text-muted)}
+.empty-state i{font-size:3rem;margin-bottom:1rem;opacity:0.3}
+.empty-state p{font-size:0.95rem}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal{max-width:500px;width:100%;background:var(--gradient-card);border:1px solid var(--border);border-radius:16px;padding:2rem;box-shadow:var(--shadow);animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+.modal h3{color:var(--accent);margin-bottom:1rem}
+.modal p{color:var(--text-secondary);font-size:0.9rem;margin-bottom:1.5rem}
+.modal .btns{display:flex;gap:0.8rem;justify-content:flex-end}
+@media(max-width:768px){
+  .main-content{padding:4.5rem 1rem 2rem}
+  .tabs{overflow-x:auto}
+  .tab{white-space:nowrap;padding:0.5rem 1rem}
+  th,td{padding:0.5rem}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="/english-test/"><i class="fas fa-cog"></i> Test Admin</a>
+  <div class="header-actions">
+    <a href="/english-test/" class="btn btn-ghost btn-sm"><i class="fas fa-arrow-left"></i> Back to Test</a>
+    <a href="/" class="btn btn-ghost btn-sm"><i class="fas fa-home"></i> Home</a>
+  </div>
+</header>
+
+<div class="main-content">
+
+  <div class="tabs">
+    <div class="tab active" data-tab="questions"><i class="fas fa-list"></i> Questions</div>
+    <div class="tab" data-tab="submissions"><i class="fas fa-users"></i> Submissions</div>
+  </div>
+
+  <!-- Questions Tab -->
+  <div class="tab-content active" id="tab-questions">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+      <h2 style="color:var(--accent);font-size:1.3rem;"><i class="fas fa-pen"></i> Manage Questions</h2>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="btn btn-ghost btn-sm" onclick="resetQuestions()"><i class="fas fa-undo"></i> Reset to Default</button>
+      </div>
+    </div>
+
+    <div id="questionsContainer"></div>
+  </div>
+
+  <!-- Submissions Tab -->
+  <div class="tab-content" id="tab-submissions">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+      <h2 style="color:var(--accent);font-size:1.3rem;"><i class="fas fa-users"></i> Submissions</h2>
+      <button class="btn btn-danger btn-sm" onclick="clearAllSubmissions()"><i class="fas fa-trash"></i> Clear All</button>
+    </div>
+    <div id="submissionsContainer"></div>
+  </div>
+
+</div>
+
+<!-- Submission Detail Modal -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal" style="max-width:700px;">
+    <h3 id="detailTitle">Submission Details</h3>
+    <div id="detailContent" style="max-height:60vh;overflow-y:auto;font-size:0.85rem;color:var(--text-secondary);"></div>
+    <div class="btns" style="margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeDetailModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <h3 id="modalTitle">Confirm</h3>
+    <p id="modalText">Are you sure?</p>
+    <div class="btns">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="modalConfirmBtn" onclick="closeModal()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ====================
+// DATA
+// ====================
+const LEVEL_NAMES = { beginner: 'Beginner', medium: 'Medium', expert: 'Expert' };
+const TYPE_NAMES = {
+  listening: 'Listening',
+  vocabulary: 'Vocabulary',
+  truefalse: 'True/False',
+  multiple: 'Multiple Choice',
+  'multi-answer': 'Multiple Answer',
+  fill: 'Fill in Blank',
+  mc: 'Multiple Choice'
+};
+
+const DEFAULT_QUESTIONS = {
+  beginner: [
+    { id: 'b1', type: 'listening', passage: 'Hi, my name is Sara. I am from Egypt. I am 22 years old. I study English at the university. I have two brothers and one sister. I like reading books and watching movies. Every morning, I drink tea and eat bread for breakfast.', questions: [{ text: 'What is her name?', options: ['Sara', 'Maria', 'Aisha', 'Lina'], correct: 0 }, { text: 'Where is she from?', options: ['Saudi Arabia', 'Egypt', 'Jordan', 'Morocco'], correct: 1 }, { text: 'How many siblings does she have?', options: ['Two', 'Three', 'Four', 'One'], correct: 1 }] },
+    { id: 'b2', type: 'vocabulary', text: 'What does the word "happy" mean?', options: ['Sad', 'Angry', 'Glad', 'Tired'], correct: 2 },
+    { id: 'b3', type: 'vocabulary', text: 'Choose the correct opposite of "big".', options: ['Large', 'Huge', 'Small', 'Tall'], correct: 2 },
+    { id: 'b4', type: 'truefalse', text: 'The sun rises in the west.', correctAnswer: false },
+    { id: 'b5', type: 'truefalse', text: 'Water freezes at 0 degrees Celsius.', correctAnswer: true },
+    { id: 'b6', type: 'multiple', text: 'What is the past tense of "go"?', options: ['Goed', 'Went', 'Gone', 'Going'], correct: 1 },
+    { id: 'b7', type: 'multiple', text: 'Choose the correct sentence:', options: ['He go to school', 'He goes to school', 'He going to school', 'He gone to school'], correct: 1 },
+    { id: 'b8', type: 'multi-answer', text: 'Which of these are fruits? (Select all that apply)', options: ['Apple', 'Carrot', 'Banana', 'Orange'], correct: [0, 2, 3] },
+    { id: 'b9', type: 'fill', text: 'I ___ a student. (am/is/are)', correctAnswer: 'am', acceptable: ['am'] },
+    { id: 'b10', type: 'listening', passage: 'Ali gets up at six o\'clock every morning. He washes his face, brushes his teeth, and gets dressed. Then he eats breakfast with his family. He leaves home at seven thirty and goes to school by bus.', questions: [{ text: 'What time does Ali get up?', options: ['5:00', '6:00', '7:00', '7:30'], correct: 1 }, { text: 'How does Ali go to school?', options: ['By car', 'By bus', 'On foot', 'By bike'], correct: 1 }] }
+  ],
+  medium: [
+    { id: 'm1', type: 'listening', passage: 'Last weekend, my family and I went to the beach. The weather was sunny and warm. We swam in the sea and built a sandcastle. My little sister collected seashells. My father cooked fish on a small fire. We stayed there until sunset. It was a wonderful day.', questions: [{ text: 'Where did the family go last weekend?', options: ['To the park', 'To the beach', 'To the mountains', 'To the river'], correct: 1 }, { text: 'What did the father do?', options: ['Swam in the sea', 'Built a sandcastle', 'Cooked fish', 'Collected seashells'], correct: 2 }, { text: 'When did they leave?', options: ['At noon', 'In the afternoon', 'At sunset', 'At midnight'], correct: 2 }] },
+    { id: 'm2', type: 'vocabulary', text: 'What is the synonym of "quick"?', options: ['Slow', 'Fast', 'Heavy', 'Light'], correct: 1 },
+    { id: 'm3', type: 'vocabulary', text: 'What does "generous" mean?', options: ['Selfish', 'Kind and giving', 'Angry', 'Lazy'], correct: 1 },
+    { id: 'm4', type: 'truefalse', text: 'The Earth revolves around the Moon.', correctAnswer: false },
+    { id: 'm5', type: 'truefalse', text: 'Shakespeare wrote Romeo and Juliet.', correctAnswer: true },
+    { id: 'm6', type: 'multiple', text: 'Choose the correct form: "If I ___ rich, I would travel the world."', options: ['am', 'was', 'were', 'be'], correct: 2 },
+    { id: 'm7', type: 'multiple', text: 'Which sentence uses the present perfect correctly?', options: ['I have saw that movie', 'I have seen that movie', 'I have see that movie', 'I have seeing that movie'], correct: 1 },
+    { id: 'm8', type: 'multi-answer', text: 'Which of these are correct ways to ask for help? (Select all that apply)', options: ['Can you help me?', 'Could you help me?', 'Help me must you', 'Would you mind helping me?'], correct: [0, 1, 3] },
+    { id: 'm9', type: 'fill', text: 'She ___ to the market yesterday. (go/went/gone)', correctAnswer: 'went', acceptable: ['went'] },
+    { id: 'm10', type: 'listening', passage: 'There are many benefits to reading books. First, reading improves your vocabulary and writing skills. Second, it helps you understand different cultures and ideas. Third, reading reduces stress and improves concentration. Experts recommend reading for at least 30 minutes every day.', questions: [{ text: 'How many benefits of reading are mentioned?', options: ['Two', 'Three', 'Four', 'Five'], correct: 1 }, { text: 'How long do experts recommend reading daily?', options: ['15 minutes', '20 minutes', '30 minutes', '1 hour'], correct: 2 }] }
+  ],
+  expert: [
+    { id: 'e1', type: 'listening', passage: 'Climate change is one of the most pressing challenges facing humanity today. Scientists warn that rising global temperatures could lead to catastrophic consequences, including extreme weather events, rising sea levels, and loss of biodiversity. Governments around the world are being urged to reduce carbon emissions and invest in renewable energy sources.', questions: [{ text: 'What is described as one of the most pressing challenges?', options: ['Poverty', 'Climate change', 'War', 'Disease'], correct: 1 }, { text: 'Which of these is NOT mentioned as a consequence?', options: ['Extreme weather', 'Rising sea levels', 'Loss of biodiversity', 'Economic collapse'], correct: 3 }, { text: 'What is required for meaningful progress?', options: ['Government action only', 'Individual action only', 'Collective action from all', 'Corporate action only'], correct: 2 }] },
+    { id: 'e2', type: 'vocabulary', text: 'What does "ubiquitous" mean?', options: ['Rare', 'Everywhere', 'Dangerous', 'Beautiful'], correct: 1 },
+    { id: 'e3', type: 'vocabulary', text: 'Choose the best synonym for "meticulous".', options: ['Careless', 'Thorough', 'Slow', 'Loud'], correct: 1 },
+    { id: 'e4', type: 'truefalse', text: 'The Industrial Revolution began in the 18th century.', correctAnswer: true },
+    { id: 'e5', type: 'truefalse', text: 'Photosynthesis occurs in animal cells.', correctAnswer: false },
+    { id: 'e6', type: 'multiple', text: 'Choose the correct form: "Had I known earlier, I ___ things differently."', options: ['would do', 'would have done', 'will do', 'did'], correct: 1 },
+    { id: 'e7', type: 'multiple', text: 'Which sentence uses the subjunctive mood correctly?', options: ['I wish I was there', 'I wish I were there', 'I wish I am there', 'I wish I be there'], correct: 1 },
+    { id: 'e8', type: 'multi-answer', text: 'Which words are examples of cohesive devices? (Select all that apply)', options: ['However', 'Therefore', 'Beautiful', 'Furthermore'], correct: [0, 1, 3] },
+    { id: 'e9', type: 'fill', text: 'By next year, I ___ here for ten years. (will work / will have worked / worked)', correctAnswer: 'will have worked', acceptable: ['will have worked'] },
+    { id: 'e10', type: 'listening', passage: 'The concept of artificial intelligence dates back to the mid-20th century when Alan Turing proposed the question, "Can machines think?" Since then, AI has evolved from simple rule-based systems to sophisticated neural networks capable of natural language processing, image recognition, and autonomous decision-making.', questions: [{ text: 'Who proposed the question "Can machines think?"', options: ['Einstein', 'Turing', 'Newton', 'Hawking'], correct: 1 }, { text: 'Which is NOT mentioned as a capability of modern AI?', options: ['Natural language processing', 'Image recognition', 'Emotional feelings', 'Autonomous decision-making'], correct: 2 }, { text: 'What ethical concern about AI is mentioned?', options: ['Cost of development', 'Job displacement', 'Internet speed', 'Electricity usage'], correct: 1 }] }
+  ]
+};
+
+// ====================
+// STATE
+// ====================
+let questions = loadQuestions();
+let editingId = null;
+
+function loadQuestions() {
+  const stored = localStorage.getItem('dlz-english-questions');
+  if (stored) {
+    try { return JSON.parse(stored); } catch(e) {}
+  }
+  return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
+}
+
+function saveQuestions(qs) {
+  localStorage.setItem('dlz-english-questions', JSON.stringify(qs));
+  questions = qs;
+  // Also update the test page's localStorage so changes reflect immediately
+  renderQuestions();
+}
+
+function getSubmissions() {
+  return JSON.parse(localStorage.getItem('dlz-english-results') || '[]');
+}
+
+function saveSubmissions(subs) {
+  localStorage.setItem('dlz-english-results', JSON.stringify(subs));
+}
+
+// ====================
+// TABS
+// ====================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    if (tab.dataset.tab === 'submissions') renderSubmissions();
+  });
+});
+
+// ====================
+// RENDER QUESTIONS
+// ====================
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  let html = '';
+  for (const level of ['beginner', 'medium', 'expert']) {
+    html += '<div class="section"><h3><i class="fas fa-' + (level === 'beginner' ? 'seedling' : level === 'medium' ? 'leaf' : 'tree') + '"></i> ' + LEVEL_NAMES[level] + ' (' + questions[level].length + ' questions)</h3>';
+    questions[level].forEach((q, idx) => {
+      html += renderQuestionCard(level, q, idx);
+    });
+    html += '</div>';
+  }
+  container.innerHTML = html;
+}
+
+function renderQuestionCard(level, q, idx) {
+  const typeName = TYPE_NAMES[q.type] || q.type;
+  let questionText = q.type === 'listening' ? '[Listening] ' + (q.passage || '').substring(0, 80) + '...' : q.text;
+
+  let html = '<div class="question-card" id="qcard-' + level + '-' + q.id + '">';
+  html += '<div class="q-header"><div><span class="q-type">' + typeName + '</span> <span style="font-size:0.75rem;color:var(--text-muted);margin-left:0.5rem;">#' + (idx + 1) + ' &middot; ' + q.id + '</span></div><div class="q-actions">';
+  html += '<button onclick="toggleEdit(\'' + level + '\',\'' + q.id + '\')" title="Edit"><i class="fas fa-edit"></i></button>';
+  html += '<button class="delete-btn" onclick="deleteQuestion(\'' + level + '\',\'' + q.id + '\',\'' + encodeURIComponent(questionText) + '\')" title="Delete"><i class="fas fa-trash"></i></button></div></div>';
+  html += '<div class="q-text">' + q.text + '</div>';
+  if (q.type === 'listening') {
+    html += '<div class="q-meta"><i class="fas fa-headphones"></i> ' + q.questions.length + ' sub-questions &middot; Passage: ' + (q.passage || '').substring(0, 60) + '...</div>';
+  }
+  if (q.type === 'truefalse') {
+    html += '<div class="q-meta">Answer: <strong>' + (q.correctAnswer ? 'True' : 'False') + '</strong></div>';
+  }
+  if (q.type === 'fill') {
+    html += '<div class="q-meta">Answer: <strong>' + q.correctAnswer + '</strong></div>';
+  }
+  if (q.options) {
+    const ci = q.correct;
+    const correctLabel = Array.isArray(ci) ? ci.map(i => q.options[i]).join(', ') : q.options[ci];
+    html += '<div class="q-meta">Options: ' + q.options.join(', ') + ' &nbsp;|&nbsp; Correct: <strong style="color:var(--success);">' + correctLabel + '</strong></div>';
+  }
+
+  // Edit form (hidden by default)
+  html += '<div class="edit-form" id="edit-' + level + '-' + q.id + '" style="display:none;"></div>';
+
+  html += '</div>';
+  return html;
+}
+
+// ====================
+// EDIT QUESTION
+// ====================
+function toggleEdit(level, qId) {
+  const form = document.getElementById('edit-' + level + '-' + qId);
+  if (form.style.display === 'block') {
+    form.style.display = 'none';
+    return;
+  }
+
+  const q = questions[level].find(qq => qq.id === qId);
+  if (!q) return;
+
+  editingId = { level, id: qId };
+
+  let html = '<label>Type</label><select id="edit-type" onchange="onTypeChange()">';
+  for (const [key, name] of Object.entries(TYPE_NAMES)) {
+    html += '<option value="' + key + '" ' + (q.type === key ? 'selected' : '') + '>' + name + '</option>';
+  }
+  html += '</select>';
+
+  html += '<div class="form-row"><label>Question Text</label><textarea id="edit-text" rows="2">' + (q.text || '') + '</textarea></div>';
+
+  // Passage field (only for listening)
+  const listenDisplay = q.type === 'listening' ? 'block' : 'none';
+  html += '<div class="form-row" id="edit-passage-wrap" style="display:' + listenDisplay + '"><label>Listening Passage (read aloud via SpeechSynthesis)</label><textarea id="edit-passage" rows="3">' + (q.passage || '') + '</textarea></div>';
+
+  // Sub-questions (only for listening)
+  html += '<div id="edit-subquestions-wrap" style="display:' + listenDisplay + '"><label>Sub-Questions</label>';
+  if (q.type === 'listening' && q.questions) {
+    q.questions.forEach((sq, si) => {
+      html += '<div class="question-card" style="margin:0.5rem 0;padding:0.8rem;"><div class="form-row"><label>Q' + (si + 1) + ' Text</label><input id="edit-sq-text-' + si + '" value="' + sq.text + '" /></div>';
+      html += '<div class="form-row"><label>Options (comma-separated)</label><input id="edit-sq-options-' + si + '" value="' + sq.options.join(', ') + '" /></div>';
+      html += '<div class="form-row"><label>Correct Option Index (0-based)</label><input id="edit-sq-correct-' + si + '" type="number" value="' + sq.correct + '" min="0" /></div></div>';
+    });
+  }
+  html += '</div>';
+
+  // Options (for types that have them)
+  const hasOptions = ['vocabulary', 'multiple', 'multi-answer'].includes(q.type);
+  html += '<div id="edit-options-wrap" style="display:' + (hasOptions ? 'block' : 'none') + '">';
+  html += '<label>Options</label><div class="options-edit" id="edit-options-list">';
+  if (q.options) {
+    const isMulti = q.type === 'multi-answer';
+    q.options.forEach((opt, oi) => {
+      const checked = isMulti ? q.correct.includes(oi) : q.correct === oi;
+      html += '<div class="option-row"><input type="text" class="edit-opt-input" value="' + opt + '" placeholder="Option ' + (oi + 1) + '" />';
+      html += '<input type="' + (isMulti ? 'checkbox' : 'radio') + '" name="edit-correct" class="is-correct" value="' + oi + '" ' + (checked ? 'checked' : '') + ' title="Correct" />';
+      html += '<button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button></div>';
+    });
+  }
+  html += '</div><button class="btn btn-ghost btn-sm" onclick="addOption()"><i class="fas fa-plus"></i> Add Option</button></div>';
+
+  // True/false answer
+  const tfDisplay = q.type === 'truefalse' ? 'block' : 'none';
+  html += '<div id="edit-tf-wrap" style="display:' + tfDisplay + '"><label>Correct Answer</label><select id="edit-tf-answer"><option value="true" ' + (q.correctAnswer === true ? 'selected' : '') + '>True</option><option value="false" ' + (q.correctAnswer === false ? 'selected' : '') + '>False</option></select></div>';
+
+  // Fill in blank
+  const fillDisplay = q.type === 'fill' ? 'block' : 'none';
+  html += '<div id="edit-fill-wrap" style="display:' + fillDisplay + '"><div class="form-row"><label>Correct Answer</label><input id="edit-fill-answer" value="' + (q.correctAnswer || '') + '" /></div>';
+  html += '<div class="form-row"><label>Acceptable Answers (comma-separated)</label><input id="edit-fill-acceptable" value="' + ((q.acceptable || []).join(', ')) + '" /></div></div>';
+
+  html += '<div class="btns"><button class="btn btn-primary btn-sm" onclick="saveEdit()"><i class="fas fa-check"></i> Save</button>';
+  html += '<button class="btn btn-ghost btn-sm" onclick="cancelEdit(\'' + level + '\',\'' + qId + '\')"><i class="fas fa-times"></i> Cancel</button></div>';
+
+  form.innerHTML = html;
+  form.style.display = 'block';
+}
+
+function onTypeChange() {
+  const type = document.getElementById('edit-type').value;
+  document.getElementById('edit-passage-wrap').style.display = type === 'listening' ? 'block' : 'none';
+  document.getElementById('edit-subquestions-wrap').style.display = type === 'listening' ? 'block' : 'none';
+  document.getElementById('edit-options-wrap').style.display = ['vocabulary', 'multiple', 'multi-answer'].includes(type) ? 'block' : 'none';
+  document.getElementById('edit-tf-wrap').style.display = type === 'truefalse' ? 'block' : 'none';
+  document.getElementById('edit-fill-wrap').style.display = type === 'fill' ? 'block' : 'none';
+}
+
+function addOption() {
+  const list = document.getElementById('edit-options-list');
+  const isMulti = document.getElementById('edit-type').value === 'multi-answer';
+  const oi = list.children.length;
+  const div = document.createElement('div');
+  div.className = 'option-row';
+  div.innerHTML = '<input type="text" class="edit-opt-input" value="" placeholder="Option ' + (oi + 1) + '" />';
+  div.innerHTML += '<input type="' + (isMulti ? 'checkbox' : 'radio') + '" name="edit-correct" class="is-correct" value="' + oi + '" title="Correct" />';
+  div.innerHTML += '<button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>';
+  list.appendChild(div);
+}
+
+function saveEdit() {
+  if (!editingId) return;
+  const { level, id } = editingId;
+  const q = questions[level].find(qq => qq.id === id);
+  if (!q) return;
+
+  const type = document.getElementById('edit-type').value;
+  const text = document.getElementById('edit-text').value.trim();
+
+  q.type = type;
+  q.text = text;
+
+  if (type === 'listening') {
+    q.passage = document.getElementById('edit-passage').value.trim();
+    if (!q.questions) q.questions = [];
+    // Get sub-questions from the form
+    const sqCount = q.questions.length;
+    for (let i = 0; i < sqCount; i++) {
+      const sqTextEl = document.getElementById('edit-sq-text-' + i);
+      const sqOptEl = document.getElementById('edit-sq-options-' + i);
+      const sqCorEl = document.getElementById('edit-sq-correct-' + i);
+      if (sqTextEl && sqOptEl && sqCorEl) {
+        if (!q.questions[i]) q.questions[i] = {};
+        q.questions[i].text = sqTextEl.value.trim();
+        q.questions[i].options = sqOptEl.value.split(',').map(s => s.trim());
+        q.questions[i].correct = parseInt(sqCorEl.value);
+      }
+    }
+    delete q.correctAnswer;
+    delete q.acceptable;
+    delete q.options;
+  } else if (type === 'truefalse') {
+    q.correctAnswer = document.getElementById('edit-tf-answer').value === 'true';
+    delete q.options;
+    delete q.passage;
+    delete q.questions;
+    delete q.acceptable;
+  } else if (type === 'fill') {
+    q.correctAnswer = document.getElementById('edit-fill-answer').value.trim();
+    q.acceptable = document.getElementById('edit-fill-acceptable').value.split(',').map(s => s.trim()).filter(Boolean);
+    delete q.options;
+    delete q.passage;
+    delete q.questions;
+  } else if (['vocabulary', 'multiple', 'multi-answer'].includes(type)) {
+    const optionInputs = document.querySelectorAll('.edit-opt-input');
+    q.options = Array.from(optionInputs).map(inp => inp.value.trim());
+    if (type === 'multi-answer') {
+      q.correct = Array.from(document.querySelectorAll('input[name="edit-correct"]:checked')).map(el => parseInt(el.value));
+    } else {
+      const checked = document.querySelector('input[name="edit-correct"]:checked');
+      q.correct = checked ? parseInt(checked.value) : 0;
+    }
+    delete q.passage;
+    delete q.questions;
+    delete q.correctAnswer;
+    delete q.acceptable;
+  }
+
+  saveQuestions(questions);
+  editingId = null;
+  // Re-render with message
+  flashMessage('Question saved!');
+}
+
+function cancelEdit(level, qId) {
+  const form = document.getElementById('edit-' + level + '-' + qId);
+  if (form) form.style.display = 'none';
+  editingId = null;
+}
+
+// ====================
+// DELETE QUESTION
+// ====================
+function deleteQuestion(level, qId, text) {
+  const decoded = decodeURIComponent(text);
+  showConfirm(
+    'Delete Question?',
+    'Are you sure you want to delete: "' + decoded.substring(0, 50) + '..."?',
+    () => {
+      questions[level] = questions[level].filter(q => q.id !== qId);
+      saveQuestions(questions);
+      flashMessage('Question deleted!');
+    }
+  );
+}
+
+// ====================
+// RESET QUESTIONS
+// ====================
+function resetQuestions() {
+  showConfirm(
+    'Reset to Default?',
+    'This will overwrite all your custom questions with the original defaults. Your submissions will not be affected.',
+    () => {
+      localStorage.setItem('dlz-english-questions', JSON.stringify(DEFAULT_QUESTIONS));
+      questions = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
+      renderQuestions();
+      flashMessage('Questions reset to default!');
+    }
+  );
+}
+
+// ====================
+// SUBMISSIONS
+// ====================
+function renderSubmissions() {
+  const container = document.getElementById('submissionsContainer');
+  const subs = getSubmissions();
+
+  if (subs.length === 0) {
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><p>No submissions yet. Students need to take the test first.</p></div>';
+    return;
+  }
+
+  let html = '<div class="table-wrap"><table><thead><tr><th>#</th><th>First Name</th><th>Last Name</th><th>Level</th><th>Score</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
+
+  subs.slice().reverse().forEach((sub, idx) => {
+    const realIdx = subs.length - idx;
+    const levelBadge = 'badge-' + sub.level;
+    const scoreClass = sub.percentage >= 80 ? 'score-high' : sub.percentage >= 50 ? 'score-mid' : 'score-low';
+    const date = new Date(sub.date);
+    const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    html += '<tr><td>' + realIdx + '</td><td>' + sub.firstName + '</td><td>' + sub.lastName + '</td>';
+    html += '<td><span class="badge ' + levelBadge + '">' + LEVEL_NAMES[sub.level] + '</span></td>';
+    html += '<td class="' + scoreClass + '">' + sub.score + '/' + sub.total + ' (' + sub.percentage + '%)</td>';
+    html += '<td style="font-size:0.8rem;color:var(--text-muted);">' + dateStr + '</td>';
+    html += '<td><div style="display:flex;gap:0.3rem;"><button class="btn btn-ghost btn-sm" onclick="viewSubmission(' + (subs.indexOf(sub)) + ')"><i class="fas fa-eye"></i></button><button class="btn btn-danger btn-sm" onclick="deleteSubmission(' + (subs.indexOf(sub)) + ')"><i class="fas fa-trash"></i></button></div></td></tr>';
+  });
+
+  html += '</tbody></table></div>';
+  html += '<p style="text-align:right;color:var(--text-muted);font-size:0.8rem;margin-top:0.5rem;">Total: ' + subs.length + ' submission(s)</p>';
+
+  container.innerHTML = html;
+}
+
+function deleteSubmission(index) {
+  showConfirm(
+    'Delete Submission?',
+    'Are you sure you want to delete this submission? This cannot be undone.',
+    () => {
+      const subs = getSubmissions();
+      subs.splice(index, 1);
+      saveSubmissions(subs);
+      renderSubmissions();
+      flashMessage('Submission deleted!');
+    }
+  );
+}
+
+function viewSubmission(index) {
+  const subs = getSubmissions();
+  const sub = subs[index];
+  if (!sub) return;
+
+  document.getElementById('detailTitle').textContent = sub.firstName + ' ' + sub.lastName + ' — ' + LEVEL_NAMES[sub.level] + ' (' + sub.score + '/' + sub.total + ')';
+
+  let html = '<div style="margin-bottom:1rem;padding:0.8rem;background:var(--bg-glass);border-radius:8px;border:1px solid var(--border);">';
+  html += '<strong>Name:</strong> ' + sub.firstName + ' ' + sub.lastName + '<br>';
+  html += '<strong>Level:</strong> ' + LEVEL_NAMES[sub.level] + '<br>';
+  html += '<strong>Score:</strong> ' + sub.score + '/' + sub.total + ' (' + sub.percentage + '%)<br>';
+  html += '<strong>Date:</strong> ' + new Date(sub.date).toLocaleString() + '<br>';
+  html += '</div>';
+
+  if (sub.answers) {
+    html += '<h4 style="color:var(--accent);margin-bottom:0.5rem;">Answers</h4>';
+    html += '<div style="font-size:0.8rem;">';
+    for (const [key, val] of Object.entries(sub.answers)) {
+      const display = Array.isArray(val) ? val.join(', ') : val;
+      html += '<div style="padding:0.3rem 0;border-bottom:1px solid var(--border);"><strong>' + key + ':</strong> ' + display + '</div>';
+    }
+    html += '</div>';
+  }
+
+  document.getElementById('detailContent').innerHTML = html;
+  document.getElementById('detailModal').classList.add('active');
+}
+
+function closeDetailModal() {
+  document.getElementById('detailModal').classList.remove('active');
+}
+
+document.getElementById('detailModal').addEventListener('click', function(e) {
+  if (e.target === this) closeDetailModal();
+});
+
+function clearAllSubmissions() {
+  const subs = getSubmissions();
+  if (subs.length === 0) return;
+  showConfirm(
+    'Clear All Submissions?',
+    'Are you sure you want to delete all ' + subs.length + ' submissions? This cannot be undone.',
+    () => {
+      saveSubmissions([]);
+      renderSubmissions();
+      flashMessage('All submissions cleared!');
+    }
+  );
+}
+
+// ====================
+// MODAL
+// ====================
+let confirmCallback = null;
+
+function showConfirm(title, text, callback) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = text;
+  document.getElementById('confirmModal').classList.add('active');
+  confirmCallback = callback;
+  document.getElementById('modalConfirmBtn').onclick = function() {
+    closeModal();
+    if (confirmCallback) confirmCallback();
+  };
+}
+
+function closeModal() {
+  document.getElementById('confirmModal').classList.remove('active');
+  confirmCallback = null;
+}
+
+document.getElementById('confirmModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeModal(); closeDetailModal(); }
+});
+
+// ====================
+// FLASH MESSAGE
+// ====================
+function flashMessage(msg) {
+  const el = document.createElement('div');
+  el.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:0.8rem 1.5rem;border-radius:10px;background:var(--gradient-accent);color:#fff;font-weight:600;font-size:0.9rem;z-index:3000;box-shadow:0 4px 20px rgba(0,0,0,0.4);animation:fadeUp 0.3s ease';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.4s ease';
+    setTimeout(() => el.remove(), 500);
+  }, 2000);
+}
+
+// ====================
+// INIT
+// ====================
+renderQuestions();
+</script>
+</body>
+</html>

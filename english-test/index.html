@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>English Test — DLZLab</title>
-<meta name="description" content="Test your English listening and comprehension skills with music-based questions." />
+<meta name="description" content="Professional English test with 3 levels: Beginner, Medium, Expert. Test your listening, vocabulary, grammar, and comprehension skills." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -21,9 +21,6 @@
   --text-muted: #b8945a;
   --accent: #d4a043;
   --accent-light: #e8c47a;
-  --wine: #6b1d2f;
-  --wine-light: #8a2740;
-  --gold: #d4a043;
   --border: rgba(212, 160, 67, 0.2);
   --shadow: 0 8px 32px rgba(0,0,0,0.6);
   --glow: 0 0 40px rgba(212, 160, 67, 0.08);
@@ -32,485 +29,142 @@
   --success: #2ecc71;
   --error: #e74c3c;
   --warning: #f39c12;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1.6;
-}
-
-/* floating background shapes */
-.floating-shapes {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.04;
-}
-.shape-1 {
-  width: 500px; height: 500px;
-  top: -150px; right: -150px;
-  animation: floatA 20s ease-in-out infinite;
-}
-.shape-2 {
-  width: 400px; height: 400px;
-  bottom: -100px; left: -100px;
-  animation: floatB 25s ease-in-out infinite;
-}
-.shape-3 {
-  width: 300px; height: 300px;
-  top: 40%; left: 15%;
-  animation: floatC 18s ease-in-out infinite;
-}
-.shape-4 {
-  width: 250px; height: 250px;
-  bottom: 25%; right: 10%;
-  animation: floatA 22s ease-in-out infinite reverse;
-}
-.shape-5 {
-  width: 350px; height: 350px;
-  top: 10%; left: 5%;
-  animation: floatB 28s ease-in-out infinite reverse;
-}
-
-@keyframes floatA {
-  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-  33% { transform: translate(30px, -40px) rotate(120deg) scale(1.05); }
-  66% { transform: translate(-20px, 20px) rotate(240deg) scale(0.95); }
-}
-@keyframes floatB {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(40px, 30px) rotate(90deg); }
-  50% { transform: translate(-30px, -40px) rotate(180deg); }
-  75% { transform: translate(20px, -20px) rotate(270deg); }
-}
-@keyframes floatC {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(20px, -30px) scale(1.1); }
-}
-
-/* header */
-.site-header {
-  width: 100%;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(13, 4, 7, 0.8);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  position: fixed;
-  top: 0;
-  z-index: 100;
-}
-.brand {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--accent);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.brand i { font-size: 1.5rem; }
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s;
-}
-.back-link:hover { color: var(--accent); }
-
-/* main container */
-.main-content {
-  width: 100%;
-  max-width: 720px;
-  padding: 5rem 1.5rem 3rem;
-  position: relative;
-  z-index: 1;
-  flex: 1;
-}
-
-/* progress bar */
-.progress-wrap {
-  margin-bottom: 2rem;
-}
-.progress-bar {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  margin-bottom: 0.5rem;
-}
-.progress-bar::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--border);
-  transform: translateY(-50%);
-  z-index: 0;
-}
-.progress-bar .fill {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  height: 2px;
-  background: var(--gradient-accent);
-  transform: translateY(-50%);
-  transition: width 0.5s ease;
-  z-index: 1;
-  border-radius: 2px;
-}
-.progress-step {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  border: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
-}
-.progress-step.active {
-  background: var(--gradient-accent);
-  border-color: var(--accent);
-  color: #fff;
-  box-shadow: 0 0 20px rgba(212, 160, 67, 0.3);
-}
-.progress-step.done {
-  background: var(--success);
-  border-color: var(--success);
-  color: #fff;
-}
-.progress-label {
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 0.5rem;
-}
-
-/* cards */
-.card {
-  background: var(--gradient-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: var(--shadow), var(--glow);
-  animation: fadeUp 0.5s ease forwards;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.card h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-.card .subtitle {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
-}
-
-/* audio player */
-.audio-wrap {
-  background: var(--bg-glass);
-  border-radius: 12px;
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--border);
-}
-.audio-wrap audio {
-  width: 100%;
-  outline: none;
-  border-radius: 8px;
-}
-.audio-wrap audio::-webkit-media-controls-panel {
-  background: var(--bg-secondary);
-}
-
-/* textarea */
-textarea {
-  width: 100%;
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: var(--bg-glass);
-  color: var(--text-primary);
-  font-size: 0.95rem;
-  outline: none;
-  transition: all 0.2s ease;
-  font-family: inherit;
-  resize: vertical;
-  min-height: 120px;
-}
-textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(212, 160, 67, 0.12);
-}
-textarea::placeholder {
-  color: var(--text-muted);
-  opacity: 0.6;
-}
-
-/* questions */
-.question {
-  margin-bottom: 1.5rem;
-  animation: fadeUp 0.4s ease forwards;
-  opacity: 0;
-}
-.question:nth-child(2) { animation-delay: 0.1s; }
-.question:nth-child(3) { animation-delay: 0.2s; }
-.question:nth-child(4) { animation-delay: 0.3s; }
-.question:nth-child(5) { animation-delay: 0.4s; }
-.question:nth-child(6) { animation-delay: 0.5s; }
-
-.question .q-text {
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-bottom: 0.6rem;
-  color: var(--text-primary);
-}
-.question .q-text .q-num {
-  color: var(--accent);
-  margin-right: 0.4rem;
-}
-
-/* options */
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.option {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.7rem 1rem;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--bg-glass);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.option:hover {
-  border-color: var(--accent);
-  background: rgba(212, 160, 67, 0.08);
-}
-.option input[type="radio"],
-.option input[type="checkbox"] {
-  accent-color: var(--accent);
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
-.option .opt-label {
-  font-size: 0.9rem;
-  color: var(--text-primary);
-  cursor: pointer;
-}
-.option.selected {
-  border-color: var(--accent);
-  background: rgba(212, 160, 67, 0.12);
-}
-
-/* true/false specific */
-.tf-options {
-  display: flex;
-  gap: 0.8rem;
-}
-.tf-options .option {
-  flex: 1;
-  justify-content: center;
-  text-align: center;
-}
-.tf-options .option .opt-label {
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-/* buttons */
-.btns {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  justify-content: flex-end;
-}
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.5rem;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  border: 0;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  font-family: inherit;
-}
-.btn-primary {
-  background: var(--gradient-accent);
-  color: #fff;
-  box-shadow: 0 4px 20px rgba(212, 160, 67, 0.25);
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 28px rgba(212, 160, 67, 0.35);
-}
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-.btn-ghost {
-  background: var(--bg-glass);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-}
-.btn-ghost:hover {
-  background: var(--border);
-  color: var(--accent-light);
-}
-
-/* step visibility */
-.step { display: none; }
-.step.active { display: block; }
-
-/* results */
-.score-wrap {
-  text-align: center;
-  padding: 2rem 1rem;
-}
-.score-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: var(--gradient-accent);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  box-shadow: 0 0 40px rgba(212, 160, 67, 0.2);
-}
-.score-circle .score-num {
-  font-size: 2.5rem;
-  font-weight: 800;
-  line-height: 1;
-}
-.score-circle .score-total {
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-.score-msg {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  color: var(--text-secondary);
-}
-
-.result-list {
-  margin-top: 1.5rem;
-}
-.result-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
-  padding: 0.8rem 1rem;
-  border-radius: 10px;
-  margin-bottom: 0.5rem;
-  border: 1px solid var(--border);
-  background: var(--bg-glass);
-}
-.result-item .icon {
-  font-size: 1.1rem;
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-.result-item.correct { border-left: 3px solid var(--success); }
-.result-item.incorrect { border-left: 3px solid var(--error); }
-.result-item .r-q { font-size: 0.85rem; }
-.result-item .r-a { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
-
-/* writing response display */
-.writing-display {
-  background: var(--bg-glass);
-  border-radius: 12px;
-  padding: 1.2rem;
-  margin: 1.5rem 0;
-  border: 1px solid var(--border);
-}
-.writing-display h3 {
-  font-size: 0.9rem;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
-}
-.writing-display p {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
-
-/* footer */
-.site-footer {
-  text-align: center;
-  padding: 2rem;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  border-top: 1px solid var(--border);
-  width: 100%;
-  position: relative;
-  z-index: 1;
-}
-
-/* responsive */
-@media (max-width: 600px) {
-  .main-content { padding: 4.5rem 1rem 2rem; }
-  .card { padding: 1.2rem; }
-  .card h2 { font-size: 1.15rem; }
-  .tf-options { flex-direction: row; }
-  .btns { flex-direction: column; }
-  .btns .btn { width: 100%; justify-content: center; }
-  .score-circle { width: 100px; height: 100px; }
-  .score-circle .score-num { font-size: 2rem; }
+  --nav-bg: rgba(13, 4, 7, 0.8);
+}
+body.theme-blue {
+  --bg-primary: #080c1a;
+  --bg-secondary: #0f172a;
+  --bg-card: rgba(79, 70, 229, 0.15);
+  --bg-glass: rgba(79, 70, 229, 0.08);
+  --text-primary: #f0f4ff;
+  --text-secondary: #7dd3fc;
+  --text-muted: #64748b;
+  --accent: #4f46e5;
+  --accent-light: #0ea5e9;
+  --border: rgba(14, 165, 233, 0.35);
+  --shadow: 0 8px 32px rgba(0,0,0,0.6);
+  --glow: 0 0 40px rgba(79, 70, 229, 0.08);
+  --gradient-accent: linear-gradient(135deg, #4f46e5, #0ea5e9, #06b6d4);
+  --gradient-card: linear-gradient(145deg, rgba(79,70,229,0.15), rgba(15,23,42,0.5));
+  --success: #2ecc71;
+  --error: #e74c3c;
+  --warning: #f39c12;
+  --nav-bg: rgba(8, 12, 26, 0.85);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;display:flex;flex-direction:column;align-items:center;line-height:1.6;transition:background 0.4s ease,color 0.4s ease}
+.floating-shapes{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.shape{position:absolute;border-radius:50%;background:var(--accent);opacity:0.04}
+.shape-1{width:500px;height:500px;top:-150px;right:-150px;animation:floatA 20s ease-in-out infinite}
+.shape-2{width:400px;height:400px;bottom:-100px;left:-100px;animation:floatB 25s ease-in-out infinite}
+.shape-3{width:300px;height:300px;top:40%;left:15%;animation:floatC 18s ease-in-out infinite}
+.shape-4{width:250px;height:250px;bottom:25%;right:10%;animation:floatA 22s ease-in-out infinite reverse}
+.shape-5{width:350px;height:350px;top:10%;left:5%;animation:floatB 28s ease-in-out infinite reverse}
+@keyframes floatA{0%,100%{transform:translate(0,0) rotate(0deg) scale(1)}33%{transform:translate(30px,-40px) rotate(120deg) scale(1.05)}66%{transform:translate(-20px,20px) rotate(240deg) scale(0.95)}}
+@keyframes floatB{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(40px,30px) rotate(90deg)}50%{transform:translate(-30px,-40px) rotate(180deg)}75%{transform:translate(20px,-20px) rotate(270deg)}}
+@keyframes floatC{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-30px) scale(1.1)}}
+.site-header{width:100%;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);position:fixed;top:0;z-index:100}
+.brand{font-size:1.3rem;font-weight:700;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:0.5rem}
+.brand i{font-size:1.5rem}
+.header-actions{display:flex;align-items:center;gap:0.8rem}
+.theme-btn{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--border);border-radius:10px;background:var(--bg-glass);color:var(--accent);font-size:1rem;cursor:pointer;transition:all 0.3s ease}
+.theme-btn:hover{background:var(--accent);color:#fff;transform:rotate(30deg)}
+.back-link{display:inline-flex;align-items:center;gap:0.4rem;color:var(--text-secondary);text-decoration:none;font-size:0.9rem;transition:color 0.2s}
+.back-link:hover{color:var(--accent)}
+.main-content{width:100%;max-width:800px;padding:5rem 1.5rem 3rem;position:relative;z-index:1;flex:1}
+.card{background:var(--gradient-card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:16px;padding:2rem;box-shadow:var(--shadow),var(--glow);animation:fadeUp 0.5s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.card h2{font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;color:var(--accent);display:flex;align-items:center;gap:0.6rem}
+.card .subtitle{color:var(--text-muted);font-size:0.9rem;margin-bottom:1.5rem}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.5rem;border-radius:10px;font-weight:600;font-size:0.9rem;border:0;cursor:pointer;transition:all 0.25s ease;font-family:inherit}
+.btn-primary{background:var(--gradient-accent);color:#fff;box-shadow:0 4px 20px rgba(212,160,67,0.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(212,160,67,0.35)}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-ghost{background:var(--bg-glass);border:1px solid var(--border);color:var(--text-secondary)}
+.btn-ghost:hover{background:var(--border);color:var(--accent-light)}
+.step{display:none}
+.step.active{display:block}
+.level-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+.level-card{border:2px solid var(--border);border-radius:14px;padding:1.5rem 1rem;text-align:center;background:var(--bg-glass);cursor:pointer;transition:all 0.3s ease;position:relative}
+.level-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.level-card.selected{border-color:var(--accent);background:rgba(212,160,67,0.12);box-shadow:0 0 30px rgba(212,160,67,0.1)}
+.level-card .lvl-icon{font-size:2rem;color:var(--accent);margin-bottom:0.5rem}
+.level-card h3{font-size:1rem;margin-bottom:0.3rem}
+.level-card p{font-size:0.8rem;color:var(--text-muted)}
+.level-card .check{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:none;align-items:center;justify-content:center;font-size:0.7rem}
+.level-card.selected .check{display:flex}
+.form-row{display:flex;flex-direction:column;gap:0.35rem;margin-bottom:1rem}
+.form-row label{font-weight:600;font-size:0.85rem;color:var(--text-secondary)}
+.form-row input{padding:0.75rem 1rem;border-radius:10px;border:1px solid var(--border);background:var(--bg-glass);color:var(--text-primary);font-size:0.95rem;outline:none;transition:all 0.2s ease;font-family:inherit}
+.form-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(212,160,67,0.12)}
+.form-row input::placeholder{color:var(--text-muted);opacity:0.6}
+.form-row.input-error input{border-color:var(--error)}
+.field-error{color:var(--error);font-size:0.8rem;min-height:1.1rem}
+.name-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.progress-wrap{margin-bottom:2rem}
+.progress-bar{display:flex;justify-content:space-between;position:relative;margin-bottom:0.5rem}
+.progress-bar::before{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:var(--border);transform:translateY(-50%);z-index:0}
+.progress-bar .fill{position:absolute;top:50%;left:0;height:2px;background:var(--gradient-accent);transform:translateY(-50%);transition:width 0.5s ease;z-index:1;border-radius:2px}
+.progress-step{width:32px;height:32px;border-radius:50%;background:var(--bg-card);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;color:var(--text-muted);position:relative;z-index:2;transition:all 0.3s ease}
+.progress-step.active{background:var(--gradient-accent);border-color:var(--accent);color:#fff}
+.progress-step.done{background:var(--success);border-color:var(--success);color:#fff}
+.progress-label{text-align:center;font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem}
+.question{margin-bottom:1.5rem;animation:fadeUp 0.4s ease forwards;opacity:0}
+.question:nth-child(2){animation-delay:0.1s}
+.question:nth-child(3){animation-delay:0.2s}
+.question:nth-child(4){animation-delay:0.3s}
+.question:nth-child(5){animation-delay:0.4s}
+.question:nth-child(6){animation-delay:0.5s}
+.question .q-text{font-weight:600;font-size:0.95rem;margin-bottom:0.6rem;color:var(--text-primary)}
+.question .q-text .q-num{color:var(--accent);margin-right:0.4rem}
+.question .q-text .q-type{display:inline-block;font-size:0.7rem;font-weight:600;padding:0.15rem 0.5rem;border-radius:6px;background:var(--bg-glass);border:1px solid var(--border);color:var(--accent);margin-left:0.5rem;text-transform:uppercase;letter-spacing:0.5px;vertical-align:middle}
+.options{display:flex;flex-direction:column;gap:0.5rem}
+.option{display:flex;align-items:center;gap:0.7rem;padding:0.7rem 1rem;border-radius:10px;border:1px solid var(--border);background:var(--bg-glass);cursor:pointer;transition:all 0.2s ease}
+.option:hover{border-color:var(--accent);background:rgba(212,160,67,0.08)}
+.option input[type="radio"],.option input[type="checkbox"]{accent-color:var(--accent);width:18px;height:18px;flex-shrink:0}
+.option .opt-label{font-size:0.9rem;color:var(--text-primary);cursor:pointer}
+.option.selected{border-color:var(--accent);background:rgba(212,160,67,0.12)}
+.tf-options{display:flex;gap:0.8rem}
+.tf-options .option{flex:1;justify-content:center;text-align:center}
+.tf-options .option .opt-label{font-weight:600;font-size:1rem}
+.btns{display:flex;gap:1rem;margin-top:1.5rem;justify-content:flex-end}
+.listening-wrap{background:var(--bg-glass);border-radius:12px;padding:1.2rem;margin-bottom:1.5rem;border:1px solid var(--border)}
+.listening-wrap .listen-text{font-size:0.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem;padding:1rem;background:rgba(0,0,0,0.2);border-radius:10px}
+.listening-controls{display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem}
+.listen-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--bg-glass);color:var(--accent);font-size:1.1rem;cursor:pointer;transition:all 0.3s ease;display:grid;place-items:center;flex-shrink:0}
+.listen-btn:hover{background:var(--accent);color:#fff}
+.listen-btn.playing{background:var(--accent);color:#fff;animation:pulseBtn 1s ease-in-out infinite}
+@keyframes pulseBtn{0%,100%{box-shadow:0 0 0 0 rgba(212,160,67,0.4)}50%{box-shadow:0 0 0 12px rgba(212,160,67,0)}}
+.listen-status{font-size:0.8rem;color:var(--text-muted)}
+.fill-input{width:100%;padding:0.75rem 1rem;border-radius:10px;border:1px solid var(--border);background:var(--bg-glass);color:var(--text-primary);font-size:0.95rem;outline:none;transition:all 0.2s ease;font-family:inherit}
+.fill-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(212,160,67,0.12)}
+.score-wrap{text-align:center;padding:2rem 1rem}
+.score-circle{width:120px;height:120px;border-radius:50%;background:var(--gradient-accent);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.5rem}
+.score-circle .score-num{font-size:2.5rem;font-weight:800;line-height:1}
+.score-circle .score-total{font-size:0.9rem;opacity:0.8}
+.score-msg{font-size:1.1rem;margin-bottom:1.5rem;color:var(--text-secondary)}
+.result-list{margin-top:1.5rem}
+.result-item{display:flex;align-items:flex-start;gap:0.8rem;padding:0.8rem 1rem;border-radius:10px;margin-bottom:0.5rem;border:1px solid var(--border);background:var(--bg-glass)}
+.result-item .icon{font-size:1.1rem;margin-top:2px;flex-shrink:0}
+.result-item.correct{border-left:3px solid var(--success)}
+.result-item.incorrect{border-left:3px solid var(--error)}
+.result-item .r-q{font-size:0.85rem}
+.result-item .r-a{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem}
+.result-item .r-a strong{color:var(--text-primary)}
+.site-footer{text-align:center;padding:2rem;color:var(--text-muted);font-size:0.85rem;border-top:1px solid var(--border);width:100%;position:relative;z-index:1}
+.site-footer a{color:var(--accent);text-decoration:none}
+@media(max-width:768px){
+  .level-cards{grid-template-columns:1fr}
+  .name-row{grid-template-columns:1fr}
+  .main-content{padding:4.5rem 1rem 2rem}
+  .card{padding:1.2rem}
+  .card h2{font-size:1.15rem}
+  .tf-options{flex-direction:row}
+  .btns{flex-direction:column}
+  .btns .btn{width:100%;justify-content:center}
+  .score-circle{width:100px;height:100px}
+  .score-circle .score-num{font-size:2rem}
 }
 </style>
 </head>
@@ -526,168 +180,84 @@ textarea::placeholder {
 
 <header class="site-header">
   <a class="brand" href="/"><i class="fas fa-pen-fancy"></i> English Test</a>
-  <a class="back-link" href="/"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  <div class="header-actions">
+    <button id="themeToggle" class="theme-btn" aria-label="Switch theme"><i class="fas fa-palette"></i></button>
+    <a class="back-link" href="/"><i class="fas fa-arrow-left"></i> Home</a>
+  </div>
 </header>
 
 <div class="main-content">
 
-  <!-- progress -->
-  <div class="progress-wrap">
+  <!-- Step 0: Welcome / Register -->
+  <div class="step active" id="step0">
+    <div class="card">
+      <h2><i class="fas fa-graduation-cap"></i> English Test</h2>
+      <p class="subtitle">Welcome to the DLZLab English Test. Enter your details, choose your level, and begin.</p>
+
+      <div class="name-row">
+        <div class="form-row" id="firstNameGroup">
+          <label for="firstName">First Name</label>
+          <input id="firstName" type="text" placeholder="e.g. Ahmad" required />
+          <small class="field-error" id="firstNameError"></small>
+        </div>
+        <div class="form-row" id="lastNameGroup">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" type="text" placeholder="e.g. Karimi" required />
+          <small class="field-error" id="lastNameError"></small>
+        </div>
+      </div>
+
+      <p style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.8rem;">Select Your Level</p>
+      <div class="level-cards">
+        <div class="level-card" data-level="beginner">
+          <div class="lvl-icon"><i class="fas fa-seedling"></i></div>
+          <h3>Beginner</h3>
+          <p>Basic vocabulary, simple grammar, easy listening</p>
+          <div class="check"><i class="fas fa-check"></i></div>
+        </div>
+        <div class="level-card" data-level="medium">
+          <div class="lvl-icon"><i class="fas fa-leaf"></i></div>
+          <h3>Medium</h3>
+          <p>Everyday English, intermediate grammar, situational</p>
+          <div class="check"><i class="fas fa-check"></i></div>
+        </div>
+        <div class="level-card" data-level="expert">
+          <div class="lvl-icon"><i class="fas fa-tree"></i></div>
+          <h3>Expert</h3>
+          <p>Advanced vocabulary, complex grammar, fluent comprehension</p>
+          <div class="check"><i class="fas fa-check"></i></div>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="btn btn-primary" id="startTest"><i class="fas fa-play"></i> Start Test</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- progress bar (hidden on step0) -->
+  <div class="progress-wrap" id="progressWrap" style="display:none;">
     <div class="progress-bar">
       <div class="fill" id="progressFill" style="width:0%"></div>
       <div class="progress-step active" id="ps1">1</div>
       <div class="progress-step" id="ps2">2</div>
       <div class="progress-step" id="ps3">3</div>
       <div class="progress-step" id="ps4">4</div>
+      <div class="progress-step" id="ps5">5</div>
     </div>
-    <div class="progress-label" id="progressLabel">Step 1 of 4 — Listening</div>
+    <div class="progress-label" id="progressLabel">Questions</div>
   </div>
 
-  <!-- Step 1: Listening -->
-  <div class="step active" id="step1">
-    <div class="card">
-      <h2><i class="fas fa-headphones"></i> Listening</h2>
-      <p class="subtitle">Listen to the music carefully, then write your thoughts below.</p>
+  <!-- Step 1–4: Question sections (generated by JS) -->
+  <div class="step" id="step1"></div>
+  <div class="step" id="step2"></div>
+  <div class="step" id="step3"></div>
+  <div class="step" id="step4"></div>
 
-      <div class="audio-wrap">
-        <audio controls preload="metadata">
-          <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-
-      <label for="listening-response" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);display:block;margin-bottom:0.5rem;">
-        What do you think are the main goals or purposes of music? Write your thoughts.
-      </label>
-      <textarea id="listening-response" placeholder="e.g. Music helps people express emotions, connect with others, and relax after a long day..."></textarea>
-
-      <div class="btns">
-        <button class="btn btn-primary" id="toStep2">Continue <i class="fas fa-arrow-right"></i></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 2: True / False -->
-  <div class="step" id="step2">
-    <div class="card">
-      <h2><i class="fas fa-check-circle"></i> True or False</h2>
-      <p class="subtitle">Read each statement and decide if it's true or false.</p>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">1.</span> Music can help reduce stress and anxiety.</p>
-        <div class="tf-options options" data-q="tf1">
-          <label class="option" data-value="true"><input type="radio" name="tf1" value="true" /><span class="opt-label">True</span></label>
-          <label class="option" data-value="false"><input type="radio" name="tf1" value="false" /><span class="opt-label">False</span></label>
-        </div>
-      </div>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">2.</span> Music has no effect on human emotions.</p>
-        <div class="tf-options options" data-q="tf2">
-          <label class="option" data-value="true"><input type="radio" name="tf2" value="true" /><span class="opt-label">True</span></label>
-          <label class="option" data-value="false"><input type="radio" name="tf2" value="false" /><span class="opt-label">False</span></label>
-        </div>
-      </div>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">3.</span> Learning a musical instrument can improve brain function.</p>
-        <div class="tf-options options" data-q="tf3">
-          <label class="option" data-value="true"><input type="radio" name="tf3" value="true" /><span class="opt-label">True</span></label>
-          <label class="option" data-value="false"><input type="radio" name="tf3" value="false" /><span class="opt-label">False</span></label>
-        </div>
-      </div>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">4.</span> All music genres have the same tempo.</p>
-        <div class="tf-options options" data-q="tf4">
-          <label class="option" data-value="true"><input type="radio" name="tf4" value="true" /><span class="opt-label">True</span></label>
-          <label class="option" data-value="false"><input type="radio" name="tf4" value="false" /><span class="opt-label">False</span></label>
-        </div>
-      </div>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">5.</span> Music therapy is used to help people with mental health conditions.</p>
-        <div class="tf-options options" data-q="tf5">
-          <label class="option" data-value="true"><input type="radio" name="tf5" value="true" /><span class="opt-label">True</span></label>
-          <label class="option" data-value="false"><input type="radio" name="tf5" value="false" /><span class="opt-label">False</span></label>
-        </div>
-      </div>
-
-      <div class="btns">
-        <button class="btn btn-ghost" id="backTo1"><i class="fas fa-arrow-left"></i> Back</button>
-        <button class="btn btn-primary" id="toStep3">Continue <i class="fas fa-arrow-right"></i></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 3: Multiple Choice -->
-  <div class="step" id="step3">
-    <div class="card">
-      <h2><i class="fas fa-list-ol"></i> Multiple Choice</h2>
-      <p class="subtitle">Choose the best answer for each question.</p>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">1.</span> What is the term for the speed of music?</p>
-        <div class="options" data-q="mc1">
-          <label class="option" data-value="volume"><input type="radio" name="mc1" value="volume" /><span class="opt-label">Volume</span></label>
-          <label class="option" data-value="tempo"><input type="radio" name="mc1" value="tempo" /><span class="opt-label">Tempo</span></label>
-          <label class="option" data-value="pitch"><input type="radio" name="mc1" value="pitch" /><span class="opt-label">Pitch</span></label>
-          <label class="option" data-value="rhythm"><input type="radio" name="mc1" value="rhythm" /><span class="opt-label">Rhythm</span></label>
-        </div>
-      </div>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">2.</span> Which instrument has black and white keys?</p>
-        <div class="options" data-q="mc2">
-          <label class="option" data-value="guitar"><input type="radio" name="mc2" value="guitar" /><span class="opt-label">Guitar</span></label>
-          <label class="option" data-value="drums"><input type="radio" name="mc2" value="drums" /><span class="opt-label">Drums</span></label>
-          <label class="option" data-value="piano"><input type="radio" name="mc2" value="piano" /><span class="opt-label">Piano</span></label>
-          <label class="option" data-value="flute"><input type="radio" name="mc2" value="flute" /><span class="opt-label">Flute</span></label>
-        </div>
-      </div>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">3.</span> What does "forte" mean in music?</p>
-        <div class="options" data-q="mc3">
-          <label class="option" data-value="fast"><input type="radio" name="mc3" value="fast" /><span class="opt-label">Fast</span></label>
-          <label class="option" data-value="soft"><input type="radio" name="mc3" value="soft" /><span class="opt-label">Soft</span></label>
-          <label class="option" data-value="loud"><input type="radio" name="mc3" value="loud" /><span class="opt-label">Loud</span></label>
-          <label class="option" data-value="slow"><input type="radio" name="mc3" value="slow" /><span class="opt-label">Slow</span></label>
-        </div>
-      </div>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">4.</span> Which of these is a popular music genre?</p>
-        <div class="options" data-q="mc4">
-          <label class="option" data-value="novel"><input type="radio" name="mc4" value="novel" /><span class="opt-label">Novel</span></label>
-          <label class="option" data-value="jazz"><input type="radio" name="mc4" value="jazz" /><span class="opt-label">Jazz</span></label>
-          <label class="option" data-value="canvas"><input type="radio" name="mc4" value="canvas" /><span class="opt-label">Canvas</span></label>
-          <label class="option" data-value="sculpture"><input type="radio" name="mc4" value="sculpture" /><span class="opt-label">Sculpture</span></label>
-        </div>
-      </div>
-
-      <div class="question">
-        <p class="q-text"><span class="q-num">5.</span> What is a group of singers called?</p>
-        <div class="options" data-q="mc5">
-          <label class="option" data-value="band"><input type="radio" name="mc5" value="band" /><span class="opt-label">Band</span></label>
-          <label class="option" data-value="choir"><input type="radio" name="mc5" value="choir" /><span class="opt-label">Choir</span></label>
-          <label class="option" data-value="crowd"><input type="radio" name="mc5" value="crowd" /><span class="opt-label">Crowd</span></label>
-          <label class="option" data-value="team"><input type="radio" name="mc5" value="team" /><span class="opt-label">Team</span></label>
-        </div>
-      </div>
-
-      <div class="btns">
-        <button class="btn btn-ghost" id="backTo2"><i class="fas fa-arrow-left"></i> Back</button>
-        <button class="btn btn-primary" id="showResults">See Results <i class="fas fa-check"></i></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 4: Results -->
-  <div class="step" id="step4">
+  <!-- Step 5: Results -->
+  <div class="step" id="step5">
     <div class="card">
       <h2><i class="fas fa-trophy"></i> Your Results</h2>
-
       <div class="score-wrap">
         <div class="score-circle">
           <span class="score-num" id="scoreNum">0</span>
@@ -695,17 +265,11 @@ textarea::placeholder {
         </div>
         <div class="score-msg" id="scoreMsg"></div>
       </div>
-
-      <div class="writing-display" id="writingDisplay">
-        <h3><i class="fas fa-pen"></i> Your Thoughts on Music</h3>
-        <p id="writingText"></p>
-      </div>
-
+      <div id="levelFeedback" style="text-align:center;margin-bottom:1.5rem;font-size:0.9rem;color:var(--text-muted);"></div>
       <div class="result-list" id="resultList"></div>
-
       <div class="btns" style="justify-content:center;">
         <button class="btn btn-primary" id="tryAgain"><i class="fas fa-redo"></i> Try Again</button>
-        <a href="/" class="btn btn-ghost"><i class="fas fa-home"></i> Back to Home</a>
+        <a href="/" class="btn btn-ghost"><i class="fas fa-home"></i> Home</a>
       </div>
     </div>
   </div>
@@ -713,187 +277,629 @@ textarea::placeholder {
 </div>
 
 <footer class="site-footer">
-  &copy; <span id="year"></span> Dawood WaliZada &mdash; <a href="https://dlzlab.com" style="color:var(--accent);text-decoration:none;">dlzlab.com</a>
+  &copy; <span id="year"></span> Dawood WaliZada &mdash; <a href="https://dlzlab.com">dlzlab.com</a>
 </footer>
 
 <script>
+// ---- Year ----
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// state
-const state = {
-  listening: '',
-  tf: {},
-  mc: {}
-};
-
-// steps
-const steps = [1,2,3,4];
-let currentStep = 1;
-
-function showStep(n) {
-  steps.forEach(s => {
-    document.getElementById('step' + s).classList.remove('active');
-    document.getElementById('ps' + s).classList.remove('active');
-  });
-  document.getElementById('step' + n).classList.add('active');
-  document.getElementById('ps' + n).classList.add('active');
-
-  const labels = ['Listening', 'True / False', 'Multiple Choice', 'Results'];
-  document.getElementById('progressLabel').textContent = 'Step ' + n + ' of 4 — ' + labels[n-1];
-  document.getElementById('progressFill').style.width = ((n-1) / 3 * 100) + '%';
+// ---- Theme ----
+const themeBtn = document.getElementById('themeToggle');
+let theme = localStorage.getItem('dlz-theme') || 'wine';
+applyTheme(theme);
+themeBtn.addEventListener('click', () => {
+  theme = theme === 'wine' ? 'blue' : 'wine';
+  applyTheme(theme);
+  localStorage.setItem('dlz-theme', theme);
+});
+function applyTheme(t) {
+  document.body.classList.toggle('theme-blue', t === 'blue');
+  const icon = themeBtn.querySelector('i');
+  if (icon) icon.className = t === 'blue' ? 'fas fa-moon' : 'fas fa-palette';
 }
 
-// step 1 -> 2
-document.getElementById('toStep2').addEventListener('click', function() {
-  const val = document.getElementById('listening-response').value.trim();
-  if (!val) {
-    document.getElementById('listening-response').focus();
-    document.getElementById('listening-response').style.borderColor = '#e74c3c';
+// ====================
+// QUESTIONS BANK
+// ====================
+const LEVEL_NAMES = { beginner: 'Beginner', medium: 'Medium', expert: 'Expert' };
+
+const DEFAULT_QUESTIONS = {
+  beginner: [
+    {
+      id: 'b1', type: 'listening',
+      passage: 'Hi, my name is Sara. I am from Egypt. I am 22 years old. I study English at the university. I have two brothers and one sister. I like reading books and watching movies. Every morning, I drink tea and eat bread for breakfast.',
+      questions: [
+        { text: 'What is her name?', options: ['Sara', 'Maria', 'Aisha', 'Lina'], correct: 0 },
+        { text: 'Where is she from?', options: ['Saudi Arabia', 'Egypt', 'Jordan', 'Morocco'], correct: 1 },
+        { text: 'How many siblings does she have?', options: ['Two', 'Three', 'Four', 'One'], correct: 1 }
+      ]
+    },
+    { id: 'b2', type: 'vocabulary', text: 'What does the word "happy" mean?', options: ['Sad', 'Angry', 'Glad', 'Tired'], correct: 2 },
+    { id: 'b3', type: 'vocabulary', text: 'Choose the correct opposite of "big".', options: ['Large', 'Huge', 'Small', 'Tall'], correct: 2 },
+    { id: 'b4', type: 'truefalse', text: 'The sun rises in the west.', correctAnswer: false },
+    { id: 'b5', type: 'truefalse', text: 'Water freezes at 0 degrees Celsius.', correctAnswer: true },
+    { id: 'b6', type: 'multiple', text: 'What is the past tense of "go"?', options: ['Goed', 'Went', 'Gone', 'Going'], correct: 1 },
+    { id: 'b7', type: 'multiple', text: 'Choose the correct sentence:', options: ['He go to school', 'He goes to school', 'He going to school', 'He gone to school'], correct: 1 },
+    { id: 'b8', type: 'multi-answer', text: 'Which of these are fruits? (Select all that apply)', options: ['Apple', 'Carrot', 'Banana', 'Orange'], correct: [0, 2, 3] },
+    { id: 'b9', type: 'fill', text: 'I ___ a student. (am/is/are)', correctAnswer: 'am', acceptable: ['am'] },
+    { id: 'b10', type: 'listening',
+      passage: 'Ali gets up at six o\'clock every morning. He washes his face, brushes his teeth, and gets dressed. Then he eats breakfast with his family. He leaves home at seven thirty and goes to school by bus.',
+      questions: [
+        { text: 'What time does Ali get up?', options: ['5:00', '6:00', '7:00', '7:30'], correct: 1 },
+        { text: 'How does Ali go to school?', options: ['By car', 'By bus', 'On foot', 'By bike'], correct: 1 }
+      ]
+    }
+  ],
+  medium: [
+    {
+      id: 'm1', type: 'listening',
+      passage: 'Last weekend, my family and I went to the beach. The weather was sunny and warm. We swam in the sea and built a sandcastle. My little sister collected seashells. My father cooked fish on a small fire. We stayed there until sunset. It was a wonderful day.',
+      questions: [
+        { text: 'Where did the family go last weekend?', options: ['To the park', 'To the beach', 'To the mountains', 'To the river'], correct: 1 },
+        { text: 'What did the father do?', options: ['Swam in the sea', 'Built a sandcastle', 'Cooked fish', 'Collected seashells'], correct: 2 },
+        { text: 'When did they leave?', options: ['At noon', 'In the afternoon', 'At sunset', 'At midnight'], correct: 2 }
+      ]
+    },
+    { id: 'm2', type: 'vocabulary', text: 'What is the synonym of "quick"?', options: ['Slow', 'Fast', 'Heavy', 'Light'], correct: 1 },
+    { id: 'm3', type: 'vocabulary', text: 'What does "generous" mean?', options: ['Selfish', 'Kind and giving', 'Angry', 'Lazy'], correct: 1 },
+    { id: 'm4', type: 'truefalse', text: 'The Earth revolves around the Moon.', correctAnswer: false },
+    { id: 'm5', type: 'truefalse', text: 'Shakespeare wrote Romeo and Juliet.', correctAnswer: true },
+    { id: 'm6', type: 'multiple', text: 'Choose the correct form: "If I ___ rich, I would travel the world."', options: ['am', 'was', 'were', 'be'], correct: 2 },
+    { id: 'm7', type: 'multiple', text: 'Which sentence uses the present perfect correctly?', options: ['I have saw that movie', 'I have seen that movie', 'I have see that movie', 'I have seeing that movie'], correct: 1 },
+    { id: 'm8', type: 'multi-answer', text: 'Which of these are correct ways to ask for help? (Select all that apply)', options: ['Can you help me?', 'Could you help me?', 'Help me must you', 'Would you mind helping me?'], correct: [0, 1, 3] },
+    { id: 'm9', type: 'fill', text: 'She ___ to the market yesterday. (go/went/gone)', correctAnswer: 'went', acceptable: ['went'] },
+    { id: 'm10', type: 'listening',
+      passage: 'There are many benefits to reading books. First, reading improves your vocabulary and writing skills. Second, it helps you understand different cultures and ideas. Third, reading reduces stress and improves concentration. Experts recommend reading for at least 30 minutes every day.',
+      questions: [
+        { text: 'How many benefits of reading are mentioned?', options: ['Two', 'Three', 'Four', 'Five'], correct: 1 },
+        { text: 'How long do experts recommend reading daily?', options: ['15 minutes', '20 minutes', '30 minutes', '1 hour'], correct: 2 }
+      ]
+    }
+  ],
+  expert: [
+    {
+      id: 'e1', type: 'listening',
+      passage: 'Climate change is one of the most pressing challenges facing humanity today. Scientists warn that rising global temperatures could lead to catastrophic consequences, including extreme weather events, rising sea levels, and loss of biodiversity. Governments around the world are being urged to reduce carbon emissions and invest in renewable energy sources. However, meaningful progress requires collective action from individuals, corporations, and policymakers alike.',
+      questions: [
+        { text: 'What is described as one of the most pressing challenges?', options: ['Poverty', 'Climate change', 'War', 'Disease'], correct: 1 },
+        { text: 'Which of these is NOT mentioned as a consequence?', options: ['Extreme weather', 'Rising sea levels', 'Loss of biodiversity', 'Economic collapse'], correct: 3 },
+        { text: 'What is required for meaningful progress?', options: ['Government action only', 'Individual action only', 'Collective action from all', 'Corporate action only'], correct: 2 }
+      ]
+    },
+    { id: 'e2', type: 'vocabulary', text: 'What does "ubiquitous" mean?', options: ['Rare', 'Everywhere', 'Dangerous', 'Beautiful'], correct: 1 },
+    { id: 'e3', type: 'vocabulary', text: 'Choose the best synonym for "meticulous".', options: ['Careless', 'Thorough', 'Slow', 'Loud'], correct: 1 },
+    { id: 'e4', type: 'truefalse', text: 'The Industrial Revolution began in the 18th century.', correctAnswer: true },
+    { id: 'e5', type: 'truefalse', text: 'Photosynthesis occurs in animal cells.', correctAnswer: false },
+    { id: 'e6', type: 'multiple', text: 'Choose the correct form: "Had I known earlier, I ___ things differently."', options: ['would do', 'would have done', 'will do', 'did'], correct: 1 },
+    { id: 'e7', type: 'multiple', text: 'Which sentence uses the subjunctive mood correctly?', options: ['I wish I was there', 'I wish I were there', 'I wish I am there', 'I wish I be there'], correct: 1 },
+    { id: 'e8', type: 'multi-answer', text: 'Which words are examples of cohesive devices? (Select all that apply)', options: ['However', 'Therefore', 'Beautiful', 'Furthermore'], correct: [0, 1, 3] },
+    { id: 'e9', type: 'fill', text: 'By next year, I ___ here for ten years. (will work / will have worked / worked)', correctAnswer: 'will have worked', acceptable: ['will have worked'] },
+    { id: 'e10', type: 'listening',
+      passage: 'The concept of artificial intelligence dates back to the mid-20th century when Alan Turing proposed the question, "Can machines think?" Since then, AI has evolved from simple rule-based systems to sophisticated neural networks capable of natural language processing, image recognition, and autonomous decision-making. While AI offers enormous potential for advancements in healthcare, education, and industry, it also raises ethical concerns about privacy, job displacement, and algorithmic bias.',
+      questions: [
+        { text: 'Who proposed the question "Can machines think?"', options: ['Einstein', 'Turing', 'Newton', 'Hawking'], correct: 1 },
+        { text: 'Which is NOT mentioned as a capability of modern AI?', options: ['Natural language processing', 'Image recognition', 'Emotional feelings', 'Autonomous decision-making'], correct: 2 },
+        { text: 'What ethical concern about AI is mentioned?', options: ['Cost of development', 'Job displacement', 'Internet speed', 'Electricity usage'], correct: 1 }
+      ]
+    }
+  ]
+};
+
+// Load questions from localStorage or use defaults
+function loadQuestions() {
+  const stored = localStorage.getItem('dlz-english-questions');
+  if (stored) {
+    try { return JSON.parse(stored); } catch(e) { /* fall through */ }
+  }
+  return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
+}
+
+function saveQuestions(qs) {
+  localStorage.setItem('dlz-english-questions', JSON.stringify(qs));
+}
+
+// ====================
+// APP STATE
+// ====================
+const state = {
+  firstName: '',
+  lastName: '',
+  level: null,
+  currentStep: 0,
+  answers: {},
+  questions: null,
+  questionsList: []
+};
+
+let questions = loadQuestions();
+
+// ====================
+// DOM REFS
+// ====================
+const steps = [0, 1, 2, 3, 4, 5];
+const stepEls = {};
+steps.forEach(s => { stepEls[s] = document.getElementById('step' + s); });
+
+// ====================
+// LEVEL SELECTION
+// ====================
+document.querySelectorAll('.level-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    state.level = card.dataset.level;
+  });
+});
+
+// ====================
+// START TEST
+// ====================
+document.getElementById('startTest').addEventListener('click', () => {
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  let valid = true;
+
+  if (!fn) {
+    document.getElementById('firstNameGroup').classList.add('input-error');
+    document.getElementById('firstNameError').textContent = 'First name is required';
+    valid = false;
+  } else {
+    document.getElementById('firstNameGroup').classList.remove('input-error');
+    document.getElementById('firstNameError').textContent = '';
+  }
+
+  if (!ln) {
+    document.getElementById('lastNameGroup').classList.add('input-error');
+    document.getElementById('lastNameError').textContent = 'Last name is required';
+    valid = false;
+  } else {
+    document.getElementById('lastNameGroup').classList.remove('input-error');
+    document.getElementById('lastNameError').textContent = '';
+  }
+
+  if (!state.level) {
+    alert('Please select your English level.');
     return;
   }
-  document.getElementById('listening-response').style.borderColor = '';
-  state.listening = val;
-  document.getElementById('ps1').classList.add('done');
-  currentStep = 2;
-  showStep(2);
+
+  if (!valid) return;
+
+  state.firstName = fn;
+  state.lastName = ln;
+  state.answers = {};
+  questions = loadQuestions();
+  state.questions = questions[state.level];
+  state.questionsList = buildQuestionList(state.questions);
+
+  document.getElementById('progressWrap').style.display = 'block';
+  goToStep(1);
+  renderQuestions(1);
 });
 
-// step 2 -> 3
-document.getElementById('toStep3').addEventListener('click', function() {
-  const qs = ['tf1','tf2','tf3','tf4','tf5'];
-  let allAnswered = true;
-  qs.forEach(q => {
-    const sel = document.querySelector('input[name="' + q + '"]:checked');
-    if (!sel) { allAnswered = false; return; }
-    state.tf[q] = sel.value;
-  });
-  if (!allAnswered) { alert('Please answer all questions before continuing.'); return; }
-  document.getElementById('ps2').classList.add('done');
-  currentStep = 3;
-  showStep(3);
-});
-
-// step 3 -> 4
-document.getElementById('showResults').addEventListener('click', function() {
-  const qs = ['mc1','mc2','mc3','mc4','mc5'];
-  let allAnswered = true;
-  qs.forEach(q => {
-    const sel = document.querySelector('input[name="' + q + '"]:checked');
-    if (!sel) { allAnswered = false; return; }
-    state.mc[q] = sel.value;
-  });
-  if (!allAnswered) { alert('Please answer all questions before continuing.'); return; }
-  document.getElementById('ps3').classList.add('done');
-  currentStep = 4;
-  showStep(4);
-  showResults();
-});
-
-// back buttons
-document.getElementById('backTo1').addEventListener('click', function() {
-  currentStep = 1;
-  document.getElementById('ps2').classList.remove('done');
-  showStep(1);
-});
-document.getElementById('backTo2').addEventListener('click', function() {
-  currentStep = 2;
-  document.getElementById('ps3').classList.remove('done');
-  showStep(2);
-});
-
-// try again
-document.getElementById('tryAgain').addEventListener('click', function() {
-  state.listening = '';
-  state.tf = {};
-  state.mc = {};
-  document.getElementById('listening-response').value = '';
-  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-  document.querySelectorAll('.progress-step').forEach(p => p.classList.remove('done'));
-  currentStep = 1;
-  showStep(1);
-});
-
-// option click handler
-document.querySelectorAll('.option').forEach(opt => {
-  opt.addEventListener('click', function(e) {
-    const radio = this.querySelector('input[type="radio"]');
-    if (radio && !e.target.closest('input')) {
-      radio.checked = true;
-      radio.dispatchEvent(new Event('change'));
+// ====================
+// BUILD FLAT QUESTION LIST
+// ====================
+function buildQuestionList(levelQs) {
+  const list = [];
+  const renderedPassages = {};
+  levelQs.forEach(q => {
+    if (q.type === 'listening') {
+      q.questions.forEach((sq, idx) => {
+        list.push({ parentId: q.id, subIndex: idx, text: sq.text, options: sq.options, correct: sq.correct, type: 'mc', passage: idx === 0 ? q.passage : null, passageId: idx === 0 ? q.id : null });
+      });
+      renderedPassages[q.id] = true;
+    } else {
+      list.push(q);
     }
   });
-});
+  return list;
+}
 
-// results
+function getTotalQuestions() {
+  return state.questionsList.length;
+}
+
+// ====================
+// STEP NAVIGATION
+// ====================
+function goToStep(n) {
+  steps.forEach(s => {
+    stepEls[s].classList.remove('active');
+    const ps = document.getElementById('ps' + s);
+    if (ps) ps.classList.remove('active');
+  });
+  stepEls[n].classList.add('active');
+  const ps = document.getElementById('ps' + n);
+  if (ps) ps.classList.add('active');
+  state.currentStep = n;
+
+  const totalQuestions = getTotalQuestions();
+  const perStep = Math.ceil(totalQuestions / 4);
+  const maxProgressStep = 5;
+  const progress = Math.min((n - 1) / 4 * 100, 100);
+  document.getElementById('progressFill').style.width = progress + '%';
+
+  const labels = ['', 'Part 1', 'Part 2', 'Part 3', 'Part 4', 'Results'];
+  const label = n >= 1 && n <= 4 ? `Step ${n} of 4 — ${labels[n]} (${Math.min(perStep, totalQuestions - (n-1)*perStep)} questions)` : labels[n] || '';
+  document.getElementById('progressLabel').textContent = label;
+}
+
+// ====================
+// RENDER QUESTIONS
+// ====================
+function renderQuestions(stepNum) {
+  const total = getTotalQuestions();
+  const perStep = Math.ceil(total / 4);
+  const startIdx = (stepNum - 1) * perStep;
+  const endIdx = Math.min(startIdx + perStep, total);
+  const qs = state.questionsList.slice(startIdx, endIdx);
+
+  const container = stepEls[stepNum];
+  let html = '<div class="card"><h2><i class="fas fa-pencil-alt"></i> Part ' + stepNum + '</h2><p class="subtitle">Answer the following questions.</p>';
+
+  let lastPassageId = null;
+  qs.forEach((q, idx) => {
+    const globalIdx = startIdx + idx;
+    if (q.passageId && q.passageId !== lastPassageId) {
+      lastPassageId = q.passageId;
+      html += '<div class="listening-wrap" style="margin:1rem 0;"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem;">';
+      html += '<button class="listen-btn" id="playBtn-' + q.passageId + '" onclick="playListening(\'' + q.passageId + '\')"><i class="fas fa-play"></i></button>';
+      html += '<span><strong style="color:var(--accent);"><i class="fas fa-headphones"></i> Listening</strong><br><span class="listen-status" id="status-' + q.passageId + '" style="font-size:0.8rem;color:var(--text-muted);">Click play to listen</span></span>';
+      html += '</div><div class="listen-text" id="passageText-' + q.passageId + '"><em style="color:var(--text-muted);font-size:0.85rem;">' + q.passage + '</em></div></div>';
+    }
+    html += renderQuestion(q, globalIdx);
+  });
+
+  html += '<div class="btns">';
+  if (stepNum > 1) {
+    html += '<button class="btn btn-ghost" onclick="prevStep(' + stepNum + ')"><i class="fas fa-arrow-left"></i> Back</button>';
+  }
+  if (stepNum < 4) {
+    html += '<button class="btn btn-primary" onclick="nextStep(' + stepNum + ')">Continue <i class="fas fa-arrow-right"></i></button>';
+  } else {
+    html += '<button class="btn btn-primary" onclick="submitTest()">See Results <i class="fas fa-check"></i></button>';
+  }
+  html += '</div></div>';
+
+  container.innerHTML = html;
+
+  // Attach event listeners for options
+  container.querySelectorAll('.option').forEach(opt => {
+    opt.addEventListener('click', function(e) {
+      const input = this.querySelector('input[type="radio"], input[type="checkbox"]');
+      if (!input) return;
+      if (input.type === 'radio') {
+        if (!e.target.closest('input')) {
+          input.checked = true;
+          input.dispatchEvent(new Event('change'));
+        }
+      } else if (input.type === 'checkbox') {
+        if (!e.target.closest('input')) {
+          input.checked = !input.checked;
+          input.dispatchEvent(new Event('change'));
+        }
+      }
+    });
+  });
+
+  // Listen for changes to store answers
+  container.querySelectorAll('input[type="radio"]').forEach(r => {
+    r.addEventListener('change', () => {
+      state.answers[r.name] = r.value;
+    });
+  });
+  container.querySelectorAll('input[type="checkbox"]').forEach(c => {
+    c.addEventListener('change', () => {
+      const name = c.name;
+      if (!state.answers[name]) state.answers[name] = [];
+      const checked = container.querySelectorAll('input[name="' + name + '"]:checked');
+      state.answers[name] = Array.from(checked).map(el => el.value);
+    });
+  });
+  container.querySelectorAll('.fill-input').forEach(inp => {
+    inp.addEventListener('input', () => {
+      state.answers[inp.name] = inp.value.trim();
+    });
+  });
+}
+
+function renderQuestion(q, idx) {
+  const qNum = idx + 1;
+  const name = 'q' + idx;
+
+  if (q.type === 'mc') {
+    let html = '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">MC</span></p><div class="options">';
+    q.options.forEach((opt, oi) => {
+      html += '<label class="option"><input type="radio" name="' + name + '" value="' + oi + '" /><span class="opt-label">' + opt + '</span></label>';
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  if (q.type === 'multiple') {
+    let html = '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">MC</span></p><div class="options">';
+    q.options.forEach((opt, oi) => {
+      html += '<label class="option"><input type="radio" name="' + name + '" value="' + oi + '" /><span class="opt-label">' + opt + '</span></label>';
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  if (q.type === 'multi-answer') {
+    let html = '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">MULTI</span></p><div class="options">';
+    q.options.forEach((opt, oi) => {
+      html += '<label class="option"><input type="checkbox" name="' + name + '" value="' + oi + '" /><span class="opt-label">' + opt + '</span></label>';
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  if (q.type === 'truefalse') {
+    const tfName = 'q' + idx;
+    return '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">T/F</span></p><div class="tf-options options"><label class="option"><input type="radio" name="' + tfName + '" value="true" /><span class="opt-label">True</span></label><label class="option"><input type="radio" name="' + tfName + '" value="false" /><span class="opt-label">False</span></label></div></div>';
+  }
+
+  if (q.type === 'vocabulary') {
+    let html = '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">VOCAB</span></p><div class="options">';
+    q.options.forEach((opt, oi) => {
+      html += '<label class="option"><input type="radio" name="' + name + '" value="' + oi + '" /><span class="opt-label">' + opt + '</span></label>';
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  if (q.type === 'fill') {
+    return '<div class="question"><p class="q-text"><span class="q-num">' + qNum + '.</span> ' + q.text + '<span class="q-type">FILL</span></p><input class="fill-input" type="text" name="' + name + '" placeholder="Type your answer..." /></div>';
+  }
+
+  return '';
+}
+
+// ====================
+// SPEECH SYNTHESIS
+// ====================
+let currentUtterance = null;
+function playListening(qId) {
+  const qs = state.questions;
+  let passage = '';
+  let found = false;
+  for (const q of qs) {
+    if (q.id === qId && q.type === 'listening') {
+      passage = q.passage;
+      found = true;
+      break;
+    }
+  }
+  if (!found) return;
+
+  if (currentUtterance && window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    const btn = document.getElementById('playBtn-' + qId);
+    if (btn) {
+      btn.innerHTML = '<i class="fas fa-play"></i>';
+      btn.classList.remove('playing');
+    }
+    document.getElementById('status-' + qId).textContent = 'Stopped';
+    currentUtterance = null;
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(passage);
+  utterance.lang = 'en-US';
+  utterance.rate = 0.9;
+  utterance.pitch = 1;
+  currentUtterance = utterance;
+
+  const btn = document.getElementById('playBtn-' + qId);
+  btn.innerHTML = '<i class="fas fa-stop"></i>';
+  btn.classList.add('playing');
+  document.getElementById('status-' + qId).textContent = 'Playing...';
+
+  utterance.onend = () => {
+    btn.innerHTML = '<i class="fas fa-play"></i>';
+    btn.classList.remove('playing');
+    document.getElementById('status-' + qId).textContent = 'Done ✓';
+    currentUtterance = null;
+  };
+
+  utterance.onerror = () => {
+    btn.innerHTML = '<i class="fas fa-play"></i>';
+    btn.classList.remove('playing');
+    document.getElementById('status-' + qId).textContent = 'Error';
+    currentUtterance = null;
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+// ====================
+// NAVIGATION
+// ====================
+function nextStep(n) {
+  if (!validateStep(n)) return;
+  document.getElementById('ps' + n).classList.add('done');
+  goToStep(n + 1);
+  renderQuestions(n + 1);
+}
+
+function prevStep(n) {
+  document.getElementById('ps' + n).classList.remove('done');
+  goToStep(n - 1);
+}
+
+function validateStep(n) {
+  const total = getTotalQuestions();
+  const perStep = Math.ceil(total / 4);
+  const startIdx = (n - 1) * perStep;
+  const endIdx = Math.min(startIdx + perStep, total);
+  const qs = state.questionsList.slice(startIdx, endIdx);
+
+  for (let i = 0; i < qs.length; i++) {
+    const globalIdx = startIdx + i;
+    const name = 'q' + globalIdx;
+    const q = qs[i];
+
+    if (q.type === 'mc' || q.type === 'multiple' || q.type === 'vocabulary') {
+      if (!state.answers[name] && state.answers[name] !== 0) {
+        alert('Please answer question ' + (globalIdx + 1));
+        return false;
+      }
+    }
+    if (q.type === 'truefalse') {
+      if (!state.answers[name]) {
+        alert('Please answer question ' + (globalIdx + 1));
+        return false;
+      }
+    }
+    if (q.type === 'multi-answer') {
+      if (!state.answers[name] || state.answers[name].length === 0) {
+        alert('Please answer question ' + (globalIdx + 1));
+        return false;
+      }
+    }
+    if (q.type === 'fill') {
+      if (!state.answers[name]) {
+        alert('Please answer question ' + (globalIdx + 1));
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+// ====================
+// SUBMIT & RESULTS
+// ====================
+function submitTest() {
+  if (!validateStep(4)) return;
+  document.getElementById('ps4').classList.add('done');
+  goToStep(5);
+  showResults();
+}
+
 function showResults() {
-  // tf answers
-  const tfAnswers = { tf1: 'true', tf2: 'false', tf3: 'true', tf4: 'false', tf5: 'true' };
-  const mcAnswers = { mc1: 'tempo', mc2: 'piano', mc3: 'loud', mc4: 'jazz', mc5: 'choir' };
-
-  const tfText = {
-    tf1: 'Music can help reduce stress and anxiety.',
-    tf2: 'Music has no effect on human emotions.',
-    tf3: 'Learning a musical instrument can improve brain function.',
-    tf4: 'All music genres have the same tempo.',
-    tf5: 'Music therapy is used to help people with mental health conditions.'
-  };
-  const mcText = {
-    mc1: 'What is the term for the speed of music?',
-    mc2: 'Which instrument has black and white keys?',
-    mc3: 'What does "forte" mean in music?',
-    mc4: 'Which of these is a popular music genre?',
-    mc5: 'What is a group of singers called?'
-  };
-  const mcCorrectLabel = {
-    tempo: 'Tempo',
-    piano: 'Piano',
-    loud: 'Loud',
-    jazz: 'Jazz',
-    choir: 'Choir'
-  };
-
+  const qs = state.questionsList;
   let correct = 0;
-  let total = 10;
+  const total = qs.length;
   let html = '';
 
-  // check tf
-  for (let q in tfAnswers) {
-    const userAns = state.tf[q] || '';
-    const isCorrect = userAns === tfAnswers[q];
-    if (isCorrect) correct++;
-    html += '<div class="result-item ' + (isCorrect ? 'correct' : 'incorrect') + '">';
-    html += '<span class="icon"><i class="fas fa-' + (isCorrect ? 'check-circle' : 'times-circle') + '" style="color:' + (isCorrect ? '#2ecc71' : '#e74c3c') + '"></i></span>';
-    html += '<div><div class="r-q">' + tfText[q] + '</div>';
-    html += '<div class="r-a">Your answer: <strong>' + (userAns === 'true' ? 'True' : userAns === 'false' ? 'False' : '—') + '</strong> &nbsp;|&nbsp; Correct: <strong style="color:var(--success);">' + (tfAnswers[q] === 'true' ? 'True' : 'False') + '</strong></div></div></div>';
-  }
+  qs.forEach((q, idx) => {
+    const name = 'q' + idx;
+    const userAns = state.answers[name];
+    let isCorrect = false;
+    let correctAnswer = '';
+    let userDisplay = '';
 
-  // check mc
-  for (let q in mcAnswers) {
-    const userAns = state.mc[q] || '';
-    const isCorrect = userAns === mcAnswers[q];
+    if (q.type === 'mc') {
+      const ci = q.correct;
+      correctAnswer = q.options[ci];
+      userDisplay = q.options[userAns] || '—';
+      isCorrect = parseInt(userAns) === ci;
+    } else if (q.type === 'multiple') {
+      const ci = q.correct;
+      correctAnswer = q.options[ci];
+      userDisplay = q.options[userAns] || '—';
+      isCorrect = parseInt(userAns) === ci;
+    } else if (q.type === 'vocabulary') {
+      const ci = q.correct;
+      correctAnswer = q.options[ci];
+      userDisplay = q.options[userAns] || '—';
+      isCorrect = parseInt(userAns) === ci;
+    } else if (q.type === 'truefalse') {
+      correctAnswer = q.correctAnswer ? 'True' : 'False';
+      userDisplay = userAns === 'true' ? 'True' : userAns === 'false' ? 'False' : '—';
+      isCorrect = (userAns === 'true') === q.correctAnswer;
+    } else if (q.type === 'multi-answer') {
+      const correctIndices = q.correct.sort().join(',');
+      const userIndices = (userAns || []).map(Number).sort().join(',');
+      correctAnswer = q.correct.map(i => q.options[i]).join(', ');
+      userDisplay = (userAns || []).map(Number).map(i => q.options[i]).join(', ') || '—';
+      isCorrect = correctIndices === userIndices;
+    } else if (q.type === 'fill') {
+      correctAnswer = q.correctAnswer;
+      userDisplay = userAns || '—';
+      isCorrect = q.acceptable.some(a => a.toLowerCase() === (userAns || '').toLowerCase());
+    }
+
     if (isCorrect) correct++;
+
     html += '<div class="result-item ' + (isCorrect ? 'correct' : 'incorrect') + '">';
     html += '<span class="icon"><i class="fas fa-' + (isCorrect ? 'check-circle' : 'times-circle') + '" style="color:' + (isCorrect ? '#2ecc71' : '#e74c3c') + '"></i></span>';
-    html += '<div><div class="r-q">' + mcText[q] + '</div>';
-    html += '<div class="r-a">Your answer: <strong>' + (mcCorrectLabel[userAns] || '—') + '</strong> &nbsp;|&nbsp; Correct: <strong style="color:var(--success);">' + mcCorrectLabel[mcAnswers[q]] + '</strong></div></div></div>';
-  }
+    html += '<div><div class="r-q">' + (idx + 1) + '. ' + q.text + '</div>';
+    html += '<div class="r-a">Your answer: <strong>' + userDisplay + '</strong> &nbsp;|&nbsp; Correct: <strong style="color:#2ecc71;">' + correctAnswer + '</strong></div></div></div>';
+  });
 
   document.getElementById('resultList').innerHTML = html;
   document.getElementById('scoreNum').textContent = correct;
+  document.getElementById('scoreTotal').textContent = '/ ' + total;
 
-  // message based on score
   const pct = correct / total;
   let msg = '';
-  if (pct === 1) msg = 'Excellent! You have a great understanding of music!';
-  else if (pct >= 0.8) msg = 'Great job! You know a lot about music.';
-  else if (pct >= 0.6) msg = 'Good effort! Keep learning about music.';
-  else if (pct >= 0.4) msg = 'Not bad, but there\'s room for improvement.';
-  else msg = 'Keep studying — music is a wonderful world to explore!';
+  if (pct >= 0.9) msg = 'Excellent! Outstanding performance!';
+  else if (pct >= 0.8) msg = 'Great job! You have strong English skills.';
+  else if (pct >= 0.7) msg = 'Good effort! You have a solid foundation.';
+  else if (pct >= 0.5) msg = 'Not bad. Keep practicing and you will improve.';
+  else msg = 'Keep studying! Review the basics and try again.';
   document.getElementById('scoreMsg').textContent = msg;
 
-  // show writing
-  document.getElementById('writingText').textContent = state.listening || '(no response)';
+  document.getElementById('levelFeedback').innerHTML = 'Level: <strong>' + LEVEL_NAMES[state.level] + '</strong> — Score: ' + correct + '/' + total + ' (' + Math.round(pct * 100) + '%)';
+
+  // Save submission
+  saveSubmission(state.firstName, state.lastName, state.level, correct, total, state.answers, html);
 }
+
+// ====================
+// SAVE SUBMISSION
+// ====================
+function saveSubmission(fn, ln, level, correct, total, answers, resultHtml) {
+  const submissions = JSON.parse(localStorage.getItem('dlz-english-results') || '[]');
+  submissions.push({
+    firstName: fn,
+    lastName: ln,
+    level: level,
+    score: correct,
+    total: total,
+    percentage: Math.round(correct / total * 100),
+    answers: answers,
+    date: new Date().toISOString()
+  });
+  localStorage.setItem('dlz-english-results', JSON.stringify(submissions));
+}
+
+// ====================
+// TRY AGAIN
+// ====================
+document.getElementById('tryAgain').addEventListener('click', () => {
+  state.answers = {};
+  state.level = null;
+  state.firstName = '';
+  state.lastName = '';
+  document.getElementById('firstName').value = '';
+  document.getElementById('lastName').value = '';
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.progress-step').forEach(p => p.classList.remove('done'));
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0%';
+  goToStep(0);
+});
+
+// ====================
+// OPTION CLICK HANDLER (global)
+// ====================
+document.addEventListener('click', function(e) {
+  const opt = e.target.closest('.option');
+  if (!opt) return;
+  const input = opt.querySelector('input[type="radio"], input[type="checkbox"]');
+  if (!input) return;
+  if (e.target.closest('input')) return;
+  if (input.type === 'radio') {
+    input.checked = true;
+  } else {
+    input.checked = !input.checked;
+  }
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+});
 </script>
 </body>
 </html>
