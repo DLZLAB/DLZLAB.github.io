@@ -153,13 +153,25 @@ body.theme-blue { background: #080c1a; }
 }
 
 .glass-border-glow {
-  border-image: linear-gradient(135deg, var(--accent), transparent, var(--accent)) 1;
+  position: relative;
   border-radius: 16px;
-  border-width: 1.5px;
-  border-style: solid;
   background: var(--gradient-card);
   backdrop-filter: blur(16px);
   box-shadow: var(--shadow), 0 0 30px rgba(212, 160, 67, 0.06);
+}
+
+.glass-border-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--accent), transparent, var(--accent));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .theme-blue .glass-card:hover {
@@ -180,6 +192,10 @@ body.theme-blue { background: #080c1a; }
 }
 .theme-blue .glass-border-glow {
   box-shadow: var(--shadow), 0 0 30px rgba(79, 70, 229, 0.06);
+}
+
+.theme-blue .glass-border-glow::before {
+  background: linear-gradient(135deg, #4f46e5, transparent, #06b6d4);
 }
 
 /* Light theme: accent glow on interactive elements */

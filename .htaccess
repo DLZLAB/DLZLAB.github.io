@@ -3,10 +3,10 @@
 RewriteEngine On
 
 # ============================
-# HTTPS Redirect (uncomment on production)
+# HTTPS Redirect
 # ============================
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
 # ============================
 # WWW to non-WWW (choose one)
@@ -22,11 +22,11 @@ RewriteRule ^index\.html$ / [R=301,L]
 
 # ============================
 # Language redirect (browser-based)
-# Uncomment on production — redirects Persian-speaking users to ?lang=fa
+# Redirects Persian-speaking users to ?lang=fa
 # ============================
-# RewriteCond %{QUERY_STRING} !lang=
-# RewriteCond %{HTTP:Accept-Language} (fa|ps|prs) [NC]
-# RewriteRule ^$ /?lang=fa [L,R=302]
+RewriteCond %{QUERY_STRING} !lang=
+RewriteCond %{HTTP:Accept-Language} (fa|ps|prs) [NC]
+RewriteRule ^$ /?lang=fa [L,R=302]
 
 # ============================
 # Friendly URLs: serve index.html for root

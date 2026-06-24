@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /images/
 
 Sitemap: https://dlzlab.com/sitemap.xml
