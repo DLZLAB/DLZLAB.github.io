@@ -137,7 +137,10 @@ tr:hover td{background:var(--bg-glass)}
   <div class="tab-content" id="tab-submissions">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
       <h2 style="color:var(--accent);font-size:1.3rem;"><i class="fas fa-users"></i> Submissions</h2>
-      <button class="btn btn-danger btn-sm" onclick="clearAllSubmissions()"><i class="fas fa-trash"></i> Clear All</button>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="btn btn-ghost btn-sm" onclick="syncFromLocalStorage()"><i class="fas fa-cloud-download-alt"></i> Sync from Browser</button>
+        <button class="btn btn-danger btn-sm" onclick="clearAllSubmissions()"><i class="fas fa-trash"></i> Clear All</button>
+      </div>
     </div>
     <div id="submissionsContainer"></div>
   </div>
@@ -222,32 +225,96 @@ const DEFAULT_QUESTIONS = {
 };
 
 // ====================
+// GITHUB CONFIG
+// ====================
+const REPO_OWNER = 'DLZLAB';
+const REPO_NAME = 'DLZLAB.github.io';
+const BRANCH = 'master';
+const QUESTIONS_PATH = 'english-test/questions.json';
+const SUBMISSIONS_PATH = 'english-test/submissions.json';
+
+function getToken() {
+  let token = sessionStorage.getItem('dlz-gh-token');
+  if (!token) {
+    token = prompt('Enter your GitHub Personal Access Token (with repo scope):');
+    if (token) sessionStorage.setItem('dlz-gh-token', token);
+  }
+  return token;
+}
+
+async function githubGetFile(path) {
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+  const token = getToken();
+  if (!token) throw new Error('No token');
+  const res = await fetch(url, { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' } });
+  if (!res.ok) throw new Error('Failed to fetch file: ' + res.status);
+  const data = await res.json();
+  const content = decodeURIComponent(escape(atob(data.content)));
+  return { content: JSON.parse(content), sha: data.sha };
+}
+
+async function githubPutFile(path, content, sha, message) {
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+  const token = getToken();
+  if (!token) throw new Error('No token');
+  const body = { message, content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))), branch: BRANCH };
+  if (sha) body.sha = sha;
+  const res = await fetch(url, { method: 'PUT', headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }, body: JSON.stringify(body) });
+  if (!res.ok) throw new Error('Failed to write file: ' + res.status);
+  return res.json();
+}
+
+// ====================
 // STATE
 // ====================
-let questions = loadQuestions();
+let questions = null;
+let submissions = null;
 let editingId = null;
 
-function loadQuestions() {
-  const stored = localStorage.getItem('dlz-english-questions');
-  if (stored) {
-    try { return JSON.parse(stored); } catch(e) {}
+async function loadQuestions() {
+  try {
+    const result = await githubGetFile(QUESTIONS_PATH);
+    questions = result.content;
+    return questions;
+  } catch(e) {
+    flashMessage('Could not fetch from GitHub. Using defaults. ' + e.message);
+    return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
   }
-  return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
 }
 
-function saveQuestions(qs) {
-  localStorage.setItem('dlz-english-questions', JSON.stringify(qs));
+async function saveQuestions(qs) {
   questions = qs;
-  // Also update the test page's localStorage so changes reflect immediately
-  renderQuestions();
+  try {
+    const result = await githubGetFile(QUESTIONS_PATH);
+    await githubPutFile(QUESTIONS_PATH, qs, result.sha, 'Update English test questions via admin');
+    renderQuestions();
+    flashMessage('Questions saved to GitHub!');
+  } catch(e) {
+    flashMessage('Error saving to GitHub: ' + e.message);
+  }
 }
 
-function getSubmissions() {
-  return JSON.parse(localStorage.getItem('dlz-english-results') || '[]');
+async function loadSubmissions() {
+  try {
+    const result = await githubGetFile(SUBMISSIONS_PATH);
+    submissions = result.content;
+    return submissions;
+  } catch(e) {
+    submissions = [];
+    return [];
+  }
 }
 
-function saveSubmissions(subs) {
-  localStorage.setItem('dlz-english-results', JSON.stringify(subs));
+async function saveSubmissions(subs) {
+  submissions = subs;
+  try {
+    const result = await githubGetFile(SUBMISSIONS_PATH);
+    await githubPutFile(SUBMISSIONS_PATH, subs, result.sha, 'Update English test submissions via admin');
+    renderSubmissions();
+    flashMessage('Submissions synced to GitHub!');
+  } catch(e) {
+    flashMessage('Error saving submissions to GitHub: ' + e.message);
+  }
 }
 
 // ====================
@@ -259,7 +326,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-    if (tab.dataset.tab === 'submissions') renderSubmissions();
+    if (tab.dataset.tab === 'submissions') { loadSubmissions().then(renderSubmissions); }
   });
 });
 
@@ -400,7 +467,7 @@ function addOption() {
   list.appendChild(div);
 }
 
-function saveEdit() {
+async function saveEdit() {
   if (!editingId) return;
   const { level, id } = editingId;
   const q = questions[level].find(qq => qq.id === id);
@@ -458,10 +525,8 @@ function saveEdit() {
     delete q.acceptable;
   }
 
-  saveQuestions(questions);
+  await saveQuestions(questions);
   editingId = null;
-  // Re-render with message
-  flashMessage('Question saved!');
 }
 
 function cancelEdit(level, qId) {
@@ -478,9 +543,9 @@ function deleteQuestion(level, qId, text) {
   showConfirm(
     'Delete Question?',
     'Are you sure you want to delete: "' + decoded.substring(0, 50) + '..."?',
-    () => {
+    async () => {
       questions[level] = questions[level].filter(q => q.id !== qId);
-      saveQuestions(questions);
+      await saveQuestions(questions);
       flashMessage('Question deleted!');
     }
   );
@@ -493,10 +558,9 @@ function resetQuestions() {
   showConfirm(
     'Reset to Default?',
     'This will overwrite all your custom questions with the original defaults. Your submissions will not be affected.',
-    () => {
-      localStorage.setItem('dlz-english-questions', JSON.stringify(DEFAULT_QUESTIONS));
+    async () => {
       questions = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
-      renderQuestions();
+      await saveQuestions(questions);
       flashMessage('Questions reset to default!');
     }
   );
@@ -507,7 +571,7 @@ function resetQuestions() {
 // ====================
 function renderSubmissions() {
   const container = document.getElementById('submissionsContainer');
-  const subs = getSubmissions();
+  const subs = submissions || [];
 
   if (subs.length === 0) {
     container.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><p>No submissions yet. Students need to take the test first.</p></div>';
@@ -540,10 +604,10 @@ function deleteSubmission(index) {
   showConfirm(
     'Delete Submission?',
     'Are you sure you want to delete this submission? This cannot be undone.',
-    () => {
-      const subs = getSubmissions();
+    async () => {
+      const subs = submissions || [];
       subs.splice(index, 1);
-      saveSubmissions(subs);
+      await saveSubmissions(subs);
       renderSubmissions();
       flashMessage('Submission deleted!');
     }
@@ -551,7 +615,7 @@ function deleteSubmission(index) {
 }
 
 function viewSubmission(index) {
-  const subs = getSubmissions();
+  const subs = submissions || [];
   const sub = subs[index];
   if (!sub) return;
 
@@ -587,13 +651,13 @@ document.getElementById('detailModal').addEventListener('click', function(e) {
 });
 
 function clearAllSubmissions() {
-  const subs = getSubmissions();
+  const subs = submissions || [];
   if (subs.length === 0) return;
   showConfirm(
     'Clear All Submissions?',
     'Are you sure you want to delete all ' + subs.length + ' submissions? This cannot be undone.',
-    () => {
-      saveSubmissions([]);
+    async () => {
+      await saveSubmissions([]);
       renderSubmissions();
       flashMessage('All submissions cleared!');
     }
@@ -645,9 +709,41 @@ function flashMessage(msg) {
 }
 
 // ====================
+// SYNC FROM LOCALSTORAGE
+// ====================
+function syncFromLocalStorage() {
+  const localSubs = JSON.parse(localStorage.getItem('dlz-english-results') || '[]');
+  if (localSubs.length === 0) {
+    flashMessage('No submissions found in browser storage.');
+    return;
+  }
+  showConfirm(
+    'Sync from Browser?',
+    'Found ' + localSubs.length + ' submission(s) in this browser. This will add them to the GitHub file if not already present.',
+    async () => {
+      const existing = submissions || [];
+      const existingKeys = new Set(existing.map(s => s.firstName + '|' + s.lastName + '|' + s.date));
+      const newSubs = localSubs.filter(s => !existingKeys.has(s.firstName + '|' + s.lastName + '|' + s.date));
+      if (newSubs.length === 0) {
+        flashMessage('All submissions already synced.');
+        return;
+      }
+      const merged = [...existing, ...newSubs];
+      await saveSubmissions(merged);
+      renderSubmissions();
+      flashMessage('Synced ' + newSubs.length + ' new submission(s) from browser to GitHub!');
+    }
+  );
+}
+
+// ====================
 // INIT
 // ====================
-renderQuestions();
+(async function init() {
+  questions = await loadQuestions();
+  submissions = await loadSubmissions();
+  renderQuestions();
+})();
 </script>
 </body>
 </html>

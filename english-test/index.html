@@ -387,16 +387,15 @@ const DEFAULT_QUESTIONS = {
 };
 
 // Load questions from localStorage or use defaults
-function loadQuestions() {
-  const stored = localStorage.getItem('dlz-english-questions');
-  if (stored) {
-    try { return JSON.parse(stored); } catch(e) { /* fall through */ }
-  }
+async function loadQuestions() {
+  try {
+    const res = await fetch('questions.json');
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+  } catch(e) { /* fall through */ }
   return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
-}
-
-function saveQuestions(qs) {
-  localStorage.setItem('dlz-english-questions', JSON.stringify(qs));
 }
 
 // ====================
@@ -412,7 +411,11 @@ const state = {
   questionsList: []
 };
 
-let questions = loadQuestions();
+let questions = null;
+
+(async function init() {
+  questions = await loadQuestions();
+})();
 
 // ====================
 // DOM REFS
@@ -435,7 +438,7 @@ document.querySelectorAll('.level-card').forEach(card => {
 // ====================
 // START TEST
 // ====================
-document.getElementById('startTest').addEventListener('click', () => {
+document.getElementById('startTest').addEventListener('click', async () => {
   const fn = document.getElementById('firstName').value.trim();
   const ln = document.getElementById('lastName').value.trim();
   let valid = true;
@@ -468,7 +471,7 @@ document.getElementById('startTest').addEventListener('click', () => {
   state.firstName = fn;
   state.lastName = ln;
   state.answers = {};
-  questions = loadQuestions();
+  questions = await loadQuestions();
   state.questions = questions[state.level];
   state.questionsList = buildQuestionList(state.questions);
 
