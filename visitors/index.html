@@ -372,7 +372,14 @@ async function loadData(){
   }catch(e){status.innerHTML='<div class="error">'+t.error+'</div>';allData=[];return;}
   status.innerHTML='';
 
-  const pages=[...new Set(allData.map(d=>d.page))].sort();
+  const KNOWN_PAGES=[
+    "/","/miniprojects/","/friends/","/muharam/","/dua/","/songs/",
+    "/students-words/","/dlz-booklab/","/english-test/","/english-test/admin/",
+    "/School/timetable/","/visitors/","/me/","/me/dua/","/me/songs/",
+    "/me/students-words/","/me/friends/words/","/me/dlz-booklab/","/me/muharam/pics/"
+  ];
+  const visitedPages=new Set(allData.map(d=>d.page));
+  const pages=[...new Set([...KNOWN_PAGES,...visitedPages])].sort();
   const sel=document.getElementById('pageFilter');
   const cur=sel.value;
   sel.innerHTML='<option value="">'+t.all_pages+'</option>'+pages.map(p=>'<option value="'+p+'"'+(p===cur?' selected':'')+'>'+p+'</option>').join('');
