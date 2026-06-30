@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title data-i18n="title">Visitors — Dawood WaliZada</title>
+<meta name="description" data-i18n="desc" content="Visitor log for dlzlab.com pages." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter','Vazirmatn',system-ui,sans-serif;
+  background:#0d0407;
+  color:#f5e6d0;
+  line-height:1.6;
+  min-height:100vh;
+  padding:2rem 1.5rem;
+  background-image:radial-gradient(ellipse at 20% 50%, rgba(107,29,47,0.3) 0%, transparent 60%),
+                   radial-gradient(ellipse at 80% 50%, rgba(212,160,67,0.08) 0%, transparent 60%);
+}
+.container{max-width:1200px;width:100%;margin:0 auto}
+
+.lang-bar{
+  display:flex;justify-content:flex-end;margin-bottom:0.8rem;gap:0.5rem;
+}
+.lang-btn{
+  background:rgba(212,160,67,0.1);
+  border:1px solid rgba(212,160,67,.15);
+  color:#b8945a;padding:4px 14px;border-radius:20px;
+  font-size:0.75rem;font-weight:600;cursor:pointer;
+  font-family:inherit;transition:all 0.25s;
+  text-transform:uppercase;letter-spacing:1px;
+}
+.lang-btn:hover{background:rgba(212,160,67,0.2);color:#d4a043}
+.theme-btn{
+  background:rgba(212,160,67,0.1);
+  border:1px solid rgba(212,160,67,.15);
+  color:#b8945a;padding:4px 14px;border-radius:20px;
+  font-size:0.75rem;font-weight:600;cursor:pointer;
+  font-family:inherit;transition:all 0.25s;
+  text-transform:uppercase;letter-spacing:1px;
+}
+.theme-btn:hover{background:rgba(212,160,67,0.2);color:#d4a043}
+
+html[dir="rtl"] .header .back{flex-direction:row-reverse}
+.header{text-align:center;margin-bottom:1.5rem}
+.header .back{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  color:#b8945a;font-size:0.85rem;text-decoration:none;
+  margin-bottom:0.5rem;transition:color 0.2s;
+}
+.header .back:hover{color:#d4a043}
+.header h1{
+  font-size:2rem;font-weight:800;line-height:1.15;
+  background:linear-gradient(135deg,#f5e6d0,#d4a043);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.header p{color:#b8945a;font-size:0.9rem;margin-top:0.4rem}
+
+.stats-row{
+  display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem;
+}
+.stat-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(212,160,67,.12);
+  border-radius:12px;padding:0.8rem 1.4rem;text-align:center;min-width:120px;
+}
+.stat-card .num{font-size:1.6rem;font-weight:800;color:#d4a043;line-height:1.2}
+.stat-card .lbl{font-size:0.75rem;color:#6b5a3a;text-transform:uppercase;letter-spacing:1px}
+
+.controls{
+  display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem;
+}
+.controls input,.controls select{
+  font-family:inherit;padding:7px 10px;
+  border:1px solid rgba(212,160,67,.15);
+  border-radius:8px;font-size:13px;
+  background:rgba(255,255,255,.05);color:#f5e6d0;outline:none;
+  transition:border-color 0.25s;
+}
+.controls input:focus,.controls select:focus{border-color:#d4a043}
+.controls option{background:#1a0e11;color:#f5e6d0}
+.controls .btn{
+  padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;
+  background:linear-gradient(135deg,#d4a043,#b8862b);color:#0d0407;
+  transition:all 0.3s;font-family:inherit;
+}
+.controls .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,160,67,.35)}
+.controls .btn.sec{
+  background:rgba(255,255,255,.04);border:1px solid rgba(212,160,67,.15);color:#b8945a;
+}
+.controls .btn.sec:hover{background:rgba(212,160,67,.1);border-color:#d4a043;color:#f5e6d0}
+
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(212,160,67,.12)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{
+  background:rgba(212,160,67,.08);color:#b8945a;
+  padding:10px 8px;text-align:left;font-weight:600;white-space:nowrap;
+  border-bottom:1px solid rgba(212,160,67,.12);cursor:pointer;user-select:none;
+}
+thead th:hover{color:#d4a043}
+thead th .sort{font-size:10px;margin-left:4px;color:#6b5a3a}
+tbody tr{border-bottom:1px solid rgba(212,160,67,.06);transition:background 0.2s}
+tbody tr:hover{background:rgba(212,160,67,.04)}
+tbody td{padding:8px;vertical-align:middle;color:#f5e6d0}
+tbody td.ip{font-family:monospace;font-size:12px;color:#b8945a}
+tbody td.page{font-size:12px;color:#d4a043}
+tbody td.time{white-space:nowrap;font-size:12px;color:#b8945a}
+tbody td.loc{font-size:12px;color:#b8945a}
+.empty-state{text-align:center;padding:3rem 1rem;color:#6b5a3a}
+.empty-state .big{font-size:2.5rem;margin-bottom:0.5rem}
+.loading{text-align:center;padding:3rem;color:#6b5a3a}
+.error{text-align:center;padding:1rem;color:#ef4444;background:rgba(239,68,68,.1);border-radius:8px;margin:1rem 0}
+
+.footer{text-align:center;margin-top:2rem;font-size:0.8rem;color:#6b5a3a}
+.footer a{color:#b8945a;text-decoration:none}
+.footer a:hover{color:#d4a043}
+
+@media(max-width:600px){
+  body{padding:1rem 0.8rem}
+  .header h1{font-size:1.4rem}
+  .stat-card{min-width:80px;padding:0.5rem 1rem}
+  table{font-size:12px}
+  tbody td,thead th{padding:6px 4px}
+}
+
+.theme-blue body,.theme-blue{background:#080c1a!important;color:#f0f4ff!important}
+.theme-blue .lang-btn,.theme-blue .theme-btn{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .lang-btn:hover,.theme-blue .theme-btn:hover{background:rgba(79,70,229,0.15)!important;color:#06b6d4!important}
+.theme-blue .stat-card{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .stat-card .num{color:#0ea5e9!important}
+.theme-blue .stat-card .lbl{color:#64748b!important}
+.theme-blue thead th{background:rgba(79,70,229,0.1)!important;color:#7dd3fc!important}
+.theme-blue thead th:hover{color:#06b6d4!important}
+.theme-blue tbody tr:hover{background:rgba(79,70,229,0.04)!important}
+.theme-blue tbody td{color:#f0f4ff!important}
+.theme-blue tbody td.page{color:#0ea5e9!important}
+.theme-blue tbody td.ip,.theme-blue tbody td.time,.theme-blue tbody td.loc{color:#64748b!important}
+.theme-blue .table-wrap{border-color:rgba(14,165,233,0.2)!important}
+.theme-blue .controls input,.theme-blue .controls select{background:rgba(15,23,42,0.6)!important;border-color:rgba(14,165,233,0.2)!important;color:#f0f4ff!important}
+.theme-blue .controls input:focus,.theme-blue .controls select:focus{border-color:#0ea5e9!important}
+.theme-blue .controls .btn{background:linear-gradient(135deg,#4f46e5,#0ea5e9)!important;color:#fff!important}
+.theme-blue .controls .btn.sec{background:rgba(79,70,229,0.08)!important;border-color:rgba(14,165,233,0.2)!important;color:#7dd3fc!important}
+.theme-blue .controls .btn.sec:hover{background:rgba(79,70,229,0.15)!important;color:#06b6d4!important}
+.theme-blue .header .back{color:#64748b!important}
+.theme-blue .header .back:hover{color:#0ea5e9!important}
+.theme-blue .header p{color:#64748b!important}
+.theme-blue .empty-state{color:#475569!important}
+</style>
+</head>
+<body>
+<div id="theme-wrapper" class="theme-wine">
+<div class="container">
+
+  <div class="lang-bar">
+    <button class="theme-btn" id="themeToggle">🌙</button>
+    <button class="lang-btn" id="langToggle">FA</button>
+  </div>
+
+  <div class="header">
+    <a class="back" href="/miniprojects/" data-i18n="back">&larr; Back to Mini Projects</a>
+    <h1 data-i18n="heading">Visitor Log</h1>
+    <p data-i18n="subtitle">Track page visits across dlzlab.com — IP, location, and timestamps</p>
+  </div>
+
+  <div class="stats-row" id="statsRow"></div>
+
+  <div class="controls">
+    <input type="text" id="searchInput" data-i18n="search_pl" placeholder="Search IP, page, city..." oninput="renderTable()">
+    <select id="pageFilter" onchange="renderTable()">
+      <option value="" data-i18n="all_pages">All Pages</option>
+    </select>
+    <button class="btn" onclick="loadData()" data-i18n="refresh">⟳ Refresh</button>
+    <button class="btn sec" onclick="clearFilters()" data-i18n="clear">✕ Clear Filters</button>
+    <button class="btn sec" onclick="exportCSV()" data-i18n="csv">⬇ CSV</button>
+  </div>
+
+  <div id="status"></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('id')" data-i18n="th_id">ID <span class="sort">▼</span></th>
+          <th onclick="sortBy('page')" data-i18n="th_page">Page <span class="sort"></span></th>
+          <th onclick="sortBy('timestamp')" data-i18n="th_time">Date/Time <span class="sort"></span></th>
+          <th onclick="sortBy('ip')" data-i18n="th_ip">IP <span class="sort"></span></th>
+          <th onclick="sortBy('city')" data-i18n="th_location">Location <span class="sort"></span></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td colspan="5" class="loading" data-i18n="loading">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <a href="/">&copy; Dawood WaliZada</a>
+  </div>
+
+</div>
+</div>
+
+<script>
+const TRANSLATIONS={
+  en:{
+    title:"Visitor Log — Dawood WaliZada",
+    desc:"Visitor log for dlzlab.com pages.",
+    back:"← Back to Mini Projects",
+    heading:"Visitor Log",
+    subtitle:"Track page visits across dlzlab.com — IP, location, and timestamps",
+    search_pl:"Search IP, page, city...",
+    all_pages:"All Pages",
+    refresh:"⟳ Refresh",
+    clear:"✕ Clear Filters",
+    csv:"⬇ CSV",
+    th_id:"ID",th_page:"Page",th_time:"Date/Time",th_ip:"IP",th_location:"Location",
+    loading:"Loading...",
+    empty:"No visitors logged yet.",
+    error:"Failed to load visitor data.",
+    total:"Total",pages:"Pages",today:"Today",
+    no_token:"<div class='error'>⚠ No GitHub token found. Set <code>gh_token</code> in localStorage to enable visitor tracking.</div>",
+  },
+  fa:{
+    title:"بازدیدکنندگان — داود ولی‌زاده",
+    desc:"لاگ بازدیدکنندگان صفحات dlzlab.com.",
+    back:"→ بازگشت به پروژه‌های کوچک",
+    heading:"لاگ بازدیدکنندگان",
+    subtitle:"ردیابی بازدید صفحات dlzlab.com — IP، موقعیت و زمان",
+    search_pl:"جستجوی IP، صفحه، شهر...",
+    all_pages:"همه صفحات",
+    refresh:"⟳ تازه کردن",
+    clear:"✕ پاک کردن فیلتر",
+    csv:"⬇ خروجی CSV",
+    th_id:"شناسه",th_page:"صفحه",th_time:"تاریخ/زمان",th_ip:"آی‌پی",th_location:"موقعیت",
+    loading:"در حال بارگذاری...",
+    empty:"هنوز بازدیدکننده‌ای ثبت نشده.",
+    error:"خطا در بارگذاری اطلاعات.",
+    total:"مجموع",pages:"صفحات",today:"امروز",
+    no_token:"<div class='error'>⚠ توکن گیت‌هاب یافت نشد. برای فعال‌سازی ردیابی، <code>gh_token</code> را در localStorage تنظیم کنید.</div>",
+  }
+};
+
+let lang=localStorage.getItem('dlz_lang')||'en';
+let theme=localStorage.getItem('dlz-theme')||'wine';
+let allData=[];
+let sortField='timestamp';
+let sortDir=-1;
+
+function applyLang(l){
+  lang=l;localStorage.setItem('dlz_lang',l);
+  document.documentElement.lang=l==='fa'?'fa':'en';
+  document.documentElement.dir=l==='fa'?'rtl':'ltr';
+  document.getElementById('langToggle').textContent=l==='fa'?'EN':'FA';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    const t=TRANSLATIONS[l]||TRANSLATIONS.en;
+    if(t[key]!==undefined){
+      if(el.tagName==='META'&&el.getAttribute('content')!==null) el.setAttribute('content',t[key]);
+      else if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') el.setAttribute('placeholder',t[key]);
+      else el.innerHTML=t[key];
+    }
+  });
+}
+document.getElementById('langToggle').addEventListener('click',()=>applyLang(lang==='fa'?'en':'fa'));
+applyLang(lang);
+
+function applyTheme(t){
+  theme=t;localStorage.setItem('dlz-theme',t);
+  const w=document.getElementById('theme-wrapper');
+  const b=document.body;
+  if(t==='blue'){w.classList.add('theme-blue');b.classList.add('theme-blue');}
+  else{w.classList.remove('theme-blue');b.classList.remove('theme-blue');}
+}
+document.getElementById('themeToggle').addEventListener('click',()=>applyTheme(theme==='wine'?'blue':'wine'));
+if(theme==='blue'){document.getElementById('theme-wrapper').classList.add('theme-blue');document.body.classList.add('theme-blue');}
+
+function fmtDate(iso){
+  const d=new Date(iso);
+  const y=d.getFullYear();
+  const mo=String(d.getMonth()+1).padStart(2,'0');
+  const dd=String(d.getDate()).padStart(2,'0');
+  const h=String(d.getHours()).padStart(2,'0');
+  const m=String(d.getMinutes()).padStart(2,'0');
+  return y+'-'+mo+'-'+dd+' '+h+':'+m;
+}
+
+function sortBy(field){
+  if(sortField===field) sortDir*=-1;
+  else{sortField=field;sortDir=-1;}
+  document.querySelectorAll('thead th .sort').forEach(el=>el.textContent='');
+  const idx=['id','page','timestamp','ip','city'].indexOf(field);
+  if(idx>=0){
+    const spans=document.querySelectorAll('thead th .sort');
+    spans[idx].textContent=sortDir===-1?'▼':'▲';
+  }
+  renderTable();
+}
+
+function renderTable(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  const pf=document.getElementById('pageFilter').value;
+  const t=TRANSLATIONS[lang]||TRANSLATIONS.en;
+  let filtered=allData.filter(d=>{
+    if(pf && d.page!==pf) return false;
+    if(q && !d.page.toLowerCase().includes(q) && !(d.ip||'').includes(q) && !(d.city||'').toLowerCase().includes(q) && !(d.id||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  filtered.sort((a,b)=>{
+    let va=a[sortField]||'',vb=b[sortField]||'';
+    if(sortField==='timestamp') return sortDir*(new Date(va)-new Date(vb));
+    return sortDir*va.toString().localeCompare(vb.toString());
+  });
+
+  const tbody=document.getElementById('tableBody');
+  if(!filtered.length){
+    tbody.innerHTML='<tr><td colspan="5" class="empty-state"><div class="big">📭</div>'+t.empty+'</td></tr>';
+  } else {
+    tbody.innerHTML=filtered.map(d=>{
+      const loc=[d.city,d.region,d.country].filter(Boolean).join(', ')||'—';
+      return '<tr><td style="font-size:11px;color:#6b5a3a">'+(d.id||'').slice(-8)+'</td><td class="page">'+d.page+'</td><td class="time">'+fmtDate(d.timestamp)+'</td><td class="ip">'+d.ip+'</td><td class="loc">'+loc+'</td></tr>';
+    }).join('');
+  }
+
+  const pages=new Set(allData.map(d=>d.page));
+  const today=allData.filter(d=>new Date(d.timestamp).toDateString()===new Date().toDateString()).length;
+  document.getElementById('statsRow').innerHTML=
+    '<div class="stat-card"><div class="num">'+allData.length+'</div><div class="lbl">'+t.total+'</div></div>'+
+    '<div class="stat-card"><div class="num">'+pages.size+'</div><div class="lbl">'+t.pages+'</div></div>'+
+    '<div class="stat-card"><div class="num">'+today+'</div><div class="lbl">'+t.today+'</div></div>';
+}
+
+function clearFilters(){
+  document.getElementById('searchInput').value='';
+  document.getElementById('pageFilter').value='';
+  renderTable();
+}
+
+function exportCSV(){
+  if(!allData.length) return;
+  const rows=[['ID','Page','Timestamp','IP','City','Region','Country']];
+  allData.forEach(d=>{
+    rows.push([d.id,d.page,d.timestamp,d.ip,d.city,d.region,d.country]);
+  });
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='visitors_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+async function loadData(){
+  const status=document.getElementById('status');
+  const t=TRANSLATIONS[lang]||TRANSLATIONS.en;
+  const token=localStorage.getItem('gh_token');
+  if(!token){status.innerHTML=t.no_token;return;}
+  status.innerHTML='<div class="loading">'+t.loading+'</div>';
+  try{
+    const r=await fetch('https://api.github.com/repos/DLZLAB/DLZLAB.github.io/contents/visitors/data.json',{
+      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(!r.ok) throw new Error('Fetch failed');
+    const d=await r.json();
+    allData=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));
+    if(!Array.isArray(allData)) allData=[];
+  }catch(e){status.innerHTML='<div class="error">'+t.error+'</div>';allData=[];return;}
+  status.innerHTML='';
+
+  const pages=[...new Set(allData.map(d=>d.page))].sort();
+  const sel=document.getElementById('pageFilter');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">'+t.all_pages+'</option>'+pages.map(p=>'<option value="'+p+'"'+(p===cur?' selected':'')+'>'+p+'</option>').join('');
+
+  renderTable();
+}
+
+loadData();
+</script>
+</body>
+</html>
