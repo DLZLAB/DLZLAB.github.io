@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>سیستم تقسیم اوقات مکتب</title>
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#222; --muted:#667; --line:#e1e4ea;
+  --accent:#2f5d8a; --accent2:#1f7a52; --warn:#b8860b; --danger:#c0392b;
+}
+*{box-sizing:border-box;}
+body{font-family:"Vazirmatn","Tahoma",sans-serif;background:var(--bg);color:var(--ink);margin:0;direction:rtl;}
+.app{max-width:1400px;margin:0 auto;padding:14px 18px 60px;}
+h1{font-size:20px;margin:6px 0 14px;color:var(--accent);}
+.topnav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:2px solid var(--line);margin-bottom:16px;}
+.topnav button{background:none;border:none;padding:10px 18px;font-size:14px;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;}
+.topnav button.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
+.panel{display:none;}
+.panel.active{display:block;}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
+.card h3{margin:0 0 10px;font-size:15px;color:var(--accent);display:flex;align-items:center;justify-content:space-between;}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px;}
+label{font-size:13px;color:var(--muted);}
+input[type=text],input[type=number],input[type=time],select{
+  font-family:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:13px;background:#fff;
+}
+button.btn{background:var(--accent);color:#fff;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;}
+button.btn.secondary{background:#fff;color:var(--accent);border:1px solid var(--accent);}
+button.btn.danger{background:#fff;color:var(--danger);border:1px solid var(--danger);padding:3px 9px;font-size:12px;}
+button.btn.small{padding:4px 9px;font-size:12px;}
+.subject-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px 14px;margin:8px 0;}
+.subject-item{display:flex;align-items:center;gap:6px;background:#f9fafb;border:1px solid var(--line);border-radius:6px;padding:5px 8px;}
+.subject-item input[type=number]{width:48px;}
+.subject-item .sname{flex:1;font-size:13px;}
+.subject-item .rm{cursor:pointer;color:#aaa;font-size:13px;}
+.subject-item .rm:hover{color:var(--danger);}
+.section-row{display:flex;gap:10px;align-items:center;background:#f3f6fa;border-radius:6px;padding:6px 10px;margin-bottom:6px;flex-wrap:wrap;}
+.section-row .tag{font-weight:700;color:var(--accent);min-width:56px;}
+.assign-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#f9fafb;border:1px solid var(--line);border-radius:6px;padding:6px 10px;margin-bottom:6px;}
+.assign-row .classes{display:flex;gap:6px;flex-wrap:wrap;}
+.assign-row .classes label{display:flex;align-items:center;gap:3px;font-size:12px;}
+.teacher-chip{display:flex;align-items:center;gap:8px;background:#f3f6fa;border-radius:6px;padding:5px 10px;margin-bottom:5px;}
+.teacher-chip.negaran{background:#eaf3ec;}
+.badge{font-size:11px;padding:1px 7px;border-radius:10px;background:var(--accent2);color:#fff;}
+.muted{color:var(--muted);font-size:12px;}
+.stickybar{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:10px 0;display:flex;gap:10px;justify-content:center;margin-top:10px;z-index:5;}
+.stats{display:flex;gap:18px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px;}
+.stats b{color:var(--accent);}
+.alert{padding:9px 12px;border-radius:7px;font-size:13px;margin-bottom:10px;}
+.alert.ok{background:#eaf6ee;color:#1f7a3f;border:1px solid #bfe5c9;}
+.alert.bad{background:#fcebea;color:var(--danger);border:1px solid #f3c3bf;}
+.alert.warn{background:#fdf3e0;color:var(--warn);border:1px solid #f0dba9;}
+.cycle-title{font-size:16px;color:var(--accent);margin:18px 0 8px;border-right:4px solid var(--accent);padding-right:8px;}
+table.tt{border-collapse:collapse;width:100%;margin-bottom:18px;background:#fff;}
+table.tt th,table.tt td{border:1px solid #d8dde5;padding:4px 6px;text-align:center;font-size:12px;}
+table.tt th{background:#eef2f7;}
+table.tt td.cell{min-width:80px;}
+table.tt td.subj{font-weight:700;font-size:12.5px;}
+table.tt td.tname{font-size:11px;color:#555;}
+table.tt td.empty{color:#bbb;}
+table.tt td.conflict{background:#fcebea !important;color:var(--danger);font-weight:700;}
+.class-table-wrap{margin-bottom:22px;}
+.class-table-wrap h4{margin:0 0 6px;font-size:14px;}
+.placeholder{padding:40px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:10px;}
+.tabs2{display:flex;gap:6px;margin-bottom:10px;}
+.tabs2 button{padding:6px 14px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;font-size:13px;}
+.tabs2 button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+@media print{
+  .topnav,.stickybar,.card,.tabs2{display:none !important;}
+  #output{display:block !important;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<h1>سیستم تقسیم اوقات مکتب</h1>
+
+<div class="topnav">
+  <button data-p="settings" class="active">تنظیمات شفت</button>
+  <button data-p="teachers">اساتید</button>
+  <button data-p="low1">ابتدائیه اول (صنوف ۱ تا ۳)</button>
+  <button data-p="low2">ابتدائیه دوم (صنوف ۴ تا ۶)</button>
+  <button data-p="mid">متوسطه (صنوف ۷ تا ۹)</button>
+  <button data-p="high3">لیسه (صنوف ۱۰ تا ۱۲)</button>
+  <button data-p="output">خروجی / جدول</button>
+</div>
+
+<!-- SETTINGS -->
+<div class="panel active" id="panel-settings">
+  <div class="card">
+    <h3>معلومات شفت</h3>
+    <div class="row">
+      <label>نام مکتب</label><input type="text" id="s_school" value="مکتب نمونه">
+      <label>شفت</label>
+      <select id="s_shift" onchange="onShiftChange()"><option value="صبح">قبل از ظهر (صبح)</option><option value="بعد از ظهر">بعد از ظهر</option></select>
+      <label>سال تعلیمی</label><input type="text" id="s_year" value="1405" style="width:80px">
+    </div>
+    <div class="row">
+      <label>وقت شروع</label><input type="time" id="s_start" value="07:30">
+      <label>مدت هر زنگ (دقیقه)</label><input type="number" id="s_dur" value="40" style="width:70px">
+      <label>وقفه (دقیقه)</label><input type="number" id="s_break" value="10" style="width:60px" title="وقفه بعد از زنگ دوم و چهارم">
+      <label>حالت هفته</label>
+      <select id="s_week">
+        <option value="6">۶ روزه (شنبه تا پنجشنبه)</option>
+        <option value="5sat">۵ روزه - شروع شنبه</option>
+        <option value="5sun">۵ روزه - شروع یکشنبه</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- TEACHERS -->
+<div class="panel" id="panel-teachers">
+  <div class="card">
+    <h3>لیست اساتید</h3>
+    <div class="row">
+      <input type="text" id="t_name" placeholder="نام استاد" onkeydown="if(event.key==='Enter'){addTeacher();}">
+      <button class="btn" onclick="addTeacher()">افزودن استاد</button>
+      <button class="btn secondary" onclick="loadSampleTeachers()">بار کردن نمونه</button>
+    </div>
+    <div id="teacherList"></div>
+    <p class="muted">استادانی که به عنوان «استاد نگران» در دوره اول (صنف ۱ تا ۶) انتخاب شوند، به‌طور خودکار از لیست انتخاب اساتید دوره دوم حذف می‌شوند — مگر استاد کمپیوتر که جداگانه در همه صنوف می‌تواند تدریس کند.</p>
+  </div>
+</div>
+
+<!-- ABTEDAIYA 1 (1-3) -->
+<div class="panel" id="panel-low1">
+  <div class="row"><button class="btn secondary" onclick="loadSampleLow()">بار کردن نمونه برای ابتدائیه</button></div>
+  <div id="lowGrades1"></div>
+</div>
+
+<!-- ABTEDAIYA 2 (4-6) -->
+<div class="panel" id="panel-low2">
+  <div id="lowGrades2"></div>
+</div>
+
+<!-- MOTAWASETA (7-9) -->
+<div class="panel" id="panel-mid">
+  <div class="row"><button class="btn secondary" onclick="loadSampleHigh()">بار کردن نمونه برای متوسطه و لیسه</button></div>
+  <p class="muted">توجه: اساتید متوسطه و لیسه مشترک هستند و از یک لیست انتخاب می‌شوند.</p>
+  <div id="midGrades"></div>
+</div>
+
+<!-- LISA (10-12) -->
+<div class="panel" id="panel-high3">
+  <div id="lisaGrades"></div>
+</div>
+
+<!-- OUTPUT -->
+<div class="panel" id="panel-output">
+  <div id="output"><div class="placeholder">هنوز جدولی ساخته نشده. معلومات را در تب‌های بالا تکمیل کنید و دکمه «ساخت تقسیم اوقات» را در پایین صفحه فشار دهید.</div></div>
+</div>
+
+<div class="stickybar">
+  <button class="btn" onclick="buildTimetable()">📅 ساخت تقسیم اوقات</button>
+  <button class="btn secondary" onclick="exportCSV()">⬇ خروجی CSV</button>
+  <button class="btn secondary" onclick="window.print()">🖨 چاپ</button>
+</div>
+</div>
+
+<script>
+/* ============== STATE ============== */
+const DAYS6 = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه"];
+const DAYS5SAT = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه"];
+const DAYS5SUN = ["یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه"];
+const PERIODS = 6;
+const SECTION_LETTERS = ["الف","ب","ج","د","ه","و"];
+const COLOR_PALETTE = ["#e3edf7","#e8f3e9","#fbe9e7","#f3e8fb","#fff6da","#e0f7f5","#fde2e4","#e2f0cb","#f6e3ff","#dff0f9","#fbe5d6","#e6e6fa"];
+
+let teachers = []; // {id, name}
+let negaranOf = {}; // teacherId -> classKey (set when chosen as negaran)
+let lowGrades = {}; // grade -> {sections, subjects:[{name,hours,enabled}], sectionTeacher:{letter:teacherId}, compSeparate:bool, compTeacher:{letter:teacherId}}
+let highGrades = {}; // grade -> {sections, subjects:[{name,enabled}], assignments:[{subject,teacherId,hours,classes:[letter,...]}]}
+
+// DEFAULT_LOW_SUBJECTS with hours per subject per grade (مطابق دیتای واقعی مکتب)
+// Total per grade must equal PERIODS(6) × days(6) = 36
+const DEFAULT_LOW_SUBJECTS = {
+  1:[{n:"دری",h:6},{n:"قرآن",h:6},{n:"ریاضی",h:6},{n:"دینیات",h:5},{n:"انگلیسی",h:3},{n:"املا",h:3},{n:"رسم و خط",h:2},{n:"ترانه",h:1},{n:"مطالعه",h:1},{n:"کمپیوتر",h:1},{n:"هشت پا",h:2}],
+  2:[{n:"دری",h:6},{n:"ریاضی",h:6},{n:"دینیات",h:5},{n:"قرآن",h:5},{n:"رسم و خط",h:4},{n:"انگلیسی",h:3},{n:"املا",h:3},{n:"کمپیوتر",h:1},{n:"ترانه",h:1},{n:"ورزش",h:1},{n:"مطالعه",h:1}],
+  3:[{n:"قرآن",h:5},{n:"دری",h:6},{n:"ریاضی",h:6},{n:"دینیات",h:5},{n:"انگلیسی",h:3},{n:"کمپیوتر",h:1},{n:"ورزش",h:1},{n:"مطالعه",h:1},{n:"املا",h:3},{n:"رسم",h:2},{n:"خط",h:2},{n:"ترانه",h:1}],
+  4:[{n:"دری",h:6},{n:"ریاضی",h:6},{n:"انگلیسی",h:4},{n:"پشتو",h:3},{n:"دینیات",h:4},{n:"ساینس",h:2},{n:"دروس",h:2},{n:"رسم و خط",h:2},{n:"قرآن",h:5},{n:"کمپیوتر",h:1},{n:"ورزش",h:1}],
+  5:[{n:"قرآن",h:5},{n:"دری",h:4},{n:"دروس",h:2},{n:"پشتو",h:3},{n:"انگلیسی",h:4},{n:"ریاضی",h:5},{n:"ساینس",h:2},{n:"خط",h:2},{n:"رسم",h:1},{n:"دینیات",h:4},{n:"دری هشت پا",h:2},{n:"کمپیوتر",h:1},{n:"ورزش",h:1}],
+  6:[{n:"دری",h:6},{n:"ریاضی",h:5},{n:"انگلیسی",h:4},{n:"پشتو",h:3},{n:"قرآن",h:5},{n:"رسم",h:2},{n:"خط",h:1},{n:"ساینس",h:2},{n:"دروس",h:2},{n:"کمپیوتر",h:1},{n:"دینیات",h:4},{n:"ورزش",h:1}]
+};
+
+const DEFAULT_HIGH_SUBJECTS = {
+  7:[{n:"فزیک",h:2},{n:"حرفه",h:1},{n:"ریاضی",h:5},{n:"تاریخ",h:2},{n:"پشتو",h:3},{n:"دینیات",h:3},{n:"عربی",h:3},{n:"جغرافیه",h:2},{n:"کیمیا",h:3},{n:"انگلیسی",h:2},{n:"دری",h:3},{n:"قرآن",h:3},{n:"ورزش",h:1},{n:"بیالوژی",h:2},{n:"کمپیوتر",h:1}],
+  8:[{n:"ریاضی",h:5},{n:"دری",h:3},{n:"جغرافیه",h:2},{n:"انگلیسی",h:2},{n:"کمپیوتر",h:1},{n:"فزیک",h:2},{n:"قرآن",h:3},{n:"پشتو",h:3},{n:"کیمیا",h:3},{n:"عربی",h:3},{n:"بیالوژی",h:2},{n:"حرفه",h:1},{n:"تاریخ",h:2},{n:"دینیات",h:3},{n:"ورزش",h:1}],
+  9:[{n:"کیمیا",h:3},{n:"پشتو",h:3},{n:"دینیات",h:3},{n:"دری",h:3},{n:"تاریخ",h:2},{n:"ریاضی",h:5},{n:"جغرافیه",h:2},{n:"عربی",h:3},{n:"حرفه",h:1},{n:"انگلیسی",h:2},{n:"بیالوژی",h:2},{n:"قرآن",h:3},{n:"فزیک",h:2},{n:"کمپیوتر",h:1},{n:"ورزش",h:1}],
+  10:[{n:"تفسیر",h:3},{n:"کیمیا",h:3},{n:"ریاضی",h:6},{n:"بیالوژی",h:2},{n:"دری",h:3},{n:"کمپیوتر",h:2},{n:"جغرافیه",h:2},{n:"دینیات",h:3},{n:"فزیک",h:3},{n:"تاریخ",h:2},{n:"انگلیسی",h:2},{n:"پشتو",h:2},{n:"جیولوژی",h:2},{n:"ورزش",h:1}]
+};
+// صنف ۱۱ و ۱۲ پیشفرض مانند صنف ۱۰ (قابل تغییر و فعال/غیرفعال کردن)
+DEFAULT_HIGH_SUBJECTS[11] = DEFAULT_HIGH_SUBJECTS[10].map(s=>({...s}));
+DEFAULT_HIGH_SUBJECTS[12] = DEFAULT_HIGH_SUBJECTS[10].map(s=>({...s}));
+
+function uid(){return 't'+Math.random().toString(36).slice(2,9);}
+
+function initGrades(){
+  for(let g=1; g<=6; g++){
+    lowGrades[g] = {
+      active:true,
+      sections:0,
+      sectionLabels:[],
+      subjects: DEFAULT_LOW_SUBJECTS[g].map(s=>({name:s.n, hours:s.h, enabled:true})),
+      sectionTeacher:{}, compSeparate:false, compTeacher:{}
+    };
+  }
+  for(let g=7; g<=12; g++){
+    const list = DEFAULT_HIGH_SUBJECTS[g] || [];
+    highGrades[g] = {
+      active: g<=10, // صنف ۱۱ و ۱۲ پیشفرض غیرفعال‌اند اما کاملاً قابل ویرایش و فعال‌سازی
+      sections:0,
+      sectionLabels:[],
+      subjects: list.map(s=>({name:s.n, hours:s.h, enabled:true})),
+      assignments:[]
+    };
+  }
+}
+initGrades();
+// برچسب نام شعبه (الف/ب/.. یا هر نام دلخواه مثل "ه") برای هر صنف قابل تغییر است
+function sectionLabel(G, i){
+  return (G.sectionLabels && G.sectionLabels[i]) || SECTION_LETTERS[i] || ('شعبه'+(i+1));
+}
+function setSectionLabel(grades, g, i, val){
+  const G = grades[g];
+  if(!G.sectionLabels) G.sectionLabels = [];
+  G.sectionLabels[i] = val.trim() || SECTION_LETTERS[i];
+}
+
+/* ============== NAV ============== */
+function onShiftChange(){
+  const shift = document.getElementById('s_shift').value;
+  document.getElementById('s_start').value = (shift==='بعد از ظهر') ? '13:10' : '07:30';
+}
+document.querySelectorAll('.topnav button').forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll('.topnav button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('panel-'+b.dataset.p).classList.add('active');
+  };
+});
+
+/* ============== TEACHERS ============== */
+function sortTeachers(){
+  teachers.sort((a,b)=> a.name.localeCompare(b.name,'fa'));
+}
+function addTeacher(name){
+  const val = name || document.getElementById('t_name').value.trim();
+  if(!val) return;
+  teachers.push({id:uid(), name:val});
+  sortTeachers();
+  document.getElementById('t_name').value='';
+  renderTeachers(); renderLow(); renderHigh();
+}
+function removeTeacher(id){
+  teachers = teachers.filter(t=>t.id!==id);
+  renderTeachers(); renderLow(); renderHigh();
+}
+function getNegaranIds(){
+  const set = new Set();
+  Object.values(lowGrades).forEach(g=>{
+    Object.values(g.sectionTeacher).forEach(id=>{ if(id) set.add(id); });
+  });
+  return set;
+}
+function renderTeachers(){
+  const negSet = getNegaranIds();
+  const el = document.getElementById('teacherList');
+  el.innerHTML = teachers.map(t=>{
+    const isNeg = negSet.has(t.id);
+    return `<div class="teacher-chip ${isNeg?'negaran':''}">
+      <span>${t.name}</span> ${isNeg?'<span class="badge">استاد نگران</span>':''}
+      <button class="btn danger" style="margin-right:auto" onclick="removeTeacher('${t.id}')">حذف</button>
+    </div>`;
+  }).join('') || '<p class="muted">هنوز استادی اضافه نشده.</p>';
+}
+function loadSampleTeachers(){
+  ["مریم رضایی","خدیجه رسولی","مریم شیرزاد","انیسه ابراهیمی","صغرا احمدی","زهرا ولی‌زاده","محمد داود ولی‌زاده","مبین احمدی‌نژاد","عباس شایق","محمد نظیف اندیشمند","فرهاد غلامی","عزیز الله مصدق","محمد موسوی","فروزان محسنی","فاطمه درویشی"].forEach(n=>{
+    if(!teachers.some(t=>t.name===n)) addTeacher(n);
+  });
+}
+
+/* helper: teacher options excluding negaran (except for computer subject context) */
+function teacherOptionsHTML(selectedId, opts){
+  opts = opts||{};
+  const negSet = getNegaranIds();
+  return teachers.filter(t=> opts.allowAll || !negSet.has(t.id) || t.id===selectedId)
+    .map(t=>`<option value="${t.id}" ${t.id===selectedId?'selected':''}>${t.name}</option>`).join('');
+}
+
+/* ============== LOW CYCLE (1-6) ============== */
+function renderLow(){
+  const wrap1 = document.getElementById('lowGrades1');
+  const wrap2 = document.getElementById('lowGrades2');
+  wrap1.innerHTML = ''; wrap2.innerHTML = '';
+  for(let g=1; g<=6; g++){
+    const wrap = g<=3 ? wrap1 : wrap2;
+    const G = lowGrades[g];
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>صنف ${g} <span class="muted" style="font-weight:400">(${g<=3?'ابتدائیه اول':'ابتدائیه دوم'})</span>
+        <label style="font-weight:400;font-size:13px"><input type="checkbox" ${G.active?'checked':''} onchange="lowGrades[${g}].active=this.checked; renderLow();"> فعال</label>
+      </h3>
+      <div class="row">
+        <label>تعداد صنف (شعبات موازی)</label>
+        <input type="number" min="0" max="6" value="${G.sections}" style="width:60px" onchange="setLowSections(${g}, this.value)">
+      </div>
+      <div class="muted">مضامین صنف ${g} (تیک بزنید + ساعت هفته‌گی):</div>
+      <div class="subject-list" id="low-subj-${g}"></div>
+      <div class="row">
+        <input type="text" id="low-newsubj-${g}" placeholder="نام مضمون جدید" onkeydown="if(event.key==='Enter'){addLowSubject(${g});}">
+        <button class="btn small secondary" onclick="addLowSubject(${g})">افزودن مضمون</button>
+      </div>
+      <div id="low-sections-${g}"></div>
+    `;
+    wrap.appendChild(card);
+    renderLowSubjects(g);
+    renderLowSections(g);
+  }
+}
+function setLowSections(g, val){
+  lowGrades[g].sections = Math.max(0, parseInt(val)||0);
+  renderLowSections(g);
+}
+function renderLowSubjects(g){
+  const G = lowGrades[g];
+  document.getElementById('low-subj-'+g).innerHTML = G.subjects.map((s,i)=>`
+    <div class="subject-item">
+      <input type="checkbox" ${s.enabled?'checked':''} onchange="lowGrades[${g}].subjects[${i}].enabled=this.checked">
+      <span class="sname">${s.name}</span>
+      <input type="number" min="0" value="${s.hours}" title="ساعت هفته‌گی" onchange="lowGrades[${g}].subjects[${i}].hours=parseInt(this.value)||0">
+      <span class="rm" onclick="removeLowSubject(${g},${i})">✕</span>
+    </div>
+  `).join('');
+}
+function addLowSubject(g){
+  const inp = document.getElementById('low-newsubj-'+g);
+  const name = inp.value.trim();
+  if(!name) return;
+  lowGrades[g].subjects.push({name, hours:3, enabled:true});
+  inp.value='';
+  renderLowSubjects(g);
+}
+function removeLowSubject(g,i){ lowGrades[g].subjects.splice(i,1); renderLowSubjects(g); }
+
+function renderLowSections(g){
+  const G = lowGrades[g];
+  const el = document.getElementById('low-sections-'+g);
+  const compEnabled = G.subjects.some(s=>s.name==="کمپیوتر" && s.enabled);
+  let html='';
+  for(let i=0;i<G.sections;i++){
+    const letter = sectionLabel(G,i);
+    const negId = G.sectionTeacher[letter];
+    html += `<div class="section-row">
+      <span class="tag">${g}-${letter}</span>
+      <label>نام شعبه:</label>
+      <input type="text" value="${letter}" style="width:50px" onchange="setSectionLabel(lowGrades,${g},${i},this.value); renderLowSections(${g});">
+      <label>استاد نگران:</label>
+      <select onchange="setNegaran(${g},'${letter}',this.value)">
+        <option value="">— انتخاب کنید —</option>
+        ${teacherOptionsHTML(negId)}
+      </select>`;
+    if(compEnabled){
+      html += `<label style="margin-right:10px"><input type="checkbox" ${G.compSeparate?'checked':''} onchange="setCompSeparate(${g},this.checked)"> کمپیوتر را استاد جدا تدریس کند</label>`;
+      if(G.compSeparate){
+        const ctId = G.compTeacher[letter];
+        html += `<label>استاد کمپیوتر:</label><select onchange="setCompTeacher(${g},'${letter}',this.value)">
+          <option value="">— انتخاب کنید —</option>
+          ${teacherOptionsHTML(ctId,{allowAll:true})}
+        </select>`;
+      }
+    }
+    html += `</div>`;
+  }
+  el.innerHTML = html || '<p class="muted">تعداد صنف را وارد کنید.</p>';
+}
+function setNegaran(g,letter,id){
+  lowGrades[g].sectionTeacher[letter] = id || null;
+  renderTeachers(); renderLow(); renderHigh();
+}
+function setCompSeparate(g,val){ lowGrades[g].compSeparate = val; renderLowSections(g); }
+function setCompTeacher(g,letter,id){ lowGrades[g].compTeacher[letter] = id || null; }
+
+/* ============== HIGH CYCLE (7-12) ============== */
+function renderHigh(){
+  const wrapMid = document.getElementById('midGrades');
+  const wrapLisa = document.getElementById('lisaGrades');
+  wrapMid.innerHTML = ''; wrapLisa.innerHTML = '';
+  for(let g=7; g<=12; g++){
+    const wrap = g<=9 ? wrapMid : wrapLisa;
+    const G = highGrades[g];
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>صنف ${g} <span class="muted" style="font-weight:400">(${g<=9?'متوسطه':'لیسه'})</span>
+        <label style="font-weight:400;font-size:13px"><input type="checkbox" ${G.active?'checked':''} onchange="highGrades[${g}].active=this.checked; renderHigh();"> فعال</label>
+      </h3>
+      ${g>=11?'<p class="muted">پیش‌فرض مضامین این صنف مانند صنف ۱۰ است؛ می‌توانید آزادانه ویرایش یا فعال/غیرفعال کنید.</p>':''}
+      <div class="row">
+        <label>تعداد صنف (شعبات موازی)</label>
+        <input type="number" min="0" max="6" value="${G.sections}" style="width:60px" onchange="setHighSections(${g}, this.value)">
+      </div>
+      <div class="muted">مضامین صنف ${g}:</div>
+      <div class="subject-list" id="high-subj-${g}"></div>
+      <div class="row">
+        <input type="text" id="high-newsubj-${g}" placeholder="نام مضمون جدید" onkeydown="if(event.key==='Enter'){addHighSubject(${g});}">
+        <button class="btn small secondary" onclick="addHighSubject(${g})">افزودن مضمون</button>
+      </div>
+      <div class="muted" style="margin-top:6px">تخصیص استاد به هر مضمون:</div>
+      <div id="high-assign-${g}"></div>
+      <div class="row">
+        <button class="btn small secondary" onclick="addHighAssignment(${g})">+ افزودن تخصیص استاد</button>
+      </div>
+    `;
+    wrap.appendChild(card);
+    renderHighSubjects(g);
+    renderHighAssignments(g);
+  }
+}
+function setHighSections(g,val){
+  highGrades[g].sections = Math.max(0, parseInt(val)||0);
+  renderHighAssignments(g);
+}
+function renderHighSubjects(g){
+  const G = highGrades[g];
+  document.getElementById('high-subj-'+g).innerHTML = G.subjects.map((s,i)=>`
+    <div class="subject-item">
+      <input type="checkbox" ${s.enabled?'checked':''} onchange="highGrades[${g}].subjects[${i}].enabled=this.checked; renderHighAssignments(${g})">
+      <span class="sname">${s.name}</span>
+      <span class="rm" onclick="removeHighSubject(${g},${i})">✕</span>
+    </div>
+  `).join('');
+}
+function addHighSubject(g){
+  const inp = document.getElementById('high-newsubj-'+g);
+  const name = inp.value.trim();
+  if(!name) return;
+  highGrades[g].subjects.push({name, enabled:true});
+  inp.value='';
+  renderHighSubjects(g);
+  renderHighAssignments(g);
+}
+function removeHighSubject(g,i){
+  const name = highGrades[g].subjects[i].name;
+  highGrades[g].subjects.splice(i,1);
+  highGrades[g].assignments = highGrades[g].assignments.filter(a=>a.subject!==name);
+  renderHighSubjects(g); renderHighAssignments(g);
+}
+function addHighAssignment(g){
+  const enabledSubjects = highGrades[g].subjects.filter(s=>s.enabled);
+  if(enabledSubjects.length===0){ alert('اول مضمون فعال کنید.'); return; }
+  const first = enabledSubjects[0];
+  highGrades[g].assignments.push({subject: first.name, teacherId:'', hours: first.hours||3, classes:[]});
+  renderHighAssignments(g);
+}
+function removeHighAssignment(g,i){ highGrades[g].assignments.splice(i,1); renderHighAssignments(g); }
+function renderHighAssignments(g){
+  const G = highGrades[g];
+  const enabledSubjects = G.subjects.filter(s=>s.enabled);
+  const el = document.getElementById('high-assign-'+g);
+  if(G.sections===0){ el.innerHTML='<p class="muted">اول تعداد صنف را وارد کنید.</p>'; return; }
+  let labelsRow = '<div class="row" style="margin-bottom:8px">';
+  for(let si=0; si<G.sections; si++){
+    labelsRow += `<label>نام شعبه ${g}-${si+1}:</label><input type="text" value="${sectionLabel(G,si)}" style="width:50px" onchange="setSectionLabel(highGrades,${g},${si},this.value); renderHighAssignments(${g});">`;
+  }
+  labelsRow += '</div>';
+  el.innerHTML = labelsRow + G.assignments.map((a,i)=>{
+    const classesHtml = Array.from({length:G.sections}).map((_,si)=>{
+      const letter = sectionLabel(G,si);
+      const checked = a.classes.includes(letter);
+      return `<label><input type="checkbox" ${checked?'checked':''} onchange="toggleAssignClass(${g},${i},'${letter}',this.checked)">${g}-${letter}</label>`;
+    }).join('');
+    const isComputer = a.subject === "کمپیوتر";
+    return `<div class="assign-row">
+      <select onchange="highGrades[${g}].assignments[${i}].subject=this.value">
+        ${enabledSubjects.map(s=>`<option value="${s.name}" ${s.name===a.subject?'selected':''}>${s.name}</option>`).join('')}
+      </select>
+      <select onchange="highGrades[${g}].assignments[${i}].teacherId=this.value">
+        <option value="">— استاد —</option>
+        ${teacherOptionsHTML(a.teacherId, {allowAll:isComputer})}
+      </select>
+      <label>ساعت/هفته</label>
+      <input type="number" min="0" style="width:50px" value="${a.hours}" onchange="highGrades[${g}].assignments[${i}].hours=parseInt(this.value)||0">
+      <div class="classes">${classesHtml}</div>
+      <button class="btn danger" onclick="removeHighAssignment(${g},${i})">حذف</button>
+    </div>`;
+  }).join('') || '<p class="muted">تخصیصی اضافه نشده.</p>';
+}
+function toggleAssignClass(g,i,letter,val){
+  const a = highGrades[g].assignments[i];
+  if(val){ if(!a.classes.includes(letter)) a.classes.push(letter); }
+  else{ a.classes = a.classes.filter(c=>c!==letter); }
+}
+
+/* ============== SAMPLE DATA ============== */
+function loadSampleLow(){
+  loadSampleTeachers();
+  for(let g=1; g<=6; g++){
+    lowGrades[g].sections = g<=3 ? 2 : 1;
+    const letters = SECTION_LETTERS.slice(0, lowGrades[g].sections);
+    letters.forEach((l,idx)=>{
+      const t = teachers[(g+idx) % teachers.length];
+      lowGrades[g].sectionTeacher[l] = t.id;
+    });
+  }
+  renderTeachers(); renderLow(); renderHigh();
+}
+function loadSampleHigh(){
+  loadSampleTeachers();
+  const map = {
+    "محمد داود ولی‌زاده":["انگلیسی","کمپیوتر","حرفه"],
+    "عباس شایق":["دری","جغرافیه"],
+    "مبین احمدی‌نژاد":["دینیات","تفسیر"],
+    "فرهاد غلامی":["فزیک"],
+    "عزیز الله مصدق":["قرآن"],
+    "محمد موسوی":["کیمیا"],
+    "محمد نظیف اندیشمند":["بیالوژی"],
+    "زهرا ولی‌زاده":["ریاضی"],
+    "صغرا احمدی":["تاریخ","پشتو"],
+    "خدیجه رسولی":["ورزش","جیولوژی"],
+    "مریم شیرزاد":["عربی"]
+  };
+  const sections = {7:2,8:2,9:1,10:1,11:0,12:0};
+  for(let g=7; g<=10; g++){
+    highGrades[g].sections = sections[g];
+    highGrades[g].assignments = [];
+    const letters = SECTION_LETTERS.slice(0, sections[g]);
+    Object.entries(map).forEach(([tname, subs])=>{
+      const teacher = teachers.find(t=>t.name===tname);
+      if(!teacher) return;
+      subs.forEach(subName=>{
+        const subDef = DEFAULT_HIGH_SUBJECTS[g]?.find(s=>s.n===subName);
+        if(!subDef) return;
+        highGrades[g].assignments.push({subject:subName, teacherId:teacher.id, hours:subDef.h, classes:[...letters]});
+      });
+    });
+  }
+  renderTeachers(); renderLow(); renderHigh();
+}
+
+/* ============== SCHEDULING ============== */
+function getDays(){
+  const mode = document.getElementById('s_week').value;
+  if(mode==='5sat') return DAYS5SAT;
+  if(mode==='5sun') return DAYS5SUN;
+  return DAYS6;
+}
+function buildTimetable(){
+  const days = getDays();
+  const shift = document.getElementById('s_shift').value; // "صبح" یا "بعد از ظهر"
+  const teacherBusy = {}; // teacherId -> Set("day-period")
+  teachers.forEach(t=> teacherBusy[t.id] = new Set());
+  const classGrid = {}; // classKey -> [day][period] = {subject, teacherName, teacherId}
+  const classMeta = []; // {key, grade, letter, cycle}
+  const conflicts = [];
+  const unplaced = [];
+  const emptyGradeWarnings = [];
+
+  function ensureGrid(key){
+    if(!classGrid[key]) classGrid[key] = days.map(()=>Array(PERIODS).fill(null));
+  }
+
+  // مضامین ورزش/رسم/خط را بر اساس شفت اولویت‌بندی می‌کنیم تا در ساعات مناسب جا بگیرند
+  // - رسم و خط همیشه به سمت ساعات آخر روز (شاگردان خسته می‌شوند)
+  // - ورزش: در شفت بعد از ظهر هم به ساعات آخر، اما در شفت صبح به ساعت اول/دوم (گرمی هوا)
+  function isCalligraphy(name){ return /رسم|خط/.test(name); }
+  function isSport(name){ return /ورزش/.test(name); }
+  function subjectGroup(name){
+    if(isSport(name)) return (shift==='صبح') ? 'early' : 'late';
+    if(isCalligraphy(name)) return 'late';
+    return 'normal';
+  }
+  function desiredGroup(p){
+    if(p < 2) return 'early';
+    if(p >= PERIODS-2) return 'late';
+    return 'normal';
+  }
+
+  // الگوریتم پخش متوازن: به جای جا دادن یک‌به‌یک هر مضمون (که می‌تواند گیر بیفتد)،
+  // برای هر روز، در هر زنگ بهترین مضمون باقیمانده (با درنظرداشت زنگ مناسب و بیشترین ساعت باقیمانده) انتخاب می‌شود.
+  // این روش تضمین می‌کند وقتی مجموع ساعات دقیقاً برابر ظرفیت هفته است، همه ساعات جا شوند.
+  function scheduleClass(classKey, entries){
+    ensureGrid(classKey);
+    const grid = classGrid[classKey];
+    const items = entries.filter(e=>e.hours>0).map(e=>({...e, remaining:e.hours}));
+    for(let d=0; d<days.length; d++){
+      const usedToday = new Set();
+      for(let p=0; p<PERIODS; p++){
+        if(grid[d][p]) continue;
+        const slotKey = d+'-'+p;
+        let candidates = items.filter(it=> it.remaining>0 && !usedToday.has(it.subject) &&
+          !(it.teacherId && teacherBusy[it.teacherId] && teacherBusy[it.teacherId].has(slotKey)));
+        if(candidates.length===0){
+          // اگر هیچ گزینه‌ای بدون تکرار در همین روز نبود، محدودیت «یک‌بار در روز» را موقتاً کنار می‌گذاریم
+          candidates = items.filter(it=> it.remaining>0 &&
+            !(it.teacherId && teacherBusy[it.teacherId] && teacherBusy[it.teacherId].has(slotKey)));
+        }
+        if(candidates.length===0) continue; // این خانه خالی می‌ماند
+        const desired = desiredGroup(p);
+        candidates.sort((a,b)=>{
+          const ga = subjectGroup(a.subject)===desired ? 0 : 1;
+          const gb = subjectGroup(b.subject)===desired ? 0 : 1;
+          if(ga!==gb) return ga-gb;
+          return b.remaining - a.remaining; // بیشترین ساعت باقیمانده اول (محدودترین مورد)
+        });
+        const chosen = candidates[0];
+        grid[d][p] = {subject:chosen.subject, teacherName:chosen.teacherName, teacherId:chosen.teacherId};
+        if(chosen.teacherId) teacherBusy[chosen.teacherId].add(slotKey);
+        chosen.remaining--;
+        usedToday.add(chosen.subject);
+      }
+    }
+    items.forEach(it=>{
+      if(it.remaining>0) unplaced.push({class:classKey, subject:it.subject, teacher:it.teacherName, missing:it.remaining});
+    });
+  }
+
+  // LOW CYCLE: فقط جمع‌آوری entries هر صنف (هنوز جا نمی‌دهیم)
+  const classQueue = []; // [{classKey, entries}]
+  for(let g=1; g<=6; g++){
+    const G = lowGrades[g];
+    if(!G.active) continue;
+    if(G.sections===0) emptyGradeWarnings.push(`صنف ${g}`);
+    for(let i=0;i<G.sections;i++){
+      const letter = sectionLabel(G,i);
+      const classKey = `${g}-${letter}`;
+      classMeta.push({key:classKey, grade:g, letter, cycle:'low'});
+      ensureGrid(classKey);
+    }
+  }
+  for(let g=1; g<=6; g++){
+    const G = lowGrades[g];
+    if(!G.active) continue;
+    const sections = [];
+    for(let i=0;i<G.sections;i++) sections.push(sectionLabel(G,i));
+    if(sections.length === 0) continue;
+    const subjects = G.subjects.filter(s=>s.enabled);
+
+    sections.forEach(letter=>{
+      const classKey = `${g}-${letter}`;
+      const negId = G.sectionTeacher[letter];
+      const negName = teachers.find(t=>t.id===negId)?.name || '(تعیین نشده)';
+      const entries = subjects.map(s=>{
+        if(s.name==="کمپیوتر" && G.compSeparate){
+          const ctId = G.compTeacher[letter];
+          const ctName = teachers.find(t=>t.id===ctId)?.name || '(تعیین نشده)';
+          return {subject:s.name, teacherId:ctId, teacherName:ctName, hours:s.hours};
+        }
+        return {subject:s.name, teacherId:negId, teacherName:negName, hours:s.hours};
+      });
+      classQueue.push({classKey, entries});
+    });
+  }
+
+  // HIGH CYCLE (صنوف ۷ تا ۱۲): فقط جمع‌آوری entries هر صنف
+  for(let g=7; g<=12; g++){
+    const G = highGrades[g];
+    if(!G.active) continue;
+    if(G.sections===0) emptyGradeWarnings.push(`صنف ${g}`);
+    for(let i=0;i<G.sections;i++){
+      const letter = sectionLabel(G,i);
+      const classKey = `${g}-${letter}`;
+      classMeta.push({key:classKey, grade:g, letter, cycle:'high'});
+      ensureGrid(classKey);
+    }
+    const sections = [];
+    for(let i=0;i<G.sections;i++) sections.push(sectionLabel(G,i));
+    sections.forEach(letter=>{
+      const classKey = `${g}-${letter}`;
+      const entries = G.assignments.filter(a=>a.classes.includes(letter)).map(a=>{
+        const tName = teachers.find(t=>t.id===a.teacherId)?.name || '(تعیین نشده)';
+        return {subject:a.subject, teacherId:a.teacherId, teacherName:tName, hours:a.hours};
+      });
+      classQueue.push({classKey, entries});
+    });
+  }
+
+  // یک معلم گاهی هم‌زمان در چند صنف درس می‌دهد (مثلاً استاد کمپیوتر که در صنوف مختلف ساعت کمی دارد).
+  // اگر چنین مضامینی را آخر از همه جا بدهیم، ممکن است دقیقاً همان خانه‌ی خالیِ باقیمانده با زمان اشغال آن استاد در صنف دیگر تصادم کند و دیگر جایی برای عقب‌نشینی نباشد.
+  // برای همین، مرحله اول: مضامینی که استادشان در بیش از یک صنف تدریس می‌کند را — وقتی هنوز همه‌ی هفته خالی است — جا می‌دهیم،
+  // مرحله دوم: باقی مضامین (که استادشان فقط در همین صنف درس می‌دهد) را در خانه‌های باقیمانده پخش می‌کنیم.
+  const teacherClassCount = {}; // teacherId -> Set(classKey)
+  classQueue.forEach(c=> c.entries.forEach(e=>{
+    if(!e.teacherId) return;
+    if(!teacherClassCount[e.teacherId]) teacherClassCount[e.teacherId] = new Set();
+    teacherClassCount[e.teacherId].add(c.classKey);
+  }));
+  function isShared(e){ return e.teacherId && teacherClassCount[e.teacherId] && teacherClassCount[e.teacherId].size>1; }
+
+  classQueue.forEach(c=> scheduleClass(c.classKey, c.entries.filter(isShared)));
+  classQueue.forEach(c=> scheduleClass(c.classKey, c.entries.filter(e=>!isShared(e))));
+
+  // sanity conflict check (teacher double-booked across classes at same slot)
+  const slotOwners = {}; // teacherId-day-period -> [classKey]
+  classMeta.forEach(cm=>{
+    const grid = classGrid[cm.key];
+    grid.forEach((row,d)=> row.forEach((cell,p)=>{
+      if(cell && cell.teacherId){
+        const sk = `${cell.teacherId}-${d}-${p}`;
+        if(!slotOwners[sk]) slotOwners[sk]=[];
+        slotOwners[sk].push({class:cm.key, day:days[d], period:p+1, subject:cell.subject, teacher:cell.teacherName});
+      }
+    }));
+  });
+  Object.values(slotOwners).forEach(arr=>{
+    if(arr.length>1){
+      arr.forEach(a=> a.classes = arr.map(x=>x.class).join(', '));
+      conflicts.push(...arr);
+      // mark cells conflict
+      arr.forEach(a=>{
+        const cm = classMeta.find(c=>c.key===a.class);
+        if(cm){
+          const dIdx = days.indexOf(a.day);
+          classGrid[cm.key][dIdx][a.period-1].conflict = true;
+        }
+      });
+    }
+  });
+
+  window._lastBuild = {days, classGrid, classMeta, conflicts, unplaced, teacherBusy, emptyGradeWarnings};
+  renderOutput();
+  document.querySelectorAll('.topnav button').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  document.querySelector('.topnav button[data-p="output"]').classList.add('active');
+  document.getElementById('panel-output').classList.add('active');
+}
+
+/* ============== TEACHER COLORS ============== */
+function teacherColor(name){
+  if(!name) return '#fff';
+  let h=0; for(let i=0;i<name.length;i++) h = (h*31 + name.charCodeAt(i)) % COLOR_PALETTE.length;
+  return COLOR_PALETTE[h];
+}
+
+/* ============== OUTPUT RENDER ============== */
+function renderOutput(){
+  const data = window._lastBuild;
+  const out = document.getElementById('output');
+  if(!data){ out.innerHTML = '<div class="placeholder">هنوز جدولی ساخته نشده.</div>'; return; }
+  const {days, classGrid, classMeta, conflicts, unplaced, emptyGradeWarnings} = data;
+
+  const school = document.getElementById('s_school').value;
+  const shift = document.getElementById('s_shift').value;
+  const year = document.getElementById('s_year').value;
+  const start = document.getElementById('s_start').value;
+  const dur = parseInt(document.getElementById('s_dur').value)||45;
+
+  function periodTime(p){
+    const [h,m] = start.split(':').map(Number);
+    const dur = parseInt(document.getElementById('s_dur').value)||40;
+    const brk = parseInt(document.getElementById('s_break').value)||10;
+    // breaks after period index 1 (2nd) and 3 (4th)
+    let extraBreaks = 0;
+    if(p >= 2) extraBreaks += brk; // after period 2
+    if(p >= 4) extraBreaks += brk; // after period 4
+    const startMin = h*60+m + p*dur + extraBreaks;
+    const endMin = startMin+dur;
+    const f = (min)=> `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`;
+    return `${f(startMin)}-${f(endMin)}`;
+  }
+
+  let html = `<h2 style="color:var(--accent)">${school} — ${shift} — سال ${year}</h2>`;
+
+  if(emptyGradeWarnings && emptyGradeWarnings.length){
+    html += `<div class="alert warn"><b>توجه:</b> ${emptyGradeWarnings.join('، ')} فعال است ولی هیچ شعبه‌ای (تعداد صنف) برای آن تعیین نشده — حد اقل یک شعبه برای هر صنف فعال در نظر بگیرید یا آن صنف را غیرفعال کنید.</div>`;
+  }
+
+  // Detect shared-teacher parallel sections and warn
+  const sharedWarnings = [];
+  for(let g=1; g<=6; g++){
+    const G = lowGrades[g];
+    if(!G.active || G.sections < 2) continue;
+    const teacherSections = {};
+    for(let i=0; i<G.sections; i++){
+      const letter = sectionLabel(G,i);
+      const negId = G.sectionTeacher[letter];
+      if(!negId) continue;
+      if(!teacherSections[negId]) teacherSections[negId] = [];
+      teacherSections[negId].push(`${g}-${letter}`);
+    }
+    Object.entries(teacherSections).forEach(([tid, cls])=>{
+      if(cls.length > 1){
+        const tname = teachers.find(t=>t.id===tid)?.name || tid;
+        sharedWarnings.push(`استاد <b>${tname}</b> در صنوف موازی ${cls.join(' و ')} تدریس می‌کند — جدول‌های این صنوف در ساعت‌های مختلف تنظیم شده‌اند.`);
+      }
+    });
+  }
+  if(sharedWarnings.length){
+    html += `<div class="alert warn"><b>توجه — استاد مشترک در صنوف موازی:</b><br>${sharedWarnings.join('<br>')}</div>`;
+  }
+
+  const totalClasses = classMeta.length;
+  const totalTeachers = teachers.length;
+  html += `<div class="stats">
+    <div>صنوف: <b>${totalClasses}</b></div>
+    <div>اساتید: <b>${totalTeachers}</b></div>
+    <div>تعارضات: <b style="color:${conflicts.length?'var(--danger)':'var(--accent2)'}">${conflicts.length}</b></div>
+    <div>ساعات جا نشده: <b style="color:${unplaced.length?'var(--warn)':'var(--accent2)'}">${unplaced.length}</b></div>
+  </div>`;
+
+  if(conflicts.length===0 && unplaced.length===0){
+    html += `<div class="alert ok">هیچ تعارض یا ساعت جا نشده‌ای پیدا نشد. ✔</div>`;
+  }
+  if(conflicts.length>0){
+    const uniq = {};
+    conflicts.forEach(c=>{ uniq[`${c.teacher}-${c.day}-${c.period}`] = c; });
+    html += `<div class="alert bad"><b>تعارض اساتید:</b><br>` + Object.values(uniq).map(c=>
+      `${c.teacher} — روز ${c.day}، زنگ ${c.period} — صنوف: ${c.classes}`).join('<br>') + `</div>`;
+  }
+  if(unplaced.length>0){
+    html += `<div class="alert warn"><b>ساعات جا نشده:</b><br>` + unplaced.map(u=>
+      `صنف ${u.class} — مضمون ${u.subject} (${u.teacher}) — ${u.missing} ساعت جا نشد`).join('<br>') + `</div>`;
+  }
+
+  // grouped class tables by level
+  const levelDefs = [
+    {key:'ab1', title:'ابتدائیه اول (صنوف ۱ تا ۳)', test:m=> m.cycle==='low' && m.grade<=3},
+    {key:'ab2', title:'ابتدائیه دوم (صنوف ۴ تا ۶)', test:m=> m.cycle==='low' && m.grade>=4},
+    {key:'mid', title:'متوسطه (صنوف ۷ تا ۹)', test:m=> m.cycle==='high' && m.grade<=9},
+    {key:'lisa', title:'لیسه (صنوف ۱۰ تا ۱۲)', test:m=> m.cycle==='high' && m.grade>=10}
+  ];
+  levelDefs.forEach(lv=>{
+    const metas = classMeta.filter(lv.test).sort((a,b)=> a.grade-b.grade || a.letter.localeCompare(b.letter));
+    if(metas.length===0) return;
+    html += `<div class="cycle-title">${lv.title}</div>`;
+    metas.forEach(cm=>{
+      const grid = classGrid[cm.key];
+      html += `<div class="class-table-wrap"><h4>صنف ${cm.key}</h4><table class="tt"><thead><tr><th>زنگ</th>`;
+      days.forEach(d=> html += `<th>${d}</th>`);
+      html += `</tr></thead><tbody>`;
+      for(let p=0; p<PERIODS; p++){
+        html += `<tr><th>${p+1}<br><span class="muted">${periodTime(p)}</span></th>`;
+        for(let d=0; d<days.length; d++){
+          const cell = grid[d][p];
+          if(cell){
+            const bg = teacherColor(cell.teacherName);
+            html += `<td class="cell ${cell.conflict?'conflict':''}" style="background:${cell.conflict?'':bg}">
+              <div class="subj">${cell.subject}</div><div class="tname">${cell.teacherName}</div></td>`;
+          } else {
+            html += `<td class="cell empty">—</td>`;
+          }
+        }
+        html += `</tr>`;
+      }
+      html += `</tbody></table></div>`;
+    });
+
+    // جدول عمومی اساتید این دوره (مناسب برای چاپ و نصب در دفتر)
+    const levelTeacherIds = new Set();
+    metas.forEach(cm=>{
+      classGrid[cm.key].forEach(row=> row.forEach(cell=>{ if(cell && cell.teacherId) levelTeacherIds.add(cell.teacherId); }));
+    });
+    const levelTeachers = teachers.filter(t=> levelTeacherIds.has(t.id));
+    if(levelTeachers.length){
+      html += `<h4 style="margin:14px 0 6px">جدول عمومی اساتید — ${lv.title}</h4>
+      <div class="class-table-wrap" style="overflow-x:auto"><table class="tt"><thead>
+        <tr><th rowspan="2">استاد</th>${days.map(d=>`<th colspan="${PERIODS}">${d}</th>`).join('')}</tr>
+        <tr>${days.map(()=> Array.from({length:PERIODS}).map((_,p)=>`<th>${p+1}</th>`).join('')).join('')}</tr>
+      </thead><tbody>`;
+      levelTeachers.forEach(t=>{
+        html += `<tr><th>${t.name}</th>`;
+        days.forEach((d,di)=>{
+          for(let p=0;p<PERIODS;p++){
+            let found = null;
+            for(const cm of metas){
+              const cell = classGrid[cm.key][di][p];
+              if(cell && cell.teacherId===t.id){ found = {subject:cell.subject, cls:cm.key, conflict:cell.conflict}; break; }
+            }
+            if(found){
+              html += `<td class="cell ${found.conflict?'conflict':''}"><div class="subj" style="font-size:11px">${found.cls}</div><div class="tname">${found.subject}</div></td>`;
+            } else {
+              html += `<td class="cell empty">—</td>`;
+            }
+          }
+        });
+        html += `</tr>`;
+      });
+      html += `</tbody></table></div>`;
+    }
+  });
+
+  // teacher tables
+  html += `<div class="cycle-title">جدول اساتید</div>`;
+  teachers.forEach(t=>{
+    html += `<div class="class-table-wrap"><h4>${t.name}</h4><table class="tt"><thead><tr><th>زنگ</th>`;
+    days.forEach(d=> html += `<th>${d}</th>`);
+    html += `</tr></thead><tbody>`;
+    for(let p=0; p<PERIODS; p++){
+      html += `<tr><th>${p+1}</th>`;
+      for(let d=0; d<days.length; d++){
+        let found = null;
+        for(const cm of classMeta){
+          const cell = classGrid[cm.key][d][p];
+          if(cell && cell.teacherId===t.id){ found = {subject:cell.subject, cls:cm.key, conflict:cell.conflict}; break; }
+        }
+        if(found){
+          html += `<td class="cell ${found.conflict?'conflict':''}">${found.subject}<br><span class="muted">${found.cls}</span></td>`;
+        } else {
+          html += `<td class="cell empty">بیکار</td>`;
+        }
+      }
+      html += `</tr>`;
+    }
+    html += `</tbody></table></div>`;
+  });
+
+  out.innerHTML = html;
+}
+
+/* ============== CSV EXPORT ============== */
+function exportCSV(){
+  const data = window._lastBuild;
+  if(!data){ alert('اول جدول را بسازید.'); return; }
+  const {days, classGrid, classMeta} = data;
+  let rows = [];
+  classMeta.forEach(cm=>{
+    rows.push([`صنف ${cm.key}`]);
+    rows.push(['زنگ', ...days]);
+    const grid = classGrid[cm.key];
+    for(let p=0;p<PERIODS;p++){
+      const row = [String(p+1)];
+      for(let d=0; d<days.length; d++){
+        const cell = grid[d][p];
+        row.push(cell ? `${cell.subject} - ${cell.teacherName}` : '-');
+      }
+      rows.push(row);
+    }
+    rows.push([]);
+  });
+  teachers.forEach(t=>{
+    rows.push([`استاد: ${t.name}`]);
+    rows.push(['زنگ', ...days]);
+    for(let p=0;p<PERIODS;p++){
+      const row=[String(p+1)];
+      for(let d=0; d<days.length; d++){
+        let found=null;
+        for(const cm of classMeta){
+          const cell = classGrid[cm.key][d][p];
+          if(cell && cell.teacherId===t.id){ found = `${cell.subject} (${cm.key})`; break; }
+        }
+        row.push(found || 'بیکار');
+      }
+      rows.push(row);
+    }
+    rows.push([]);
+  });
+  const csv = rows.map(r=> r.map(c=> `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const bom = '\uFEFF';
+  const blob = new Blob([bom+csv], {type:'text/csv;charset=utf-8;'});
+  const link = document.createElement('a');
+  const year = document.getElementById('s_year').value;
+  const shift = document.getElementById('s_shift').value;
+  link.href = URL.createObjectURL(blob);
+  link.download = `تقسیم_اوقات_${shift}_${year}.csv`;
+  link.click();
+}
+
+/* init */
+renderTeachers(); renderLow(); renderHigh();
+</script>
+</body>
+</html>
