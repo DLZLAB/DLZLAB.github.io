@@ -49,7 +49,7 @@
       if(r.ok){
         const d=await r.json();
         sha=d.sha;
-        try{items=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))))}catch{e=>{}}
+        try{items=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))))}catch(e){}
       }
       if(!Array.isArray(items)) items=[];
       items.unshift(visit);
