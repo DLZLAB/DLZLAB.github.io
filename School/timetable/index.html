@@ -502,11 +502,12 @@ const DEFAULT_LOW_SUBJECTS = {
 };
 
 const DEFAULT_HIGH_SUBJECTS = {
-  7:[{n:"فزیک",h:2},{n:"حرفه",h:1},{n:"ریاضی",h:5},{n:"تاریخ",h:2},{n:"پشتو",h:3},{n:"دینیات",h:3},{n:"عربی",h:3},{n:"جغرافیه",h:2},{n:"کیمیا",h:3},{n:"انگلیسی",h:2},{n:"دری",h:3},{n:"قرآن",h:3},{n:"ورزش",h:1},{n:"بیالوژی",h:2},{n:"کمپیوتر",h:1}],
-  8:[{n:"ریاضی",h:5},{n:"دری",h:3},{n:"جغرافیه",h:2},{n:"انگلیسی",h:2},{n:"کمپیوتر",h:1},{n:"فزیک",h:2},{n:"قرآن",h:3},{n:"پشتو",h:3},{n:"کیمیا",h:3},{n:"عربی",h:3},{n:"بیالوژی",h:2},{n:"حرفه",h:1},{n:"تاریخ",h:2},{n:"دینیات",h:3},{n:"ورزش",h:1}],
-  9:[{n:"کیمیا",h:3},{n:"پشتو",h:3},{n:"دینیات",h:3},{n:"دری",h:3},{n:"تاریخ",h:2},{n:"ریاضی",h:5},{n:"جغرافیه",h:2},{n:"عربی",h:3},{n:"حرفه",h:1},{n:"انگلیسی",h:2},{n:"بیالوژی",h:2},{n:"قرآن",h:3},{n:"فزیک",h:2},{n:"کمپیوتر",h:1},{n:"ورزش",h:1}],
-  10:[{n:"تفسیر",h:3},{n:"کیمیا",h:3},{n:"ریاضی",h:6},{n:"بیالوژی",h:2},{n:"دری",h:3},{n:"کمپیوتر",h:2},{n:"جغرافیه",h:2},{n:"دینیات",h:3},{n:"فزیک",h:3},{n:"تاریخ",h:2},{n:"انگلیسی",h:2},{n:"پشتو",h:2},{n:"جیولوژی",h:2},{n:"ورزش",h:1}]
+  7:[{n:"فزیک",h:2},{n:"حرفه",h:1},{n:"ریاضی",h:5},{n:"تاریخ",h:2},{n:"پشتو",h:3},{n:"دینیات",h:3},{n:"عربی",h:3},{n:"جغرافیه",h:2},{n:"کیمیا",h:3},{n:"انگلیسی",h:2},{n:"دری",h:3},{n:"قرآن",h:3},{n:"ورزش",h:1},{n:"بیالوژی",h:2},{n:"کامپیوتر",h:1}],
+  8:[{n:"ریاضی",h:5},{n:"دری",h:3},{n:"جغرافیه",h:2},{n:"انگلیسی",h:2},{n:"کامپیوتر",h:1},{n:"فزیک",h:2},{n:"قرآن",h:3},{n:"پشتو",h:3},{n:"کیمیا",h:3},{n:"عربی",h:3},{n:"بیالوژی",h:2},{n:"حرفه",h:1},{n:"تاریخ",h:2},{n:"دینیات",h:3},{n:"ورزش",h:1}],
+  9:[{n:"کیمیا",h:3},{n:"پشتو",h:3},{n:"دینیات",h:3},{n:"دری",h:3},{n:"تاریخ",h:2},{n:"ریاضی",h:5},{n:"جغرافیه",h:2},{n:"عربی",h:3},{n:"حرفه",h:1},{n:"انگلیسی",h:2},{n:"بیالوژی",h:2},{n:"قرآن",h:3},{n:"فزیک",h:2},{n:"کامپیوتر",h:1},{n:"ورزش",h:1}],
+  10:[{n:"تفسیر",h:3},{n:"کیمیا",h:3},{n:"ریاضی",h:6},{n:"بیالوژی",h:2},{n:"دری",h:3},{n:"کامپیوتر",h:2},{n:"جغرافیه",h:2},{n:"دینیات",h:3},{n:"فزیک",h:3},{n:"تاریخ",h:2},{n:"انگلیسی",h:2},{n:"پشتو",h:2},{n:"جیولوژی",h:2},{n:"ورزش",h:1}]
 };
+// Grades 11-12 use Grade 10 data as TEMPORARY PLACEHOLDER — update with actual curriculum values when available
 DEFAULT_HIGH_SUBJECTS[11] = DEFAULT_HIGH_SUBJECTS[10].map(s=>({...s}));
 DEFAULT_HIGH_SUBJECTS[12] = DEFAULT_HIGH_SUBJECTS[10].map(s=>({...s}));
 
@@ -834,9 +835,9 @@ function renderHighAssignments(g){
       const checked = a.classes.includes(letter);
       return `<label><input type="checkbox" ${checked?'checked':''} onchange="toggleAssignClass(${g},${i},'${letter}',this.checked)">${g}-${letter}</label>`;
     }).join('');
-    const isComputer = a.subject === "کمپیوتر";
+    const isComputer = a.subject === "کامپیوتر" || a.subject === "کمپیوتر";
     return `<div class="assign-row">
-      <select onchange="highGrades[${g}].assignments[${i}].subject=this.value">
+      <select onchange="updateHighAssignmentSubject(${g},${i},this.value)">
         ${enabledSubjects.map(s=>`<option value="${s.name}" ${s.name===a.subject?'selected':''}>${s.name}</option>`).join('')}
       </select>
       <select onchange="highGrades[${g}].assignments[${i}].teacherId=this.value">
@@ -849,6 +850,14 @@ function renderHighAssignments(g){
       <button class="btn danger" onclick="removeHighAssignment(${g},${i})">حذف</button>
     </div>`;
   }).join('') || '<p class="muted">تخصیصی اضافه نشده.</p>';
+}
+function updateHighAssignmentSubject(g, i, subjectName){
+  const a = highGrades[g].assignments[i];
+  a.subject = subjectName;
+  const subDef = highGrades[g].subjects.find(s => s.name === subjectName);
+  if(subDef && subDef.hours) a.hours = subDef.hours;
+  renderHighAssignments(g);
+  saveState();
 }
 function toggleAssignClass(g,i,letter,val){
   const a = highGrades[g].assignments[i];
@@ -872,7 +881,7 @@ function loadSampleLow(){
 function loadSampleHigh(){
   loadSampleTeachers();
   const map = {
-    "محمد داود ولی‌زاده":["انگلیسی","کمپیوتر","حرفه"],
+    "محمد داود ولی‌زاده":["انگلیسی","کامپیوتر","حرفه"],
     "عباس شایق":["دری","جغرافیه"],
     "مبین احمدی‌نژاد":["دینیات","تفسیر"],
     "فرهاد غلامی":["فزیک"],
@@ -940,7 +949,7 @@ function buildTimetable(){
   }
   function isCalligraphy(name){ return /رسم|خط/.test(name); }
   function isSport(name){ return /ورزش/.test(name); }
-  function isComputer(name){ return /کمپیوتر|كمپیوتر/.test(name); }
+  function isComputer(name){ return /کامپیوتر|کمپیوتر|كمپیوتر/.test(name); }
   function subjectGroup(name){
     if(isSport(name)) return (shift==='صبح') ? 'early' : 'late';
     if(isCalligraphy(name)) return 'late';
