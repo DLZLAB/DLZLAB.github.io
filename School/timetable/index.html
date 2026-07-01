@@ -854,8 +854,18 @@ function renderHighAssignments(g){
 function updateHighAssignmentSubject(g, i, subjectName){
   const a = highGrades[g].assignments[i];
   a.subject = subjectName;
-  const subDef = highGrades[g].subjects.find(s => s.name === subjectName);
-  if(subDef && subDef.hours) a.hours = subDef.hours;
+  // Look up hours from hardcoded defaults first (most reliable — immune to localStorage corruption)
+  let hours = null;
+  if(DEFAULT_HIGH_SUBJECTS[g]) {
+    const def = DEFAULT_HIGH_SUBJECTS[g].find(s => s.n === subjectName);
+    if(def != null) hours = def.h;
+  }
+  // Fallback to current subjects array (covers custom / renamed subjects)
+  if(hours == null) {
+    const subDef = highGrades[g].subjects.find(s => s.name === subjectName);
+    if(subDef && subDef.hours != null) hours = subDef.hours;
+  }
+  if(hours != null) a.hours = hours;
   renderHighAssignments(g);
   saveState();
 }
