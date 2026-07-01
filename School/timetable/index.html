@@ -348,17 +348,17 @@ table.tt td.conflict{background:rgba(239,68,68,.15)!important;color:#ef4444!impo
     <div class="card">
       <h3 data-i18n="shift_info">معلومات شفت</h3>
       <div class="row">
-        <label data-i18n="school_name">نام مکتب</label><input type="text" id="s_school" value="مکتب نمونه">
+        <label data-i18n="school_name">نام مکتب</label><input type="text" id="s_school" value="مکتب نمونه" onchange="saveState()">
         <label data-i18n="shift">شفت</label>
-        <select id="s_shift" onchange="onShiftChange()"><option value="صبح">قبل از ظهر (صبح)</option><option value="بعد از ظهر">بعد از ظهر</option></select>
-        <label data-i18n="year">سال تعلیمی</label><input type="text" id="s_year" value="1405" style="width:80px">
+        <select id="s_shift" onchange="onShiftChange(); saveState();"><option value="صبح">قبل از ظهر (صبح)</option><option value="بعد از ظهر">بعد از ظهر</option></select>
+        <label data-i18n="year">سال تعلیمی</label><input type="text" id="s_year" value="1405" style="width:80px" onchange="saveState()">
       </div>
       <div class="row">
-        <label data-i18n="start_time">وقت شروع</label><input type="time" id="s_start" value="07:30">
-        <label data-i18n="period_dur">مدت هر زنگ (دقیقه)</label><input type="number" id="s_dur" value="40" style="width:70px">
-        <label data-i18n="break_dur">وقفه (دقیقه)</label><input type="number" id="s_break" value="10" style="width:60px" title="وقفه بعد از زنگ دوم و چهارم">
+        <label data-i18n="start_time">وقت شروع</label><input type="time" id="s_start" value="07:30" onchange="saveState()">
+        <label data-i18n="period_dur">مدت هر زنگ (دقیقه)</label><input type="number" id="s_dur" value="40" style="width:70px" onchange="saveState()">
+        <label data-i18n="break_dur">وقفه (دقیقه)</label><input type="number" id="s_break" value="10" style="width:60px" title="وقفه بعد از زنگ دوم و چهارم" onchange="saveState()">
         <label data-i18n="week_mode">حالت هفته</label>
-        <select id="s_week">
+        <select id="s_week" onchange="saveState()">
           <option value="6">۶ روزه (شنبه تا پنجشنبه)</option>
           <option value="5sat">۵ روزه - شروع شنبه</option>
           <option value="5sun">۵ روزه - شروع یکشنبه</option>
@@ -413,6 +413,7 @@ table.tt td.conflict{background:rgba(239,68,68,.15)!important;color:#ef4444!impo
     <button class="btn" onclick="buildTimetable()" data-i18n="build_btn">📅 ساخت تقسیم اوقات</button>
     <button class="btn secondary" onclick="exportCSV()" data-i18n="csv_btn">⬇ خروجی CSV</button>
     <button class="btn secondary" onclick="window.print()" data-i18n="print_btn">🖨 چاپ</button>
+    <button class="btn danger" onclick="resetData()" style="font-size:12px">🗑 ریست داده‌ها</button>
   </div>
 
 </div>
@@ -532,8 +533,6 @@ function initGrades(){
     };
   }
 }
-initGrades();
-
 function sectionLabel(G, i){
   return (G.sectionLabels && G.sectionLabels[i]) || SECTION_LETTERS[i] || ('شعبه'+(i+1));
 }
@@ -587,7 +586,7 @@ function renderTeachers(){
     const isNeg = negSet.has(t.id);
     const avail = t.availablePeriods||'1-6';
     return `<div class="teacher-chip ${isNeg?'negaran':''}">
-      <span>${t.name}</span> ${isNeg?'<span class="badge">استاد نگران</span>':''}
+      <span ondblclick="editTeacherName('${t.id}')" style="cursor:pointer;border-bottom:1px dashed #6b5a3a" title="دوبار کلیک کنید تا ویرایش شود">${t.name}</span> ${isNeg?'<span class="badge">استاد نگران</span>':''}
       <label style="font-size:11px;color:#b8945a;display:flex;align-items:center;gap:3px">
         دسترسی:
         <select onchange="setTeacherAvail('${t.id}',this.value)" style="font-size:11px;padding:2px 4px;width:auto">
@@ -603,6 +602,16 @@ function renderTeachers(){
       <button class="btn danger" style="margin-right:auto" onclick="removeTeacher('${t.id}')">حذف</button>
     </div>`;
   }).join('') || '<p class="muted">هنوز استادی اضافه نشده.</p>';
+  saveState();
+}
+function editTeacherName(id){
+  const t = teachers.find(t=>t.id===id);
+  if(!t) return;
+  const newName = prompt('نام جدید استاد را وارد کنید:', t.name);
+  if(!newName || newName.trim()==='' || newName===t.name) return;
+  t.name = newName.trim();
+  sortTeachers();
+  renderTeachers(); renderLow(); renderHigh();
 }
 function setTeacherAvail(id, val){
   const t = teachers.find(t=>t.id===id);
@@ -651,18 +660,38 @@ function renderLow(){
     renderLowSubjects(g);
     renderLowSections(g);
   }
+  saveState();
 }
 function setLowSections(g, val){
   lowGrades[g].sections = Math.max(0, parseInt(val)||0);
-  renderLowSections(g);
+  renderLowSections(g); saveState();
+}
+function editLowSubjectName(g,i){
+  const s = lowGrades[g].subjects[i];
+  if(!s) return;
+  const newName = prompt('نام جدید مضمون را وارد کنید:', s.name);
+  if(!newName || newName.trim()==='' || newName===s.name) return;
+  s.name = newName.trim();
+  renderLowSubjects(g);
+}
+function editHighSubjectName(g,i){
+  const s = highGrades[g].subjects[i];
+  if(!s) return;
+  const newName = prompt('نام جدید مضمون را وارد کنید:', s.name);
+  if(!newName || newName.trim()==='' || newName===s.name) return;
+  const oldName = s.name;
+  s.name = newName.trim();
+  highGrades[g].assignments.forEach(a=>{ if(a.subject===oldName) a.subject = s.name; });
+  renderHighSubjects(g);
+  renderHighAssignments(g);
 }
 function renderLowSubjects(g){
   const G = lowGrades[g];
   document.getElementById('low-subj-'+g).innerHTML = G.subjects.map((s,i)=>`
     <div class="subject-item">
-      <input type="checkbox" ${s.enabled?'checked':''} onchange="lowGrades[${g}].subjects[${i}].enabled=this.checked">
-      <span class="sname">${s.name}</span>
-      <input type="number" min="0" value="${s.hours}" title="ساعت هفته‌گی" onchange="lowGrades[${g}].subjects[${i}].hours=parseInt(this.value)||0">
+      <input type="checkbox" ${s.enabled?'checked':''} onchange="lowGrades[${g}].subjects[${i}].enabled=this.checked; saveState();">
+      <span class="sname" ondblclick="editLowSubjectName(${g},${i})" style="cursor:pointer;border-bottom:1px dashed #6b5a3a" title="دوبار کلیک کنید تا ویرایش شود">${s.name}</span>
+      <input type="number" min="0" value="${s.hours}" title="ساعت هفته‌گی" onchange="lowGrades[${g}].subjects[${i}].hours=parseInt(this.value)||0; saveState();">
       <span class="rm" onclick="removeLowSubject(${g},${i})">✕</span>
     </div>
   `).join('');
@@ -673,9 +702,9 @@ function addLowSubject(g){
   if(!name) return;
   lowGrades[g].subjects.push({name, hours:3, enabled:true});
   inp.value='';
-  renderLowSubjects(g);
+  renderLowSubjects(g); saveState();
 }
-function removeLowSubject(g,i){ lowGrades[g].subjects.splice(i,1); renderLowSubjects(g); }
+function removeLowSubject(g,i){ lowGrades[g].subjects.splice(i,1); renderLowSubjects(g); saveState(); }
 
 function renderLowSections(g){
   const G = lowGrades[g];
@@ -712,8 +741,8 @@ function setNegaran(g,letter,id){
   lowGrades[g].sectionTeacher[letter] = id || null;
   renderTeachers(); renderLow(); renderHigh();
 }
-function setCompSeparate(g,val){ lowGrades[g].compSeparate = val; renderLowSections(g); }
-function setCompTeacher(g,letter,id){ lowGrades[g].compTeacher[letter] = id || null; }
+function setCompSeparate(g,val){ lowGrades[g].compSeparate = val; renderLowSections(g); saveState(); }
+function setCompTeacher(g,letter,id){ lowGrades[g].compTeacher[letter] = id || null; saveState(); }
 
 /* ============== HIGH CYCLE (7-12) ============== */
 function renderHigh(){
@@ -750,17 +779,18 @@ function renderHigh(){
     renderHighSubjects(g);
     renderHighAssignments(g);
   }
+  saveState();
 }
 function setHighSections(g,val){
   highGrades[g].sections = Math.max(0, parseInt(val)||0);
-  renderHighAssignments(g);
+  renderHighAssignments(g); saveState();
 }
 function renderHighSubjects(g){
   const G = highGrades[g];
   document.getElementById('high-subj-'+g).innerHTML = G.subjects.map((s,i)=>`
     <div class="subject-item">
-      <input type="checkbox" ${s.enabled?'checked':''} onchange="highGrades[${g}].subjects[${i}].enabled=this.checked; renderHighAssignments(${g})">
-      <span class="sname">${s.name}</span>
+      <input type="checkbox" ${s.enabled?'checked':''} onchange="highGrades[${g}].subjects[${i}].enabled=this.checked; renderHighAssignments(${g}); saveState();">
+      <span class="sname" ondblclick="editHighSubjectName(${g},${i})" style="cursor:pointer;border-bottom:1px dashed #6b5a3a" title="دوبار کلیک کنید تا ویرایش شود">${s.name}</span>
       <span class="rm" onclick="removeHighSubject(${g},${i})">✕</span>
     </div>
   `).join('');
@@ -772,22 +802,22 @@ function addHighSubject(g){
   highGrades[g].subjects.push({name, enabled:true});
   inp.value='';
   renderHighSubjects(g);
-  renderHighAssignments(g);
+  renderHighAssignments(g); saveState();
 }
 function removeHighSubject(g,i){
   const name = highGrades[g].subjects[i].name;
   highGrades[g].subjects.splice(i,1);
   highGrades[g].assignments = highGrades[g].assignments.filter(a=>a.subject!==name);
-  renderHighSubjects(g); renderHighAssignments(g);
+  renderHighSubjects(g); renderHighAssignments(g); saveState();
 }
 function addHighAssignment(g){
   const enabledSubjects = highGrades[g].subjects.filter(s=>s.enabled);
   if(enabledSubjects.length===0){ alert('اول مضمون فعال کنید.'); return; }
   const first = enabledSubjects[0];
   highGrades[g].assignments.push({subject: first.name, teacherId:'', hours: first.hours||3, classes:[]});
-  renderHighAssignments(g);
+  renderHighAssignments(g); saveState();
 }
-function removeHighAssignment(g,i){ highGrades[g].assignments.splice(i,1); renderHighAssignments(g); }
+function removeHighAssignment(g,i){ highGrades[g].assignments.splice(i,1); renderHighAssignments(g); saveState(); }
 function renderHighAssignments(g){
   const G = highGrades[g];
   const enabledSubjects = G.subjects.filter(s=>s.enabled);
@@ -1029,15 +1059,30 @@ function buildTimetable(){
     });
   }
 
-  // 36-hour validation (Issue 3)
+  // 36-hour & teacher overload validation
   classQueue.forEach(c=>{
     const total = c.entries.reduce((sum, e) => sum + e.hours, 0);
     if(total !== 36){
       hourWarnings.push(`صنف ${c.classKey}: مجموع ساعت‌های هفته‌گی ${total} ساعت است (باید ۳۶ باشد)`);
     }
   });
+  // Teacher limit check (no teacher > total available periods)
+  const teacherHours = {};
+  classQueue.forEach(c=>{
+    c.entries.forEach(e=>{
+      if(!e.teacherId) return;
+      teacherHours[e.teacherId] = (teacherHours[e.teacherId]||0) + e.hours;
+    });
+  });
+  const maxTeacherHours = days.length * PERIODS;
+  Object.entries(teacherHours).forEach(([tid, total])=>{
+    if(total > maxTeacherHours){
+      const tname = teachers.find(t=>t.id===tid)?.name||tid;
+      hourWarnings.push(`استاد ${tname}: ${total} ساعت تدریس تعیین شده (حداکثر ${maxTeacherHours})`);
+    }
+  });
   if(hourWarnings.length){
-    const msg = '⚠ اخطار — مجموع ساعت‌های هفته‌گی باید ۳۶ باشد:\n\n' + hourWarnings.join('\n') + '\n\nآیا می‌خواهید با وجود این اخطارها جدول را بسازید؟';
+    const msg = '⚠ اخطار:\n\n' + hourWarnings.join('\n') + '\n\nآیا می‌خواهید با وجود این اخطارها جدول را بسازید؟';
     if(!confirm(msg)) return;
   }
 
@@ -1077,7 +1122,21 @@ function buildTimetable(){
     }
   });
 
-  window._lastBuild = {days, classGrid, classMeta, conflicts, unplaced, teacherBusy, emptyGradeWarnings, hourWarnings};
+  // Teacher 36-hour limit check
+  const teacherHourWarnings = [];
+  teachers.forEach(t=>{
+    let total = 0;
+    classMeta.forEach(cm=>{
+      classGrid[cm.key].forEach(row=> row.forEach(cell=>{
+        if(cell && cell.teacherId===t.id) total++;
+      }));
+    });
+    if(total > PERIODS * days.length){
+      teacherHourWarnings.push(`استاد ${t.name}: ${total} ساعت تدریس (حداکثر ${PERIODS * days.length})`);
+    }
+  });
+
+  window._lastBuild = {days, classGrid, classMeta, conflicts, unplaced, teacherBusy, emptyGradeWarnings, hourWarnings, teacherHourWarnings};
   renderOutput();
   document.querySelectorAll('#topnav button').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
@@ -1097,7 +1156,7 @@ function renderOutput(){
   const data = window._lastBuild;
   const out = document.getElementById('output');
   if(!data){ out.innerHTML = '<div class="placeholder">هنوز جدولی ساخته نشده.</div>'; return; }
-  const {days, classGrid, classMeta, conflicts, unplaced, emptyGradeWarnings, hourWarnings} = data;
+  const {days, classGrid, classMeta, conflicts, unplaced, emptyGradeWarnings, hourWarnings, teacherHourWarnings} = data;
 
   const school = document.getElementById('s_school').value;
   const shift = document.getElementById('s_shift').value;
@@ -1148,6 +1207,9 @@ function renderOutput(){
 
   if(hourWarnings && hourWarnings.length){
     html += `<div class="alert bad"><b>⚠ اخطار — مجموع ساعت‌های هفته‌گی باید ۳۶ باشد:</b><br>${hourWarnings.join('<br>')}</div>`;
+  }
+  if(teacherHourWarnings && teacherHourWarnings.length){
+    html += `<div class="alert bad"><b>⚠ اخطار — استاد بیش از حد مجاز تدریس دارد:</b><br>${teacherHourWarnings.join('<br>')}</div>`;
   }
 
   const totalClasses = classMeta.length;
@@ -1238,6 +1300,41 @@ function renderOutput(){
 
       html += `</div>`;
     });
+
+    // Master compact table per cycle (print-friendly)
+    const cycleData = {};
+    metas.forEach(cm=>{
+      const grid = classGrid[cm.key];
+      grid.forEach((row,d)=> row.forEach((cell,p)=>{
+        if(!cell || !cell.teacherId) return;
+        const tid = cell.teacherId;
+        const tname = cell.teacherName;
+        if(!cycleData[tid]) cycleData[tid] = {name: tname, entries: []};
+        const existing = cycleData[tid].entries.find(e=> e.class===cm.key && e.subject===cell.subject);
+        if(!existing) cycleData[tid].entries.push({class: cm.key, subject: cell.subject});
+      }));
+    });
+    const sortedTeachers = Object.values(cycleData).sort((a,b)=> a.name.localeCompare(b.name,'fa'));
+    if(sortedTeachers.length){
+      html += `<div class="master-table print-only"><h4 style="margin:14px 0 6px;color:#d4a043">جدول جامع — ${lv.title}</h4>`;
+      html += `<table class="tt" style="font-size:9px"><thead><tr><th>استاد</th><th>صنف</th><th>مضامین</th></tr></thead><tbody>`;
+      sortedTeachers.forEach(t=>{
+        const classGroups = {};
+        t.entries.forEach(e=>{
+          if(!classGroups[e.class]) classGroups[e.class] = [];
+          classGroups[e.class].push(e.subject);
+        });
+        const classList = Object.keys(classGroups).sort();
+        html += `<tr><td style="font-weight:700;white-space:nowrap">${t.name}</td>`;
+        html += `<td style="vertical-align:top;text-align:right;direction:rtl">`;
+        html += classList.sort().map(cls=> `<div>${cls}</div>`).join('');
+        html += `</td>`;
+        html += `<td style="vertical-align:top;text-align:right;direction:rtl">`;
+        html += classList.sort().map(cls=> `<div style="font-size:8px">${classGroups[cls].join('، ')}</div>`).join('');
+        html += `</td></tr>`;
+      });
+      html += `</tbody></table></div>`;
+    }
 
     const levelTeacherIds = new Set();
     metas.forEach(cm=>{
@@ -1347,7 +1444,59 @@ function exportCSV(){
   link.click();
 }
 
+/* ============== PERSISTENCE ============== */
+const STORAGE_KEY = 'nsmat_timetable_v2';
+let _loading = false;
+
+function saveState(){
+  if(_loading) return;
+  const state = {
+    teachers: teachers.map(t=>({...t})),
+    lowGrades: JSON.parse(JSON.stringify(lowGrades)),
+    highGrades: JSON.parse(JSON.stringify(highGrades)),
+    settings: {
+      school: document.getElementById('s_school').value,
+      shift: document.getElementById('s_shift').value,
+      year: document.getElementById('s_year').value,
+      start: document.getElementById('s_start').value,
+      dur: document.getElementById('s_dur').value,
+      brk: document.getElementById('s_break').value,
+      week: document.getElementById('s_week').value,
+    }
+  };
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return false;
+    const state = JSON.parse(raw);
+    if(state.teachers) teachers = state.teachers;
+    if(state.lowGrades) lowGrades = state.lowGrades;
+    if(state.highGrades) highGrades = state.highGrades;
+    if(state.settings){
+      const s = state.settings;
+      if(document.getElementById('s_school')) document.getElementById('s_school').value = s.school||'مکتب نمونه';
+      if(document.getElementById('s_shift')) document.getElementById('s_shift').value = s.shift||'صبح';
+      if(document.getElementById('s_year')) document.getElementById('s_year').value = s.year||'1405';
+      if(document.getElementById('s_start')) document.getElementById('s_start').value = s.start||'07:30';
+      if(document.getElementById('s_dur')) document.getElementById('s_dur').value = s.dur||'40';
+      if(document.getElementById('s_break')) document.getElementById('s_break').value = s.brk||'10';
+      if(document.getElementById('s_week')) document.getElementById('s_week').value = s.week||'6';
+    }
+    return true;
+  }catch(e){ return false; }
+}
+function resetData(){
+  if(!confirm('آیا مطمئن هستید؟ تمام داده‌های ذخیره شده پاک خواهد شد.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
 /* init */
+_loading = true;
+if(!loadState()) initGrades();
+_loading = false;
 renderTeachers(); renderLow(); renderHigh();
 </script>
 <script src="/visitors/log.js"></script>
