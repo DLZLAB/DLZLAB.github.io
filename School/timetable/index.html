@@ -915,6 +915,7 @@ function buildTimetable(){
   const teacherBusy = {};
   teachers.forEach(t=> teacherBusy[t.id] = new Set());
   const peBusy = new Set();
+  const computerBusy = new Set();
   const classGrid = {};
   const classMeta = [];
   const conflicts = [];
@@ -939,6 +940,7 @@ function buildTimetable(){
   }
   function isCalligraphy(name){ return /رسم|خط/.test(name); }
   function isSport(name){ return /ورزش/.test(name); }
+  function isComputer(name){ return /کمپیوتر|كمپیوتر/.test(name); }
   function subjectGroup(name){
     if(isSport(name)) return (shift==='صبح') ? 'early' : 'late';
     if(isCalligraphy(name)) return 'late';
@@ -972,11 +974,13 @@ function buildTimetable(){
         let candidates = items.filter(it=> it.remaining>0 && !usedToday.has(it.subject) &&
           !(it.teacherId && teacherBusy[it.teacherId]?.has(slotKey)) &&
           (!isSport(it.subject) || !peBusy.has(slotKey)) &&
+          (!isComputer(it.subject) || !computerBusy.has(slotKey)) &&
           isTeacherAvail(it.teacherId, p));
         if(candidates.length===0){
           candidates = items.filter(it=> it.remaining>0 &&
             !(it.teacherId && teacherBusy[it.teacherId]?.has(slotKey)) &&
             (!isSport(it.subject) || !peBusy.has(slotKey)) &&
+            (!isComputer(it.subject) || !computerBusy.has(slotKey)) &&
             isTeacherAvail(it.teacherId, p));
         }
         if(candidates.length===0) continue;
@@ -991,6 +995,7 @@ function buildTimetable(){
         grid[d][p] = {subject:chosen.subject, teacherName:chosen.teacherName, teacherId:chosen.teacherId};
         if(chosen.teacherId) teacherBusy[chosen.teacherId].add(slotKey);
         if(isSport(chosen.subject)) peBusy.add(slotKey);
+        if(isComputer(chosen.subject)) computerBusy.add(slotKey);
         chosen.remaining--;
         usedToday.add(chosen.subject);
       }
