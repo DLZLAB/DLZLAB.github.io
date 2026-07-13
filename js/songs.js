@@ -49,6 +49,7 @@ function renderSongs(songs){
     <div class="song-item" data-id="${s.id||i}">
       <div class="song-header" onclick="toggleSong(this)">
         <div class="song-num">${i+1}</div>
+        ${s.photo?`<div class="song-photo"><img src="${escAttr(s.photo)}" alt="" loading="lazy" /></div>`:''}
         <div class="song-info">
           <h3>${esc(s.title)}</h3>
           <span class="artist">${TRANSLATIONS[lang].by} ${esc(s.artist||TRANSLATIONS[lang].s_unknown)}</span>

@@ -91,6 +91,10 @@ small{color:#6b5a3a;font-size:0.75rem}
       <label>Audio File (MP3, WAV, OGG, M4A — max 15MB)</label>
       <input id="audioFile" type="file" accept="audio/*" />
     </div>
+    <div class="form-group">
+      <label>Photo URL (optional — cover image)</label>
+      <input id="songPhoto" type="url" placeholder="https://example.com/cover.jpg" />
+    </div>
     <div id="uploadProgress"><div class="bar" id="progressBar"></div></div>
     <button class="btn" onclick="saveSong()" id="saveBtn">Add & Publish</button>
     <button class="btn btn-outline btn-sm" onclick="cancelEdit()" id="cancelBtn" style="display:none">Cancel</button>
@@ -191,6 +195,7 @@ function editSong(id) {
   document.getElementById('songTitle').value = song.title;
   document.getElementById('songArtist').value = song.artist || '';
   document.getElementById('songPoet').value = song.poet || '';
+  document.getElementById('songPhoto').value = song.photo || '';
   document.getElementById('formTitle').textContent = 'Edit';
   document.getElementById('saveBtn').textContent = 'Update';
   document.getElementById('cancelBtn').style.display = 'inline-flex';
@@ -203,6 +208,7 @@ function cancelEdit() {
   document.getElementById('songArtist').value = '';
   document.getElementById('songPoet').value = '';
   document.getElementById('audioFile').value = '';
+  document.getElementById('songPhoto').value = '';
   document.getElementById('formTitle').textContent = 'Add';
   document.getElementById('saveBtn').textContent = 'Add & Publish';
   document.getElementById('cancelBtn').style.display = 'none';
@@ -215,6 +221,7 @@ async function saveSong() {
   const title = document.getElementById('songTitle').value.trim();
   const artist = document.getElementById('songArtist').value.trim() || 'Dawood WaliZada';
   const poet = document.getElementById('songPoet').value.trim();
+  const photo = document.getElementById('songPhoto').value.trim();
   const file = document.getElementById('audioFile').files[0];
 
   if (!token) { setStatus('Enter token first.', 'err'); return; }
@@ -264,6 +271,7 @@ async function saveSong() {
         songs[idx].title = title;
         songs[idx].artist = artist;
         songs[idx].poet = poet;
+        songs[idx].photo = photo;
         if (audioPath) {
           songs[idx].audio = audioPath;
           songs[idx].audio_url = audioUrl;
@@ -276,6 +284,7 @@ async function saveSong() {
         title,
         artist,
         poet,
+        photo,
         audio: audioPath,
         audio_url: audioUrl,
         date_added: new Date().toISOString().split('T')[0]
@@ -300,6 +309,7 @@ async function saveSong() {
     document.getElementById('songTitle').value = '';
     document.getElementById('songArtist').value = '';
     document.getElementById('songPoet').value = '';
+    document.getElementById('songPhoto').value = '';
     document.getElementById('audioFile').value = '';
     cancelEdit();
   } catch (e) {
