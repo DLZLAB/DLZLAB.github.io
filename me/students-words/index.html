@@ -79,7 +79,7 @@ small{color:#6b5a3a;font-size:0.75rem}
   </div>
 
   <div class="section">
-    <h2>✏️ Add Message Directly</h2>
+    <h2>✏️ <span id="formTitle">Add</span> Message Directly</h2>
     <div class="form-row">
       <div class="form-group">
         <label>Name</label>
@@ -94,7 +94,10 @@ small{color:#6b5a3a;font-size:0.75rem}
       <label>Message</label>
       <textarea id="manualText" placeholder="Write the message..."></textarea>
     </div>
-    <button class="btn btn-success" onclick="addDirect()">Publish Directly</button>
+    <div style="display:flex;gap:0.5rem;align-items:center">
+      <button class="btn btn-success" id="saveBtn" onclick="saveMsg()">Publish Directly</button>
+      <button class="btn btn-outline btn-sm" id="cancelBtn" onclick="cancelEditMsg()" style="display:none">Cancel</button>
+    </div>
     <div class="status" id="status"></div>
   </div>
 </div>
@@ -106,6 +109,7 @@ const SUB_PATH = 'students-words/submissions.json';
 
 let messages = [], submissions = [];
 let dataSha = null, subSha = null;
+let editingMsgId = null, editingSubIdx = -1;
 
 const tokenInput = document.getElementById('tokenInput');
 tokenInput.value = localStorage.getItem('gh_token') || '';
@@ -164,6 +168,7 @@ function render() {
           <span class="m-date">${s.date || ''}</span>
         </div>
         <div class="m-actions">
+          <button class="btn btn-sm btn-outline" onclick="editSub(${i})">Edit</button>
           <button class="btn btn-sm btn-success" onclick="approve(${i})">Publish</button>
           <button class="btn btn-sm btn-danger" onclick="reject(${i})">Delete</button>
         </div>
@@ -185,6 +190,7 @@ function render() {
           <span class="m-date">${m.date || ''}</span>
         </div>
         <div class="m-actions">
+          <button class="btn btn-sm btn-outline" onclick="editMsg(${m.id})">Edit</button>
           <button class="btn btn-sm btn-danger" onclick="deleteMsg(${i})">Delete</button>
         </div>
       </div>
@@ -251,21 +257,67 @@ async function deleteMsg(index) {
   catch (e) { setStatus('Error: ' + e.message, 'err'); }
 }
 
-async function addDirect() {
+function editMsg(id) {
+  const m = messages.find(x => x.id === id);
+  if (!m) return;
+  editingMsgId = id; editingSubIdx = -1;
+  document.getElementById('manualName').value = m.name || '';
+  document.getElementById('manualClass').value = m.class || '';
+  document.getElementById('manualText').value = m.text;
+  document.getElementById('formTitle').textContent = 'Edit';
+  document.getElementById('saveBtn').textContent = 'Update';
+  document.getElementById('cancelBtn').style.display = 'inline-flex';
+  document.getElementById('manualText').focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function editSub(idx) {
+  const s = submissions[idx];
+  if (!s) return;
+  editingSubIdx = idx; editingMsgId = null;
+  document.getElementById('manualName').value = s.name || '';
+  document.getElementById('manualClass').value = s.class || '';
+  document.getElementById('manualText').value = s.text;
+  document.getElementById('formTitle').textContent = 'Edit';
+  document.getElementById('saveBtn').textContent = 'Update';
+  document.getElementById('cancelBtn').style.display = 'inline-flex';
+  document.getElementById('manualText').focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function cancelEditMsg() {
+  editingMsgId = null; editingSubIdx = -1;
+  document.getElementById('manualName').value = '';
+  document.getElementById('manualClass').value = '';
+  document.getElementById('manualText').value = '';
+  document.getElementById('formTitle').textContent = 'Add';
+  document.getElementById('saveBtn').textContent = 'Publish Directly';
+  document.getElementById('cancelBtn').style.display = 'none';
+}
+
+async function saveMsg() {
   const name = document.getElementById('manualName').value.trim() || 'Anonymous';
   const cls = document.getElementById('manualClass').value.trim();
   const text = document.getElementById('manualText').value.trim();
   if (!text) { setStatus('Write a message first.', 'err'); return; }
-  const newId = messages.length ? Math.max(...messages.map(m => m.id)) + 1 : 1;
-  messages.push({ id: newId, name, class: cls, text, date: new Date().toISOString().split('T')[0] });
+
+  if (editingMsgId) {
+    const idx = messages.findIndex(m => m.id === editingMsgId);
+    if (idx === -1) { setStatus('Message not found.', 'err'); return; }
+    messages[idx] = { ...messages[idx], name, class: cls, text };
+  } else if (editingSubIdx >= 0) {
+    submissions[editingSubIdx] = { ...submissions[editingSubIdx], name, class: cls, text };
+  } else {
+    const newId = messages.length ? Math.max(...messages.map(m => m.id)) + 1 : 1;
+    messages.push({ id: newId, name, class: cls, text, date: new Date().toISOString().split('T')[0] });
+  }
+
   setStatus('Saving...', 'info');
   try {
-    await commitData();
+    if (editingSubIdx >= 0) await commitSubmissions(); else await commitData();
+    cancelEditMsg();
     render();
-    setStatus('Published!', 'ok');
-    document.getElementById('manualName').value = '';
-    document.getElementById('manualClass').value = '';
-    document.getElementById('manualText').value = '';
+    setStatus('Saved!', 'ok');
   } catch (e) {
     setStatus('Error: ' + e.message, 'err');
   }
