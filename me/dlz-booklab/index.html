@@ -137,7 +137,7 @@ async function loadBooks() {
   try {
     const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
     dataSha = data.sha;
-    books = JSON.parse(atob(data.content.replace(/\n/g, ''))).books || [];
+    books = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).books || [];
     renderBooks();
     setStatus('Loaded ' + books.length + ' books.', 'ok');
   } catch (e) {
@@ -182,7 +182,7 @@ async function addBook() {
     if (!dataSha) {
       const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
       dataSha = data.sha;
-      books = JSON.parse(atob(data.content.replace(/\n/g, ''))).books || [];
+    books = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).books || [];
     }
 
     const newId = books.length ? Math.max(...books.map(b => b.id)) + 1 : 1;

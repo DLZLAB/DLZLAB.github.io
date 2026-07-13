@@ -83,7 +83,12 @@ function applyLang(l){
   if(btn)btn.innerHTML=`<span class="lang-icon">${l==='fa'?'EN':'FA'}</span>`
 }
 
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function esc(s){
+  if(s==null)return ''
+  const d=document.createElement('div')
+  d.textContent=s
+  return d.innerHTML
+}
 
 async function loadBooks(){
   try{
@@ -107,7 +112,7 @@ function renderBooks(books){
       <div class="book-header" onclick="toggleBook(this)">
         <div class="book-icon"><i class="fas fa-book"></i></div>
         <div class="book-info">
-          <h3>${esc(b.title)}</h3>
+          <h3>${esc(b.title||'—')}</h3>
           <div class="book-meta">
             <span><i class="fas fa-user-pen"></i> ${esc(b.author||'—')}</span>
             ${b.translator?`<span><i class="fas fa-language"></i> ${esc(b.translator)}</span>`:''}
@@ -119,7 +124,7 @@ function renderBooks(books){
         <div class="book-body-inner">
           <div class="book-summary">
             <h4><i class="fas fa-feather"></i> <span>${T[lang].book} ${esc(b.title)}</span></h4>
-            <div class="summary-text">${esc(b.summary)}</div>
+            <div class="summary-text">${esc(b.summary||'')}</div>
           </div>
           <div class="book-footer">
             <span><i class="fas fa-calendar"></i> ${T[lang].date}: ${esc(b.date||'—')}</span>

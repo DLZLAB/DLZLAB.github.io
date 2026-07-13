@@ -41,7 +41,7 @@ button{cursor:pointer;font-family:inherit}
 html[dir="rtl"] .book-info .book-meta i{margin-right:0;margin-left:0.3rem}
 
 .book-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
-.book-item.active .book-body{max-height:2000px}
+.book-item.active .book-body{max-height:100000px}
 .book-body-inner{padding:0 1.2rem 1.2rem;border-top:1px solid rgba(212,160,67,0.1);padding-top:1rem}
 
 .book-summary{background:rgba(255,255,255,0.03);border:1px solid rgba(212,160,67,0.1);border-radius:12px;padding:1rem}
