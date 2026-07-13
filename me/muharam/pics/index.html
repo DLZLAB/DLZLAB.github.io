@@ -125,7 +125,7 @@ async function loadData() {
   try {
     const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${MANIFEST_PATH}`);
     manifestSha = data.sha;
-    images = JSON.parse(atob(data.content.replace(/\n/g, ''))).images || [];
+    images = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).images || [];
     renderImages();
     setStatus('Loaded ' + images.length + ' images.', 'ok');
   } catch (e) {
@@ -191,7 +191,7 @@ async function uploadImage() {
       if (!manifestSha) {
         const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${MANIFEST_PATH}`);
         manifestSha = data.sha;
-        images = JSON.parse(atob(data.content.replace(/\n/g, ''))).images || [];
+        images = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).images || [];
       }
 
       progressBar.style.width = '50%';

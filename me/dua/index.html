@@ -155,7 +155,7 @@ async function loadData() {
   try {
     const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
     dataSha = data.sha;
-    sections = JSON.parse(atob(data.content.replace(/\n/g, ''))).sections || [];
+    sections = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).sections || [];
     renderList();
     setStatus('Loaded ' + sections.reduce((a, s) => a + s.duas.length, 0) + ' duas.', 'ok');
   } catch (e) {
@@ -204,7 +204,7 @@ async function addDua() {
     if (!dataSha) {
       const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
       dataSha = data.sha;
-      sections = JSON.parse(atob(data.content.replace(/\n/g, ''))).sections || [];
+      sections = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).sections || [];
     }
 
     const section = sections.find(s => s.id === sectionId);

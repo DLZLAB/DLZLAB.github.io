@@ -133,11 +133,11 @@ async function loadAll() {
   try {
     const d = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
     dataSha = d.sha;
-    quotes = JSON.parse(atob(d.content.replace(/\n/g, ''))).quotes || [];
+    quotes = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g, ''))))).quotes || [];
     try {
       const s = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${SUB_PATH}`);
       subSha = s.sha;
-      submissions = JSON.parse(atob(s.content.replace(/\n/g, ''))).submissions || [];
+      submissions = JSON.parse(decodeURIComponent(escape(atob(s.content.replace(/\n/g, ''))))).submissions || [];
     } catch(e) { submissions = []; subSha = null; }
     render();
     setStatus('Loaded ' + quotes.length + ' published, ' + submissions.length + ' pending.', 'ok');

@@ -142,7 +142,7 @@ async function loadSongs() {
   try {
     const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
     dataSha = data.sha;
-    songs = JSON.parse(atob(data.content.replace(/\n/g, ''))).songs || [];
+    songs = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).songs || [];
     renderSongs();
     setStatus('Loaded ' + songs.length + ' songs.', 'ok');
   } catch (e) {
@@ -205,7 +205,7 @@ async function addSong() {
       if (!dataSha) {
         const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
         dataSha = data.sha;
-        songs = JSON.parse(atob(data.content.replace(/\n/g, ''))).songs || [];
+        songs = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).songs || [];
       }
 
       progressBar.style.width = '50%';
