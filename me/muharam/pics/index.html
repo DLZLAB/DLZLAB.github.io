@@ -66,7 +66,7 @@ img-item .img-name{font-size:0.7rem;color:#f5e6d0;overflow:hidden;text-overflow:
   </div>
 
   <div class="section">
-    <h2>Upload Image</h2>
+    <h2><span id="formTitle">Add</span> Image</h2>
     <div class="form-group">
       <label>Image Name</label>
       <input id="imgName" type="text" placeholder="e.g. Muharam 1446" maxlength="50" />
@@ -78,7 +78,8 @@ img-item .img-name{font-size:0.7rem;color:#f5e6d0;overflow:hidden;text-overflow:
     <img class="preview" id="preview" />
     <div id="uploadProgress"><div class="bar" id="progressBar"></div></div>
     <div style="margin-top:0.8rem">
-      <button class="btn" onclick="uploadImage()">Upload & Publish</button>
+      <button class="btn" id="saveBtn" onclick="saveImage()">Upload & Publish</button>
+      <button class="btn btn-outline btn-sm" id="cancelBtn" onclick="cancelEdit()" style="display:none">Cancel</button>
     </div>
     <div class="status" id="status"></div>
   </div>
@@ -96,6 +97,7 @@ const IMG_DIR = 'muharam/images/';
 
 let images = [];
 let manifestSha = null;
+let editingId = null;
 
 const tokenInput = document.getElementById('tokenInput');
 tokenInput.value = localStorage.getItem('gh_token') || '';
@@ -162,12 +164,25 @@ function previewFile() {
   reader.readAsDataURL(file);
 }
 
-async function uploadImage() {
+async function saveImage() {
   const token = tokenInput.value.trim();
   const name = document.getElementById('imgName').value.trim();
   const file = document.getElementById('imgFile').files[0];
   if (!token) { setStatus('Enter token first.', 'err'); return; }
   if (!name) { setStatus('Enter an image name.', 'err'); return; }
+  if (editingId !== null) {
+    images[editingId].name = name;
+    setStatus('Saving...', 'info');
+    try {
+      await saveManifest('Update Muharam image: ' + name);
+      renderImages();
+      setStatus('Updated.', 'ok');
+      cancelEdit();
+    } catch (e) {
+      setStatus('Error: ' + e.message, 'err');
+    }
+    return;
+  }
   if (!file) { setStatus('Select an image file.', 'err'); return; }
   if (file.size > 10485760) { setStatus('Image too large (max 10MB).', 'err'); return; }
 
@@ -215,9 +230,7 @@ async function uploadImage() {
 
       renderImages();
       setStatus('Uploaded! Visit /muharam/ to see it.', 'ok');
-      document.getElementById('imgName').value = '';
-      document.getElementById('imgFile').value = '';
-      document.getElementById('preview').classList.remove('show');
+      cancelEdit();
     } catch (e) {
       document.getElementById('uploadProgress').style.display = 'none';
       setStatus('Error: ' + e.message, 'err');
@@ -234,19 +247,26 @@ async function saveManifest(msg) {
   manifestSha = data.content.sha;
 }
 
-async function editImage(index) {
+function editImage(index) {
   const img = images[index];
-  const newName = prompt('Edit image name:', img.name);
-  if (!newName || newName.trim() === img.name) return;
-  img.name = newName.trim();
-  setStatus('Saving...', 'info');
-  try {
-    await saveManifest('Rename Muharam image: ' + img.name);
-    renderImages();
-    setStatus('Renamed.', 'ok');
-  } catch (e) {
-    setStatus('Error: ' + e.message, 'err');
-  }
+  editingId = index;
+  document.getElementById('imgName').value = img.name;
+  document.getElementById('formTitle').textContent = 'Edit';
+  document.getElementById('saveBtn').textContent = 'Save Changes';
+  document.getElementById('cancelBtn').style.display = 'inline-flex';
+  document.getElementById('status').className = 'status';
+  document.getElementById('imgName').focus();
+}
+
+function cancelEdit() {
+  editingId = null;
+  document.getElementById('imgName').value = '';
+  document.getElementById('imgFile').value = '';
+  document.getElementById('preview').classList.remove('show');
+  document.getElementById('formTitle').textContent = 'Add';
+  document.getElementById('saveBtn').textContent = 'Upload & Publish';
+  document.getElementById('cancelBtn').style.display = 'none';
+  document.getElementById('status').className = 'status';
 }
 
 async function deleteImage(index) {

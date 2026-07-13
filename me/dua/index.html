@@ -70,7 +70,7 @@ small{color:#6b5a3a;font-size:0.75rem}
   </div>
 
   <div class="section">
-    <h2>Add New Dua</h2>
+    <h2><span id="formTitle">Add</span> New Dua</h2>
     <div class="form-row">
       <div class="form-group">
         <label>Section</label>
@@ -110,7 +110,8 @@ small{color:#6b5a3a;font-size:0.75rem}
       <label>English Translation *</label>
       <textarea id="duaEn" placeholder="English translation..."></textarea>
     </div>
-    <button class="btn" onclick="addDua()">Add & Publish</button>
+    <button class="btn" onclick="saveDua()" id="submitBtn">Add & Publish</button>
+    <button class="btn btn-outline" onclick="cancelEdit()" id="cancelBtn" style="display:none">Cancel</button>
     <div class="status" id="status"></div>
   </div>
 
@@ -126,6 +127,7 @@ const DATA_PATH = 'dua/data.json';
 
 let sections = [];
 let dataSha = null;
+let editingId = null;
 
 const tokenInput = document.getElementById('tokenInput');
 tokenInput.value = localStorage.getItem('gh_token') || '';
@@ -176,6 +178,7 @@ function renderList() {
             <span class="d-meta"><span class="tag">${d.type === 'short' ? 'کوتاه' : 'مفصّل'}</span> ID: ${d.id}</span>
           </div>
           <div class="d-actions">
+            <button class="btn btn-sm btn-outline" onclick="editItem(${d.id})">Edit</button>
             <button class="btn btn-sm btn-danger" onclick="deleteDua('${s.id}', ${i})">حذف</button>
           </div>
         </div>
@@ -184,7 +187,40 @@ function renderList() {
   `).join('');
 }
 
-async function addDua() {
+function editItem(id) {
+  const dua = sections.flatMap(s => s.duas).find(d => d.id === id);
+  if (!dua) return;
+  editingId = id;
+  const section = sections.find(s => s.duas.some(d => d.id === id));
+  document.getElementById('duaSection').value = section ? section.id : '';
+  document.getElementById('duaType').value = dua.type;
+  document.getElementById('duaTitle').value = dua.title;
+  document.getElementById('duaTitleEn').value = dua.title_en || '';
+  document.getElementById('duaArabic').value = dua.arabic;
+  const fa = dua.translations.find(t => t.lang === 'fa');
+  const en = dua.translations.find(t => t.lang === 'en');
+  document.getElementById('duaFa').value = fa ? fa.text : '';
+  document.getElementById('duaEn').value = en ? en.text : '';
+  document.getElementById('formTitle').textContent = 'Edit';
+  document.getElementById('submitBtn').textContent = 'Update';
+  document.getElementById('cancelBtn').style.display = 'inline-flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function cancelEdit() {
+  editingId = null;
+  document.getElementById('duaTitle').value = '';
+  document.getElementById('duaTitleEn').value = '';
+  document.getElementById('duaArabic').value = '';
+  document.getElementById('duaFa').value = '';
+  document.getElementById('duaEn').value = '';
+  document.getElementById('formTitle').textContent = 'Add';
+  document.getElementById('submitBtn').textContent = 'Add & Publish';
+  document.getElementById('cancelBtn').style.display = 'none';
+  setStatus('', '');
+}
+
+async function saveDua() {
   const token = tokenInput.value.trim();
   const sectionId = document.getElementById('duaSection').value;
   const type = document.getElementById('duaType').value;
@@ -205,6 +241,29 @@ async function addDua() {
       const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
       dataSha = data.sha;
       sections = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).sections || [];
+    }
+
+    if (editingId) {
+      const existing = sections.flatMap(s => s.duas).find(d => d.id === editingId);
+      if (!existing) { setStatus('Dua not found.', 'err'); return; }
+      existing.type = type;
+      existing.title = title;
+      existing.title_en = titleEn;
+      existing.arabic = arabic;
+      const faT = existing.translations.find(t => t.lang === 'fa');
+      if (faT) faT.text = fa; else existing.translations.push({ lang: 'fa', text: fa });
+      const enT = existing.translations.find(t => t.lang === 'en');
+      if (enT) enT.text = en; else existing.translations.push({ lang: 'en', text: en });
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify({ sections }, null, 2) + '\n')));
+      const upData = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, 'PUT', {
+        message: 'Update dua: ' + title,
+        content, sha: dataSha, branch: BRANCH
+      });
+      dataSha = upData.content.sha;
+      renderList();
+      setStatus('Updated!', 'ok');
+      cancelEdit();
+      return;
     }
 
     const section = sections.find(s => s.id === sectionId);
@@ -230,11 +289,7 @@ async function addDua() {
 
     renderList();
     setStatus('Published! Visit /dua/ to see it.', 'ok');
-    document.getElementById('duaTitle').value = '';
-    document.getElementById('duaTitleEn').value = '';
-    document.getElementById('duaArabic').value = '';
-    document.getElementById('duaFa').value = '';
-    document.getElementById('duaEn').value = '';
+    cancelEdit();
   } catch (e) {
     setStatus('Error: ' + e.message, 'err');
   }

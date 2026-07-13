@@ -72,7 +72,7 @@ small{color:#6b5a3a;font-size:0.75rem}
   </div>
 
   <div class="section">
-    <h2>Add Song</h2>
+    <h2><span id="formTitle">Add</span> Song</h2>
     <div class="form-row">
       <div class="form-group">
         <label>Song Name</label>
@@ -92,7 +92,8 @@ small{color:#6b5a3a;font-size:0.75rem}
       <input id="audioFile" type="file" accept="audio/*" />
     </div>
     <div id="uploadProgress"><div class="bar" id="progressBar"></div></div>
-    <button class="btn" onclick="addSong()">Add & Publish</button>
+    <button class="btn" onclick="saveSong()" id="saveBtn">Add & Publish</button>
+    <button class="btn btn-outline btn-sm" onclick="cancelEdit()" id="cancelBtn" style="display:none">Cancel</button>
     <div class="status" id="status"></div>
   </div>
 
@@ -109,6 +110,7 @@ const AUDIO_DIR = 'songs/audio/';
 
 let songs = [];
 let dataSha = null;
+let editingId = null;
 
 const tokenInput = document.getElementById('tokenInput');
 tokenInput.value = localStorage.getItem('gh_token') || '';
@@ -165,6 +167,7 @@ function renderSongs() {
         </div>
         <div class="s-actions">
           <a href="${s.audio_url || 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + s.audio}" class="btn btn-sm btn-outline" download target="_blank">DL</a>
+          <button class="btn btn-sm btn-outline" onclick="editSong(${s.id})">Edit</button>
           <button class="btn btn-sm btn-danger" onclick="deleteSong(${i})">Del</button>
         </div>
       </div>
@@ -172,7 +175,42 @@ function renderSongs() {
   }).join('');
 }
 
-async function addSong() {
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function editSong(id) {
+  const song = songs.find(s => s.id === id);
+  if (!song) return;
+  editingId = id;
+  document.getElementById('songTitle').value = song.title;
+  document.getElementById('songArtist').value = song.artist || '';
+  document.getElementById('songPoet').value = song.poet || '';
+  document.getElementById('formTitle').textContent = 'Edit';
+  document.getElementById('saveBtn').textContent = 'Update';
+  document.getElementById('cancelBtn').style.display = 'inline-flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function cancelEdit() {
+  editingId = null;
+  document.getElementById('songTitle').value = '';
+  document.getElementById('songArtist').value = '';
+  document.getElementById('songPoet').value = '';
+  document.getElementById('audioFile').value = '';
+  document.getElementById('formTitle').textContent = 'Add';
+  document.getElementById('saveBtn').textContent = 'Add & Publish';
+  document.getElementById('cancelBtn').style.display = 'none';
+  document.getElementById('uploadProgress').style.display = 'none';
+  document.getElementById('status').className = 'status';
+}
+
+async function saveSong() {
   const token = tokenInput.value.trim();
   const title = document.getElementById('songTitle').value.trim();
   const artist = document.getElementById('songArtist').value.trim() || 'Dawood WaliZada';
@@ -181,46 +219,57 @@ async function addSong() {
 
   if (!token) { setStatus('Enter token first.', 'err'); return; }
   if (!title) { setStatus('Enter a song name.', 'err'); return; }
-  if (!file) { setStatus('Select an audio file.', 'err'); return; }
-  if (file.size > 15728640) { setStatus('File too large (max 15MB).', 'err'); return; }
+
+  const isEdit = editingId !== null;
+  if (!isEdit && !file) { setStatus('Select an audio file.', 'err'); return; }
+  if (file && file.size > 15728640) { setStatus('File too large (max 15MB).', 'err'); return; }
 
   const progressBar = document.getElementById('progressBar');
   document.getElementById('uploadProgress').style.display = 'block';
   progressBar.style.width = '10%';
 
-  setStatus('Reading audio file...', 'info');
-  const reader = new FileReader();
-  reader.onload = async function(e) {
-    const base64 = e.target.result.split(',')[1];
-    const ext = file.name.split('.').pop();
-    const filename = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' + Date.now() + '.' + ext;
-    const audioPath = AUDIO_DIR + filename;
-    const audioUrl = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + audioPath;
+  try {
+    progressBar.style.width = '30%';
 
-    try {
-      progressBar.style.width = '30%';
+    if (!dataSha) {
+      const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
+      dataSha = data.sha;
+      songs = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).songs || [];
+    }
+
+    let audioPath, audioUrl;
+
+    if (file) {
+      setStatus('Reading audio file...', 'info');
+      const base64 = await readFileAsBase64(file);
+      const ext = file.name.split('.').pop();
+      const filename = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' + Date.now() + '.' + ext;
+      audioPath = AUDIO_DIR + filename;
+      audioUrl = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + audioPath;
+
       setStatus('Uploading audio file...', 'info');
-
-      // Load data if needed
-      if (!dataSha) {
-        const data = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`);
-        dataSha = data.sha;
-        songs = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).songs || [];
-      }
-
-      progressBar.style.width = '50%';
-
-      // Commit audio file
       await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${audioPath}`, 'PUT', {
-        message: 'Add song audio: ' + title,
+        message: (isEdit ? 'Update' : 'Add') + ' song audio: ' + title,
         content: base64,
         branch: BRANCH
       });
+    }
 
-      progressBar.style.width = '70%';
-      setStatus('Updating data file...', 'info');
+    progressBar.style.width = '70%';
+    setStatus('Updating data file...', 'info');
 
-      // Update data.json
+    if (isEdit) {
+      const idx = songs.findIndex(s => s.id === editingId);
+      if (idx !== -1) {
+        songs[idx].title = title;
+        songs[idx].artist = artist;
+        songs[idx].poet = poet;
+        if (audioPath) {
+          songs[idx].audio = audioPath;
+          songs[idx].audio_url = audioUrl;
+        }
+      }
+    } else {
       const newId = songs.length ? Math.max(...songs.map(s => s.id)) + 1 : 1;
       songs.push({
         id: newId,
@@ -231,32 +280,32 @@ async function addSong() {
         audio_url: audioUrl,
         date_added: new Date().toISOString().split('T')[0]
       });
-      songs.sort((a, b) => b.id - a.id); // newest first
-
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify({ songs }, null, 2) + '\n')));
-      const upData = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, 'PUT', {
-        message: 'Add song: ' + title,
-        content,
-        sha: dataSha,
-        branch: BRANCH
-      });
-      dataSha = upData.content.sha;
-
-      progressBar.style.width = '100%';
-      setTimeout(() => { document.getElementById('uploadProgress').style.display = 'none'; progressBar.style.width = '0%'; }, 500);
-
-      renderSongs();
-      setStatus('Published! Visit /songs/ to see it.', 'ok');
-      document.getElementById('songTitle').value = '';
-      document.getElementById('songArtist').value = '';
-      document.getElementById('songPoet').value = '';
-      document.getElementById('audioFile').value = '';
-    } catch (e) {
-      document.getElementById('uploadProgress').style.display = 'none';
-      setStatus('Error: ' + e.message, 'err');
     }
-  };
-  reader.readAsDataURL(file);
+    songs.sort((a, b) => b.id - a.id);
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify({ songs }, null, 2) + '\n')));
+    const upData = await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, 'PUT', {
+      message: (isEdit ? 'Update' : 'Add') + ' song: ' + title,
+      content,
+      sha: dataSha,
+      branch: BRANCH
+    });
+    dataSha = upData.content.sha;
+
+    progressBar.style.width = '100%';
+    setTimeout(() => { document.getElementById('uploadProgress').style.display = 'none'; progressBar.style.width = '0%'; }, 500);
+
+    renderSongs();
+    setStatus(isEdit ? 'Updated!' : 'Published! Visit /songs/ to see it.', 'ok');
+    document.getElementById('songTitle').value = '';
+    document.getElementById('songArtist').value = '';
+    document.getElementById('songPoet').value = '';
+    document.getElementById('audioFile').value = '';
+    cancelEdit();
+  } catch (e) {
+    document.getElementById('uploadProgress').style.display = 'none';
+    setStatus('Error: ' + e.message, 'err');
+  }
 }
 
 async function deleteSong(index) {

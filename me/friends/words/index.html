@@ -80,7 +80,7 @@ small{color:#6b5a3a;font-size:0.75rem}
   </div>
 
   <div class="section">
-    <h2>✏️ Add Quote Directly</h2>
+    <h2>✏️ <span id="formTitle">Add</span> Quote Directly</h2>
     <div class="form-row">
       <div class="form-group">
         <label>Name</label>
@@ -91,7 +91,8 @@ small{color:#6b5a3a;font-size:0.75rem}
       <label>Quote</label>
       <textarea id="manualText" placeholder="Write the quote..."></textarea>
     </div>
-    <button class="btn btn-success" onclick="addDirect()">Publish Directly</button>
+    <button class="btn btn-success" id="saveBtn" onclick="addDirect()">Publish Directly</button>
+    <button class="btn btn-outline btn-sm" id="cancelBtn" onclick="cancelEdit()" style="display:none">Cancel</button>
     <div class="status" id="status"></div>
   </div>
 </div>
@@ -102,6 +103,7 @@ const DATA_PATH = 'friends/quotes.json';
 const SUB_PATH = 'friends/submissions.json';
 
 let quotes = [], submissions = [];
+let editingQuoteId = null, editingSubIdx = -1;
 let dataSha = null, subSha = null;
 
 const tokenInput = document.getElementById('tokenInput');
@@ -161,6 +163,7 @@ function render() {
           <span class="m-date">${s.date || ''}</span>
         </div>
         <div class="m-actions">
+          <button class="btn btn-sm btn-outline" onclick="editSub(${i})">Edit</button>
           <button class="btn btn-sm btn-success" onclick="approve(${i})">Publish</button>
           <button class="btn btn-sm btn-danger" onclick="reject(${i})">Delete</button>
         </div>
@@ -181,6 +184,7 @@ function render() {
           <div class="quote-author">— ${esc(m.name)}</div>
         </div>
         <div class="m-actions">
+          <button class="btn btn-sm btn-outline" onclick="editQuote(${i})">Edit</button>
           <button class="btn btn-sm btn-danger" onclick="deleteQuote(${i})">Delete</button>
         </div>
       </div>
@@ -245,18 +249,71 @@ async function deleteQuote(index) {
   catch (e) { setStatus('Error: ' + e.message, 'err'); }
 }
 
+function editQuote(id) {
+  const q = quotes[id];
+  document.getElementById('manualName').value = q.name || '';
+  document.getElementById('manualText').value = q.text;
+  editingQuoteId = id;
+  editingSubIdx = -1;
+  document.getElementById('formTitle').textContent = 'Edit';
+  document.getElementById('saveBtn').textContent = 'Update Quote';
+  document.getElementById('cancelBtn').style.display = 'inline-flex';
+  document.getElementById('status').className = 'status';
+  document.getElementById('manualName').focus();
+  window.scrollTo({ top: document.querySelector('.section:last-of-type').offsetTop - 20, behavior: 'smooth' });
+}
+
+function editSub(idx) {
+  const s = submissions[idx];
+  document.getElementById('manualName').value = s.name || '';
+  document.getElementById('manualText').value = s.text;
+  editingQuoteId = null;
+  editingSubIdx = idx;
+  document.getElementById('formTitle').textContent = 'Edit';
+  document.getElementById('saveBtn').textContent = 'Update Quote';
+  document.getElementById('cancelBtn').style.display = 'inline-flex';
+  document.getElementById('status').className = 'status';
+  document.getElementById('manualName').focus();
+  window.scrollTo({ top: document.querySelector('.section:last-of-type').offsetTop - 20, behavior: 'smooth' });
+}
+
+function cancelEdit() {
+  editingQuoteId = null;
+  editingSubIdx = -1;
+  document.getElementById('manualName').value = '';
+  document.getElementById('manualText').value = '';
+  document.getElementById('formTitle').textContent = 'Add';
+  document.getElementById('saveBtn').textContent = 'Publish Directly';
+  document.getElementById('cancelBtn').style.display = 'none';
+  document.getElementById('status').className = 'status';
+}
+
 async function addDirect() {
   const name = document.getElementById('manualName').value.trim() || 'Anonymous';
   const text = document.getElementById('manualText').value.trim();
   if (!text) { setStatus('Write a quote first.', 'err'); return; }
-  quotes.push({ name, text });
+
+  const wasEdit = editingQuoteId !== null || editingSubIdx !== -1;
+  const wasSubEdit = editingSubIdx !== -1;
+
+  if (editingQuoteId !== null) {
+    quotes[editingQuoteId] = { name, text };
+  } else if (editingSubIdx !== -1) {
+    submissions[editingSubIdx] = { ...submissions[editingSubIdx], name, text };
+  } else {
+    quotes.push({ name, text });
+  }
+
+  cancelEdit();
   setStatus('Saving...', 'info');
   try {
-    await commitData();
+    if (wasSubEdit) {
+      await commitSubmissions();
+    } else {
+      await commitData();
+    }
     render();
-    setStatus('Published!', 'ok');
-    document.getElementById('manualName').value = '';
-    document.getElementById('manualText').value = '';
+    setStatus(wasEdit ? 'Updated!' : 'Published!', 'ok');
   } catch (e) {
     setStatus('Error: ' + e.message, 'err');
   }
