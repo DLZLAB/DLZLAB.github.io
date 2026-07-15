@@ -1,5 +1,14 @@
 [
   {
+    "id": "mrlsnbkr9uvz",
+    "page": "/",
+    "timestamp": "2026-07-15T08:04:00.219Z",
+    "ip": "205.147.17.33",
+    "city": "Oslo",
+    "region": "Oslo",
+    "country": "NO"
+  },
+  {
     "id": "mrjezdurz2vg",
     "page": "/me/songs/",
     "timestamp": "2026-07-13T16:05:56.067Z",
