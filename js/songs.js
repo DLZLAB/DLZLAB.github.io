@@ -45,6 +45,7 @@ function renderSongs(songs){
     container.innerHTML=`<div class="empty-state"><i class="fas fa-music"></i><p data-i18n="empty">${TRANSLATIONS[lang].empty}</p></div>`
     return
   }
+  container.className='song-list'
   container.innerHTML=songs.map((s,i)=>`
     <div class="song-item" data-id="${s.id||i}">
       <div class="song-header" onclick="toggleSong(this)">
@@ -76,6 +77,7 @@ function renderSongs(songs){
             </div>
             <a href="${escAttr(audioUrl(s))}" download class="download-btn"><i class="fas fa-download"></i> ${TRANSLATIONS[lang].download}</a>
           </div>
+          <div class="player-error"></div>
           ${s.poet?`<div class="poet-box"><h4><i class="fas fa-feather"></i> ${TRANSLATIONS[lang].lyrics}</h4><div class="poet-text">${esc(s.poet)}</div></div>`:''}
         </div>
       </div>
@@ -116,7 +118,22 @@ function playSong(btn,src,idx){
     timeDisps[1].textContent=formatTime(currentAudio.duration)
   })
   currentAudio.addEventListener('ended',()=>{if(currentBtn)setPlayBtn(currentBtn,'pause');if(timeDisps){timeDisps[0].textContent='0:00';timeDisps[1].textContent='0:00'};if(seekBar)seekBar.value=0})
-  currentAudio.play()
+  currentAudio.addEventListener('error',()=>{
+    setPlayBtn(btn,'pause')
+    if(timeDisps){timeDisps[0].textContent='0:00';timeDisps[1].textContent='0:00'}
+    if(seekBar)seekBar.value=0
+    const item=btn.closest('.song-item')
+    const errEl=item?.querySelector('.player-error')
+    if(errEl)errEl.textContent='Playback failed. Try downloading the song.'
+  })
+  currentAudio.play().catch(()=>{
+    setPlayBtn(btn,'pause')
+    if(timeDisps){timeDisps[0].textContent='0:00';timeDisps[1].textContent='0:00'}
+    if(seekBar)seekBar.value=0
+    const item=btn.closest('.song-item')
+    const errEl=item?.querySelector('.player-error')
+    if(errEl)errEl.textContent='Playback failed. Try downloading the song.'
+  })
   setPlayBtn(btn,'play')
 }
 

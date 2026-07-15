@@ -92,8 +92,9 @@ small{color:#6b5a3a;font-size:0.75rem}
       <input id="audioFile" type="file" accept="audio/*" />
     </div>
     <div class="form-group">
-      <label>Photo URL (optional — cover image)</label>
-      <input id="songPhoto" type="url" placeholder="https://example.com/cover.jpg" />
+      <label>Photo (optional — cover image)</label>
+      <input id="songPhoto" type="file" accept="image/*" onchange="previewPhoto(this)" />
+      <img id="photoPreview" class="preview" alt="Preview" />
     </div>
     <div id="uploadProgress"><div class="bar" id="progressBar"></div></div>
     <button class="btn" onclick="saveSong()" id="saveBtn">Add & Publish</button>
@@ -111,6 +112,7 @@ small{color:#6b5a3a;font-size:0.75rem}
 const OWNER = 'DLZLAB', REPO = 'DLZLAB.github.io', BRANCH = 'master';
 const DATA_PATH = 'songs/data.json';
 const AUDIO_DIR = 'songs/audio/';
+const PHOTO_DIR = 'songs/photos/';
 
 let songs = [];
 let dataSha = null;
@@ -161,7 +163,8 @@ function renderSongs() {
   document.getElementById('songCount').textContent = songs.length;
   if (!songs.length) { list.innerHTML = '<p class="empty-msg">No songs yet.</p>'; return; }
   list.innerHTML = songs.map((s, i) => {
-    const tags = s.poet ? '<span>Lyrics</span>' : '';
+    let tags = s.poet ? '<span>Lyrics</span>' : '';
+    if (s.photo) tags += '<span>Photo</span>';
     return `
       <div class="song-item">
         <div class="s-main">
@@ -195,7 +198,13 @@ function editSong(id) {
   document.getElementById('songTitle').value = song.title;
   document.getElementById('songArtist').value = song.artist || '';
   document.getElementById('songPoet').value = song.poet || '';
-  document.getElementById('songPhoto').value = song.photo || '';
+  document.getElementById('audioFile').value = '';
+  document.getElementById('songPhoto').value = '';
+  if (song.photo) {
+    const preview = document.getElementById('photoPreview');
+    preview.src = song.photo;
+    preview.className = 'preview show';
+  }
   document.getElementById('formTitle').textContent = 'Edit';
   document.getElementById('saveBtn').textContent = 'Update';
   document.getElementById('cancelBtn').style.display = 'inline-flex';
@@ -209,6 +218,8 @@ function cancelEdit() {
   document.getElementById('songPoet').value = '';
   document.getElementById('audioFile').value = '';
   document.getElementById('songPhoto').value = '';
+  document.getElementById('photoPreview').className = 'preview';
+  document.getElementById('photoPreview').src = '';
   document.getElementById('formTitle').textContent = 'Add';
   document.getElementById('saveBtn').textContent = 'Add & Publish';
   document.getElementById('cancelBtn').style.display = 'none';
@@ -216,12 +227,24 @@ function cancelEdit() {
   document.getElementById('status').className = 'status';
 }
 
+function previewPhoto(input) {
+  const preview = document.getElementById('photoPreview');
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => { preview.src = e.target.result; preview.className = 'preview show'; };
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    preview.className = 'preview';
+    preview.src = '';
+  }
+}
+
 async function saveSong() {
   const token = tokenInput.value.trim();
   const title = document.getElementById('songTitle').value.trim();
   const artist = document.getElementById('songArtist').value.trim() || 'Dawood WaliZada';
   const poet = document.getElementById('songPoet').value.trim();
-  const photo = document.getElementById('songPhoto').value.trim();
+  const photoFile = document.getElementById('songPhoto').files[0];
   const file = document.getElementById('audioFile').files[0];
 
   if (!token) { setStatus('Enter token first.', 'err'); return; }
@@ -244,7 +267,7 @@ async function saveSong() {
       songs = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).songs || [];
     }
 
-    let audioPath, audioUrl;
+    let audioPath, audioUrl, photoPath, photoUrl;
 
     if (file) {
       setStatus('Reading audio file...', 'info');
@@ -262,6 +285,22 @@ async function saveSong() {
       });
     }
 
+    if (photoFile) {
+      setStatus('Reading photo...', 'info');
+      const base64 = await readFileAsBase64(photoFile);
+      const ext = photoFile.name.split('.').pop();
+      const filename = 'photo-' + title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' + Date.now() + '.' + ext;
+      photoPath = PHOTO_DIR + filename;
+      photoUrl = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + photoPath;
+
+      setStatus('Uploading photo...', 'info');
+      await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${photoPath}`, 'PUT', {
+        message: (isEdit ? 'Update' : 'Add') + ' song photo: ' + title,
+        content: base64,
+        branch: BRANCH
+      });
+    }
+
     progressBar.style.width = '70%';
     setStatus('Updating data file...', 'info');
 
@@ -271,7 +310,7 @@ async function saveSong() {
         songs[idx].title = title;
         songs[idx].artist = artist;
         songs[idx].poet = poet;
-        songs[idx].photo = photo;
+        if (photoUrl) songs[idx].photo = photoUrl;
         if (audioPath) {
           songs[idx].audio = audioPath;
           songs[idx].audio_url = audioUrl;
@@ -284,7 +323,7 @@ async function saveSong() {
         title,
         artist,
         poet,
-        photo,
+        photo: photoUrl || '',
         audio: audioPath,
         audio_url: audioUrl,
         date_added: new Date().toISOString().split('T')[0]
@@ -311,6 +350,8 @@ async function saveSong() {
     document.getElementById('songPoet').value = '';
     document.getElementById('songPhoto').value = '';
     document.getElementById('audioFile').value = '';
+    document.getElementById('photoPreview').className = 'preview';
+    document.getElementById('photoPreview').src = '';
     cancelEdit();
   } catch (e) {
     document.getElementById('uploadProgress').style.display = 'none';
