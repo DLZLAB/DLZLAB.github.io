@@ -1,4 +1,4 @@
-const TRANSLATIONS={en:{title:"Songs — Dawood WaliZada",desc:"Songs by Dawood WaliZada",heading:"Songs",sub:"Listen to songs created by Dawood WaliZada",back:"← Back to Home",empty:"No songs yet. Check back soon!",play:"Play",pause:"Pause",download:"Download",lyrics:"Lyrics",artist:"Artist",by:"by",s_unknown:"Unknown Artist",buffering:"Loading… may take several seconds"},fa:{title:"آهنگ‌ها — داود ولی‌زاده",desc:"آهنگ‌های داود ولی‌زاده",heading:"آهنگ‌ها",sub:"به آهنگ‌های ساخته شده توسط داود ولی‌زاده گوش دهید",back:"→ بازگشت به صفحه اصلی",empty:"هنوز آهنگی وجود ندارد. به زودی!",play:"پخش",pause:"توقف",download:"دانلود",lyrics:"متن شعر",artist:"هنرمند",by:"اثر",s_unknown:"هنرمند ناشناس",buffering:"در حال بارگیری… ممکن است چند ثانیه طول بکشد"}}
+const TRANSLATIONS={en:{title:"Songs — Dawood WaliZada",desc:"Songs by Dawood WaliZada",heading:"Songs",sub:"Listen to songs created by Dawood WaliZada",back:"← Back to Home",empty:"No songs yet. Check back soon!",play:"Play",pause:"Pause",download:"Download",lyrics:"Lyrics",artist:"Artist",by:"by",s_unknown:"Unknown Artist",buffering:"Loading… may take a few seconds on slow connections",slow:"Slow connection? Download the audio instead"},fa:{title:"آهنگ‌ها — داود ولی‌زاده",desc:"آهنگ‌های داود ولی‌زاده",heading:"آهنگ‌ها",sub:"به آهنگ‌های ساخته شده توسط داود ولی‌زاده گوش دهید",back:"→ بازگشت به صفحه اصلی",empty:"هنوز آهنگی وجود ندارد. به زودی!",play:"پخش",pause:"توقف",download:"دانلود",lyrics:"متن شعر",artist:"هنرمند",by:"اثر",s_unknown:"هنرمند ناشناس",buffering:"در حال بارگیری… در اینترنت ضعیف ممکن است زمانبر باشد",slow:"اینترنت ضعیف؟ فایل را دانلود کنید و سپس گوش دهید"}}
 
 let currentAudio=null,currentBtn=null,currentItem=null
 let lang=localStorage.getItem('dlz-lang')||'en'
@@ -77,6 +77,7 @@ function renderSongs(songs){
               <input type="range" min="0" max="1" step="0.05" value="1" oninput="setVolume(this)">
             </div>
             <a href="${escAttr(audioUrl(s))}" download class="download-btn"><i class="fas fa-download"></i> ${TRANSLATIONS[lang].download}</a>
+            <span class="slow-hint">${TRANSLATIONS[lang].slow}</span>
           </div>
           <div class="player-error"></div>
           ${s.poet?`<div class="poet-box"><h4><i class="fas fa-feather"></i> ${TRANSLATIONS[lang].lyrics}</h4><div class="poet-text">${esc(s.poet)}</div></div>`:''}
