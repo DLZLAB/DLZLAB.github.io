@@ -37,7 +37,7 @@ async function loadSongs(){
   }
 }
 
-function audioUrl(s){return s.audio_url||'/'+s.audio}
+function audioUrl(s){return s.audio.startsWith('/')?s.audio:'/'+s.audio}
 
 function renderSongs(songs){
   const container=document.getElementById('songList')
@@ -70,6 +70,7 @@ function renderSongs(songs){
               <span class="time-display">0:00</span>
               <input type="range" class="seek" min="0" max="100" value="0" oninput="seekAudio(this)">
               <span class="time-display">0:00</span>
+              <div class="loading-indicator" style="display:none"><i class="fas fa-circle-notch fa-spin"></i></div>
             </div>
             <div class="volume-wrap">
               <i class="fas fa-volume-up"></i>
@@ -90,9 +91,17 @@ function escAttr(s){return s.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 
 function toggleSong(header){
   const item=header.closest('.song-item')
+  const body=item.querySelector('.song-body')
   const wasActive=item.classList.contains('active')
-  document.querySelectorAll('.song-item.active').forEach(el=>el.classList.remove('active'))
-  if(!wasActive)item.classList.add('active')
+  document.querySelectorAll('.song-item.active').forEach(el=>{
+    el.classList.remove('active')
+    const b=el.querySelector('.song-body')
+    if(b)b.style.maxHeight='0px'
+  })
+  if(!wasActive){
+    item.classList.add('active')
+    body.style.maxHeight=body.scrollHeight+'px'
+  }
 }
 
 function playSong(btn,src,idx){
@@ -103,12 +112,26 @@ function playSong(btn,src,idx){
   }
   if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;if(currentBtn)setPlayBtn(currentBtn,'pause')}
   currentAudio=new Audio(src)
+  currentAudio.preload='auto'
   currentBtn=btn
   const item=btn.closest('.song-item')
   const seekBar=item?.querySelector('.seek')
   const timeDisps=item?.querySelectorAll('.time-display')
   const volSlider=item?.querySelector('.volume-wrap input')
+  const loadInd=item?.querySelector('.loading-indicator')
+  const errEl=item?.querySelector('.player-error')
   if(volSlider)currentAudio.volume=parseFloat(volSlider.value)
+  if(errEl)errEl.textContent=''
+
+  setPlayBtn(btn,'loading')
+  if(loadInd)loadInd.style.display=''
+
+  const loaded=()=>{
+    setPlayBtn(btn,'play')
+    if(loadInd)loadInd.style.display='none'
+  }
+
+  currentAudio.addEventListener('canplay',loaded,{once:true})
 
   currentAudio.addEventListener('timeupdate',()=>{
     if(!currentAudio||!seekBar||!timeDisps)return
@@ -117,36 +140,37 @@ function playSong(btn,src,idx){
     timeDisps[0].textContent=formatTime(currentAudio.currentTime)
     timeDisps[1].textContent=formatTime(currentAudio.duration)
   })
-  currentAudio.addEventListener('ended',()=>{if(currentBtn)setPlayBtn(currentBtn,'pause');if(timeDisps){timeDisps[0].textContent='0:00';timeDisps[1].textContent='0:00'};if(seekBar)seekBar.value=0})
-  currentAudio.addEventListener('error',()=>{
+  currentAudio.addEventListener('ended',()=>{
     setPlayBtn(btn,'pause')
     if(timeDisps){timeDisps[0].textContent='0:00';timeDisps[1].textContent='0:00'}
     if(seekBar)seekBar.value=0
-    const item=btn.closest('.song-item')
-    const errEl=item?.querySelector('.player-error')
-    if(errEl)errEl.textContent='Playback failed. Try downloading the song.'
+    if(loadInd)loadInd.style.display='none'
   })
-  currentAudio.play().catch(()=>{
+  currentAudio.addEventListener('waiting',()=>{
+    if(loadInd)loadInd.style.display=''
+  })
+  currentAudio.addEventListener('playing',()=>{
+    if(loadInd)loadInd.style.display='none'
+  })
+
+  const onError=()=>{
     setPlayBtn(btn,'pause')
     if(timeDisps){timeDisps[0].textContent='0:00';timeDisps[1].textContent='0:00'}
     if(seekBar)seekBar.value=0
-    const item=btn.closest('.song-item')
-    const errEl=item?.querySelector('.player-error')
+    if(loadInd)loadInd.style.display='none'
     if(errEl)errEl.textContent='Playback failed. Try downloading the song.'
-  })
-  setPlayBtn(btn,'play')
+  }
+  currentAudio.addEventListener('error',onError)
+  currentAudio.play().catch(onError)
 }
 
 function setPlayBtn(btn,state){
-  const icons=btn.closest('.song-item')?.querySelectorAll('.fa-play, .fa-pause')||[]
-  icons.forEach(ic=>{
-    if(btn.closest('.song-item')?.querySelector('.song-header')?.contains(ic.closest('.song-header'))||
-       btn.closest('.song-item')?.querySelector('.song-body')?.contains(ic.closest('.song-body'))){
-      ic.className=state==='play'?'fas fa-pause':'fas fa-play'
-    }
-  })
-  const hdrBtn=btn.closest('.song-item')?.querySelector('.song-header .song-actions button')
-  if(hdrBtn)hdrBtn.innerHTML=state==='play'?'<i class="fas fa-pause"></i>':'<i class="fas fa-play"></i>'
+  const item=btn.closest('.song-item')
+  if(!item)return
+  const cls=state==='loading'?'fas fa-circle-notch fa-spin':state==='play'?'fas fa-pause':'fas fa-play'
+  item.querySelectorAll('.fa-play, .fa-pause, .fa-circle-notch').forEach(ic=>{ic.className=cls})
+  const hdrBtn=item.querySelector('.song-header .song-actions button')
+  if(hdrBtn)hdrBtn.innerHTML='<i class="'+cls+'"></i>'
 }
 
 function seekAudio(el){

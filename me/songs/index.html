@@ -173,7 +173,7 @@ function renderSongs() {
           <div class="s-tags">${tags}<span>Audio</span></div>
         </div>
         <div class="s-actions">
-          <a href="${s.audio_url || 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + s.audio}" class="btn btn-sm btn-outline" download target="_blank">DL</a>
+          <a href="https://${OWNER.toLowerCase()}.github.io/${s.audio}" class="btn btn-sm btn-outline" download target="_blank">DL</a>
           <button class="btn btn-sm btn-outline" onclick="editSong(${s.id})">Edit</button>
           <button class="btn btn-sm btn-danger" onclick="deleteSong(${i})">Del</button>
         </div>
@@ -267,7 +267,7 @@ async function saveSong() {
       songs = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))).songs || [];
     }
 
-    let audioPath, audioUrl, photoPath, photoUrl;
+    let audioPath, photoPath, photoUrl;
 
     if (file) {
       setStatus('Reading audio file...', 'info');
@@ -275,7 +275,6 @@ async function saveSong() {
       const ext = file.name.split('.').pop();
       const filename = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' + Date.now() + '.' + ext;
       audioPath = AUDIO_DIR + filename;
-      audioUrl = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/' + audioPath;
 
       setStatus('Uploading audio file...', 'info');
       await api(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${audioPath}`, 'PUT', {
@@ -313,7 +312,6 @@ async function saveSong() {
         if (photoUrl) songs[idx].photo = photoUrl;
         if (audioPath) {
           songs[idx].audio = audioPath;
-          songs[idx].audio_url = audioUrl;
         }
       }
     } else {
@@ -325,7 +323,6 @@ async function saveSong() {
         poet,
         photo: photoUrl || '',
         audio: audioPath,
-        audio_url: audioUrl,
         date_added: new Date().toISOString().split('T')[0]
       });
     }
