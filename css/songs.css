@@ -55,7 +55,8 @@ button{cursor:pointer;font-family:inherit}
 .progress-wrap input[type="range"]{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:2px;background:rgba(212,160,67,0.2);outline:none;min-width:40px}
 .progress-wrap input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#d4a043;cursor:pointer;border:2px solid #0d0407}
 .time-display{font-size:0.75rem;color:#b8945a;font-variant-numeric:tabular-nums;min-width:35px;text-align:center;white-space:nowrap}
-.loading-indicator{color:#d4a043;font-size:0.85rem;display:flex;align-items:center;gap:0.3rem;flex-shrink:0}
+.loading-indicator{color:#d4a043;font-size:0.8rem;display:flex;align-items:center;gap:0.4rem;flex-shrink:0}
+.loading-indicator .buf-msg{font-size:0.7rem;color:#b8945a;white-space:nowrap}
 .volume-wrap{display:flex;align-items:center;gap:0.3rem;flex-shrink:0}
 .volume-wrap i{color:#b8945a;font-size:0.8rem}
 .volume-wrap input[type="range"]{-webkit-appearance:none;appearance:none;width:50px;height:4px;border-radius:2px;background:rgba(212,160,67,0.2);outline:none}

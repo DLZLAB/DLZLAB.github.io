@@ -1,4 +1,4 @@
-const TRANSLATIONS={en:{title:"Songs — Dawood WaliZada",desc:"Songs by Dawood WaliZada",heading:"Songs",sub:"Listen to songs created by Dawood WaliZada",back:"← Back to Home",empty:"No songs yet. Check back soon!",play:"Play",pause:"Pause",download:"Download",lyrics:"Lyrics",artist:"Artist",by:"by",s_unknown:"Unknown Artist"},fa:{title:"آهنگ‌ها — داود ولی‌زاده",desc:"آهنگ‌های داود ولی‌زاده",heading:"آهنگ‌ها",sub:"به آهنگ‌های ساخته شده توسط داود ولی‌زاده گوش دهید",back:"→ بازگشت به صفحه اصلی",empty:"هنوز آهنگی وجود ندارد. به زودی!",play:"پخش",pause:"توقف",download:"دانلود",lyrics:"متن شعر",artist:"هنرمند",by:"اثر",s_unknown:"هنرمند ناشناس"}}
+const TRANSLATIONS={en:{title:"Songs — Dawood WaliZada",desc:"Songs by Dawood WaliZada",heading:"Songs",sub:"Listen to songs created by Dawood WaliZada",back:"← Back to Home",empty:"No songs yet. Check back soon!",play:"Play",pause:"Pause",download:"Download",lyrics:"Lyrics",artist:"Artist",by:"by",s_unknown:"Unknown Artist",buffering:"Loading… may take several seconds"},fa:{title:"آهنگ‌ها — داود ولی‌زاده",desc:"آهنگ‌های داود ولی‌زاده",heading:"آهنگ‌ها",sub:"به آهنگ‌های ساخته شده توسط داود ولی‌زاده گوش دهید",back:"→ بازگشت به صفحه اصلی",empty:"هنوز آهنگی وجود ندارد. به زودی!",play:"پخش",pause:"توقف",download:"دانلود",lyrics:"متن شعر",artist:"هنرمند",by:"اثر",s_unknown:"هنرمند ناشناس",buffering:"در حال بارگیری… ممکن است چند ثانیه طول بکشد"}}
 
 let currentAudio=null,currentBtn=null,currentItem=null
 let lang=localStorage.getItem('dlz-lang')||'en'
@@ -70,7 +70,7 @@ function renderSongs(songs){
               <span class="time-display">0:00</span>
               <input type="range" class="seek" min="0" max="100" value="0" oninput="seekAudio(this)">
               <span class="time-display">0:00</span>
-              <div class="loading-indicator" style="display:none"><i class="fas fa-circle-notch fa-spin"></i></div>
+              <div class="loading-indicator" style="display:none"><i class="fas fa-circle-notch fa-spin"></i> <span class="buf-msg">${TRANSLATIONS[lang].buffering}</span></div>
             </div>
             <div class="volume-wrap">
               <i class="fas fa-volume-up"></i>

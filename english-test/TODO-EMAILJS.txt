@@ -1,0 +1,64 @@
+────────────────────────────────────────────────
+  ENGLISH TEST — SUBMISSION SYSTEM (EmailJS)
+────────────────────────────────────────────────
+
+Goal: Send student results to my email instead of saving to localStorage.
+
+────────────────────────────────────────────────
+STEP 1 — Sign up at EmailJS
+────────────────────────────────────────────────
+Go to https://www.emailjs.com and create a free account
+(200 emails/month, plenty for a classroom)
+
+────────────────────────────────────────────────
+STEP 2 — Create an Email Service
+────────────────────────────────────────────────
+Dashboard → Email Services → Add New Service
+Connect your Gmail, Outlook, or any SMTP provider.
+
+────────────────────────────────────────────────
+STEP 3 — Create an Email Template
+────────────────────────────────────────────────
+Dashboard → Email Templates → Create New Template
+
+Write something like:
+
+  Subject: English Test Result — {{firstName}} {{lastName}}
+
+  Body:
+  Name: {{firstName}} {{lastName}}
+  Level: {{level}}
+  Score: {{score}} / {{total}} ({{percentage}}%)
+  Date: {{date}}
+
+  --- Answers ---
+  {{answers}}
+
+The variables you can use (I'll send these):
+  {{firstName}}, {{lastName}}, {{level}}, {{score}},
+  {{total}}, {{percentage}}, {{answers}}, {{date}}
+
+────────────────────────────────────────────────
+STEP 4 — Copy these 3 keys
+────────────────────────────────────────────────
+  1. Public Key   → Account → API Keys → Public Key
+  2. Service ID   → Email Services → your service → Service ID
+  3. Template ID  → Email Templates → your template → Template ID
+
+────────────────────────────────────────────────
+STEP 5 — Give me the keys
+────────────────────────────────────────────────
+When you come back, tell me:
+
+  Public Key:    ____________________
+  Service ID:    ____________________
+  Template ID:   ____________________
+  Send To Email: ____________________
+
+I'll wire it into the code so every submission emails you instantly.
+
+────────────────────────────────────────────────
+BONUS FIXES
+────────────────────────────────────────────────
+- Move saveSubmission() BEFORE DOM rendering (save first, then show)
+- Remove "Sync from Browser" button from admin (no longer needed)
