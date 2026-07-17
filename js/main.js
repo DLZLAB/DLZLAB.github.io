@@ -13,6 +13,7 @@ const TRANSLATIONS = {
     nav_projects: 'Projects',
     nav_contact: 'Contact',
     nav_miniprojects: 'Mini Projects',
+    nav_skills: 'Skills',
     hero_badge: 'Available for Projects',
     hero_tagline: 'Web Developer & MIS Specialist \u2014 building powerful, data-driven web solutions from <strong>Mazar-i-Sharif, Afghanistan</strong>.',
     hero_btn_projects: 'View Projects',
@@ -39,6 +40,8 @@ const TRANSLATIONS = {
     projects_title: 'Featured Projects',
     projects_sub: 'Click on any project to see details, screenshots, and live links.',
     project_view: 'View Details',
+    skills_title: 'Skills & Expertise',
+    skills_sub: 'Technologies and tools I work with daily to deliver robust solutions.',
     proj1_title: 'NSMAT Business Website',
     proj1_desc: 'Marketing site with CMS integration, analytics dashboard, and SEO optimization.',
     proj2_title: 'DLZLab MIS',
@@ -92,6 +95,7 @@ const TRANSLATIONS = {
     nav_projects: 'پروژه‌ها',
     nav_contact: 'تماس',
     nav_miniprojects: 'پروژه‌های کوچک',
+    nav_skills: 'مهارت‌ها',
     hero_badge: 'آماده برای پروژه‌ها',
     hero_tagline: 'توسعه‌دهنده وب و متخصص MIS \u2014 ساخت راه‌حل‌های قدرتمند وب از <strong>مزارشریف، افغانستان</strong>.',
     hero_btn_projects: 'مشاهده پروژه‌ها',
@@ -118,6 +122,8 @@ const TRANSLATIONS = {
     projects_title: 'پروژه‌های برگزیده',
     projects_sub: 'روی هر پروژه کلیک کنید برای دیدن جزئیات، تصاویر و لینک‌ها.',
     project_view: 'مشاهده جزئیات',
+    skills_title: 'مهارت‌ها و تخصص',
+    skills_sub: 'تکنولوژی‌ها و ابزارهایی که روزانه برای ارائه راه‌حل‌های قدرتمند استفاده می‌کنم.',
     proj1_title: 'وب‌سایت تجاری NSMAT',
     proj1_desc: 'سایت بازاریابی با سیستم مدیریت محتوا، داشبورد تحلیلی و بهینه‌سازی SEO.',
     proj2_title: 'DLZLab MIS',
@@ -495,4 +501,89 @@ document.addEventListener('DOMContentLoaded', () => {
       tagline.style.transform = 'translateY(0)';
     }, 800);
   }
+
+  // ---- 3D Tilt Effect ----
+  const tiltElements = document.querySelectorAll('[data-tilt]');
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  if (!isTouchDevice) {
+    tiltElements.forEach(el => {
+      el.classList.add('tilt-shine');
+
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -8;
+        const rotateY = ((x - centerX) / centerX) * 8;
+
+        el.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02,1.02,1.02)`;
+        el.style.setProperty('--shine-x', `${(x / rect.width) * 100}%`);
+        el.style.setProperty('--shine-y', `${(y / rect.height) * 100}%`);
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+      });
+    });
+  }
+
+  // ---- Skills Bar Animation ----
+  const skillBars = document.querySelectorAll('.skill-bar');
+
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bar = entry.target;
+        const fill = bar.querySelector('.skill-fill');
+        const progress = bar.dataset.progress;
+        if (fill && progress) {
+          fill.style.setProperty('--progress', progress + '%');
+          fill.classList.add('animated');
+        }
+        skillObserver.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  skillBars.forEach(bar => skillObserver.observe(bar));
+
+  // ---- Parallax Effect on Floating Shapes ----
+  const shapes = document.querySelectorAll('.shape');
+
+  if (!isTouchDevice && shapes.length) {
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      shapes.forEach((shape, i) => {
+        const speed = 0.03 + (i * 0.02);
+        const yOffset = scrollY * speed;
+        shape.style.transform = `translateY(${yOffset}px)`;
+      });
+    });
+  }
+
+  // ---- Enhanced Scroll Reveal with stagger ----
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.dataset.delay || 0;
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, delay);
+        revealObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.skill-category, .project-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    el.dataset.delay = i * 100;
+    revealObserver.observe(el);
+  });
 });
