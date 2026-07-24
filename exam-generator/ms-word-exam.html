@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MS Word</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg-2: #f1f5f9;
+  --panel: #ffffff;
+  --panel-2: #f8fafc;
+  --panel-3: #e2e8f0;
+  --border: rgba(0,0,0,0.07);
+  --border-strong: rgba(0,0,0,0.14);
+  --purple: #7c3aed;
+  --purple-soft: #a78bfa;
+  --green: #10b981;
+  --green-soft: #34d399;
+  --blue: #3b82f6;
+  --coral: #ef4444;
+  --text: #0f172a;
+  --text-dim: #475569;
+  --text-faint: #94a3b8;
+  --radius: 14px;
+  --font-fa: 'Vazirmatn', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:linear-gradient(180deg,#eef2ff 0%,var(--bg) 40%,#f0fdf4 100%);color:var(--text);font-family:var(--font-fa);min-height:100vh;line-height:1.7}
+::selection{background:var(--purple-soft);color:#fff}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(124,58,237,0.05) 1px,transparent 1px);background-size:26px 26px;pointer-events:none;z-index:0}
+.app{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:28px 20px 80px}
+.mono{font-family:var(--font-mono)}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);color:var(--purple-soft);font-size:13px;letter-spacing:.5px}
+.brand .tag{color:var(--blue)}
+.lang-toggle{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:3px;gap:2px}
+.lang-toggle button{font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.5px;border:none;background:transparent;color:var(--text-faint);padding:6px 14px;border-radius:999px;cursor:pointer;transition:all .2s ease}
+.lang-toggle button.active{background:var(--purple);color:#161616}
+.panel{background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 20px 50px -20px rgba(0,0,0,.6)}
+.start-screen .hero{padding:44px 34px 30px;text-align:center;position:relative;overflow:hidden}
+.start-screen .hero::after{content:'</>';position:absolute;font-family:var(--font-mono);font-weight:700;font-size:160px;color:rgba(124,58,237,0.06);inset-inline-end:-20px;top:-30px;z-index:0;line-height:1}
+.eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;position:relative}
+.start-screen h1{font-size:34px;font-weight:800;margin:0 0 10px;position:relative;color:var(--text)}
+.start-screen h1 .accent{color:var(--purple-soft)}
+.start-screen p.sub{color:var(--text-dim);font-size:15px;max-width:520px;margin:0 auto;position:relative}
+.meta-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;position:relative}
+.meta-chip{font-family:var(--font-mono);font-size:12.5px;color:var(--purple-soft);background:rgba(124,58,237,.08);border:1px solid var(--border);padding:7px 14px;border-radius:999px}
+.start-body{padding:6px 34px 34px}
+.rules{list-style:none;margin:20px 0;padding:0;display:grid;gap:10px}
+.rules li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-dim);background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.rules li .dot{flex:none;width:20px;height:20px;border-radius:6px;background:var(--panel-3);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;color:var(--purple-soft);font-weight:700;margin-top:1px}
+.field{margin:22px 0 8px}
+.field label{display:block;font-size:13px;color:var(--text-dim);margin-bottom:8px;font-weight:600}
+.field input[type='text']{width:100%;background:var(--bg-2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;color:var(--text);font-family:var(--font-fa);font-size:15px;outline:none;transition:border-color .2s ease,box-shadow .2s ease}
+.field input[type='text']:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.btn{font-family:var(--font-fa);font-weight:700;font-size:15px;cursor:pointer;border:none;border-radius:10px;padding:14px 22px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease}
+.btn-primary{background:linear-gradient(135deg,var(--purple-soft),var(--purple));color:#fff;box-shadow:0 10px 25px -10px rgba(124,58,237,.45);width:100%}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-dim)}
+.btn-ghost:hover{border-color:var(--border-strong);color:var(--text)}
+.btn-danger-ghost{background:transparent;border:1px solid rgba(239,68,68,.35);color:var(--coral)}
+.btn-danger-ghost:hover{background:rgba(239,68,68,.08)}
+.reset-link{text-align:center;margin-top:18px;font-size:12.5px;color:var(--text-faint)}
+.reset-link button{background:none;border:none;color:var(--text-faint);text-decoration:underline;cursor:pointer;font-family:var(--font-fa);font-size:12.5px}
+.reset-link button:hover{color:var(--coral)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.q-card{margin-bottom:18px;overflow:hidden}
+.q-tag{font-family:var(--font-mono);font-size:12px;color:var(--purple);padding:14px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.q-tag .type-badge{font-size:10.5px;color:var(--text-faint);border:1px solid var(--border);padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px}
+.q-body{padding:12px 20px 20px}
+.q-text{font-size:16px;font-weight:600;color:var(--text);margin:6px 0 18px}
+.q-closing{font-family:var(--font-mono);font-size:12px;color:var(--purple-soft);padding:0 20px 14px;opacity:.7}
+.fill-answer{display:flex;align-items:center;gap:2px;font-family:var(--font-mono);font-size:15px}
+.fill-answer .bracket{color:var(--purple-soft);font-weight:700}
+.fill-answer input{background:var(--bg-2);border:1.5px solid var(--border);border-radius:8px;color:var(--purple-soft);font-family:var(--font-mono);font-size:15px;padding:10px 12px;outline:none;min-width:160px;transition:border-color .2s ease}
+.fill-answer input:focus{border-color:var(--purple)}
+.fill-answer input:disabled{opacity:.75}
+.opt-list{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.02);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+.opt:hover{border-color:var(--border-strong)}
+.opt.checked{border-color:var(--purple);background:rgba(124,58,237,.07)}
+.opt input{accent-color:var(--purple);width:17px;height:17px;flex:none;cursor:pointer}
+.opt .opt-label{font-family:var(--font-mono);font-size:14.5px;color:var(--text)}
+.opt.disabled{cursor:default;opacity:.85}
+.submit-zone{text-align:center;margin-top:30px}
+.submit-zone .hint{font-size:12.5px;color:var(--text-faint);margin-top:10px}
+.result-hero{text-align:center;padding:46px 30px 34px;position:relative;overflow:hidden}
+.result-hero .badge{width:78px;height:78px;margin:0 auto 18px;border-radius:20px;background:linear-gradient(135deg,var(--purple-soft),var(--purple));display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 15px 35px -12px rgba(124,58,237,.5)}
+.result-hero h1{font-size:26px;margin:0 0 8px;font-weight:800}
+.result-hero p{color:var(--text-dim);font-size:14.5px;max-width:460px;margin:0 auto}
+.score-panel{display:flex;align-items:center;justify-content:center;gap:34px;padding:10px 30px 34px;flex-wrap:wrap}
+.score-circle{width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:var(--bg-2);border:3px solid var(--green);font-family:var(--font-mono)}
+.score-circle .num{font-size:30px;font-weight:700;color:var(--green)}
+.score-circle .of{font-size:11px;color:var(--text-faint)}
+.score-stats{display:grid;gap:10px;min-width:180px}
+.score-stat{display:flex;justify-content:space-between;gap:20px;font-size:13.5px}
+.score-stat .k{color:var(--text-dim)}
+.score-stat .v{font-family:var(--font-mono);font-weight:700}
+.v.ok{color:var(--green)}
+.v.bad{color:var(--coral)}
+.actions-row{display:flex;gap:12px;justify-content:center;padding:0 30px 30px;flex-wrap:wrap}
+.actions-row .btn{width:auto}
+.review-list{padding:6px 30px 34px;display:grid;gap:12px}
+.review-item{border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;background:rgba(255,255,255,.015)}
+.review-item.correct{border-color:rgba(16,185,129,.4)}
+.review-item.incorrect{border-color:rgba(239,68,68,.35)}
+.review-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.review-head .qn{font-family:var(--font-mono);font-size:12px;color:var(--text-faint)}
+.review-head .status{font-family:var(--font-mono);font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px}
+.status.correct{background:rgba(16,185,129,.12);color:var(--green)}
+.status.incorrect{background:rgba(239,68,68,.12);color:var(--coral)}
+.review-q{font-size:14.5px;font-weight:600;margin-bottom:10px}
+.review-ans{display:grid;gap:5px;font-size:13px;font-family:var(--font-mono)}
+.review-ans .row{display:flex;gap:8px}
+.review-ans .row .k{color:var(--text-faint);flex:none;min-width:130px}
+.review-ans .row .v{color:var(--text)}
+.review-ans .row .v.ok{color:var(--green)}
+.review-ans .row .v.bad{color:var(--coral)}
+.footer-note{text-align:center;color:var(--text-faint);font-size:12px;margin-top:26px}
+.hidden{display:none!important}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-box{background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%);border:1px solid var(--border-strong);border-radius:var(--radius);box-shadow:0 30px 80px -20px rgba(0,0,0,.7);max-width:460px;width:90%;padding:0;transform:scale(.92) translateY(12px);transition:transform .25s ease}
+.modal-overlay.open .modal-box{transform:scale(1) translateY(0)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 0}
+.modal-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.modal-icon.info{background:rgba(59,130,246,.12)}
+.modal-icon.warn{background:rgba(124,58,237,.12)}
+.modal-icon.danger{background:rgba(239,68,68,.12)}
+.modal-body{padding:14px 22px 22px;font-size:14.5px;color:var(--text-dim);line-height:1.8}
+.modal-body .title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+.modal-body input[type='text'],.modal-body input[type='password']{width:100%;background:var(--bg-2);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:var(--font-fa);font-size:14px;outline:none;margin-top:12px;transition:border-color .2s ease}
+.modal-body input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.modal-actions{display:flex;gap:10px;padding:0 22px 22px}
+.modal-actions .btn{flex:1;font-size:13.5px;padding:12px 16px}
+.modal-actions .btn-cancel{background:transparent;border:1px solid var(--border);color:var(--text-dim)}
+.modal-actions .btn-cancel:hover{border-color:var(--border-strong);color:var(--text)}
+.modal-actions .btn-confirm{background:linear-gradient(135deg,var(--purple-soft),var(--purple));color:#fff;font-weight:700}
+.exam-wrap{display:flex;gap:0;min-height:100vh}
+.sidebar{width:20%;min-width:210px;max-width:270px;background:linear-gradient(180deg,#f5f3ff 0%,#ede9fe 100%);border-inline-end:1px solid var(--border);padding:24px 16px 20px;display:flex;flex-direction:column;gap:20px;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
+.sidebar-brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);color:var(--purple-soft);font-size:14px;letter-spacing:.5px;text-decoration:none;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.sidebar-brand .tag{color:var(--blue);font-weight:700}
+.sidebar-student{display:flex;align-items:center;gap:12px;padding:10px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px}
+.sidebar-student .avatar{width:36px;height:36px;border-radius:10px;background:var(--panel-3);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;color:var(--purple-soft);font-size:15px;flex-shrink:0}
+.sidebar-student .name{font-size:13px;font-weight:700;color:var(--text);line-height:1.3}
+.sidebar-student .sub{font-size:10.5px;color:var(--text-faint);font-family:var(--font-mono)}
+.sidebar-timer{text-align:center;padding:14px 10px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px}
+.sidebar-timer .label{font-size:10.5px;color:var(--text-faint);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.sidebar-timer .time{font-family:var(--font-mono);font-weight:700;font-size:28px;letter-spacing:2px;color:var(--blue)}
+.sidebar-timer .time.warn{color:var(--coral);animation:pulse 1s infinite}
+.sidebar-progress{display:flex;flex-direction:column;gap:8px}
+.sidebar-progress .bar{height:6px;background:var(--panel);border-radius:999px;overflow:hidden;border:1px solid var(--border)}
+.sidebar-progress .bar .fill{height:100%;background:linear-gradient(90deg,var(--green),var(--purple));transition:width .3s ease;border-radius:999px}
+.sidebar-progress .info{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--text-faint)}
+.sidebar-lang{margin-top:auto;display:flex;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:3px;gap:2px}
+.sidebar-lang button{flex:1;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.5px;border:none;background:transparent;color:var(--text-faint);padding:7px 10px;border-radius:999px;cursor:pointer;transition:all .2s ease}
+.sidebar-lang button.active{background:var(--purple);color:#161616}
+.main-content{flex:1;padding:28px 24px 80px;min-width:0}
+@media (max-width:860px){
+.exam-wrap{flex-direction:column}
+.sidebar{width:100%;min-width:unset;max-width:unset;height:auto;position:relative;flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 16px;border-inline-end:none;border-bottom:1px solid var(--border)}
+.sidebar-brand{padding-bottom:0;border-bottom:none;font-size:12px}
+.sidebar-student{padding:6px 10px}
+.sidebar-timer{padding:8px 14px;display:flex;align-items:center;gap:8px}
+.sidebar-timer .label{margin-bottom:0}
+.sidebar-timer .time{font-size:18px}
+.sidebar-progress{flex:1;min-width:120px}
+.sidebar-lang{margin-top:0}
+.main-content{padding:18px 14px 60px}
+}
+@media (max-width:560px){
+.start-screen h1{font-size:26px}
+.score-panel{gap:20px}
+}
+@media print{
+body::before,.topbar,.sidebar,.actions-row .btn-ghost,.reset-link,.no-print,.modal-overlay{display:none!important}
+.exam-wrap{display:block}
+.main-content{padding:0}
+body{background:#fff;color:#111}
+.panel{background:#fff!important;border-color:#ccc!important;box-shadow:none!important}
+.score-circle{border-color:#333}
+.score-circle .num{color:#111}
+.review-item{break-inside:avoid;border-color:#ccc!important}
+.status.correct{color:#047857;background:#ecfdf5}
+.status.incorrect{color:#b91c1c;background:#fef2f2}
+a{text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="modal-overlay" id="modalOverlay"><div class="modal-box" id="modalBox"><div class="modal-header"><div class="modal-icon" id="modalIcon">i</div></div><div class="modal-body" id="modalBody"></div><div class="modal-actions" id="modalActions"></div></div></div>
+<div class="app">
+<div class="topbar no-print" id="topbarGlobal">
+<a class="brand" href="https://dlzlab.com" target="_blank" rel="noopener" style="text-decoration:none"><span class="tag">&lt;</span>DLZLAB<span class="tag">/&gt;</span>&nbsp;MS Word</a>
+<div class="lang-toggle" id="langToggleTop"></div>
+</div>
+
+<div id="startScreen" class="panel start-screen hidden">
+<div class="hero"><div class="eyebrow" data-t="eyebrow"></div><h1 data-t="startTitle"></h1><p class="sub" data-t="startSub"></p>
+<div class="meta-row"><div class="meta-chip mono">📝 <span data-t="chipQuestions"></span></div><div class="meta-chip mono">⏱ <span data-t="chipTimer"></span></div><div class="meta-chip mono">🔒 <span data-t="chipLocked"></span></div></div></div>
+<div class="start-body">
+<ul class="rules" id="rulesList"></ul>
+<div class="field"><label data-t="nameLabel"></label><input type="text" id="studentName" data-t-ph="namePlaceholder" autocomplete="off"></div>
+<button class="btn btn-primary" id="startBtn" onclick="startExam()" data-t="startBtn"></button></div></div>
+
+<div id="examScreen" class="hidden">
+<div class="exam-wrap">
+<aside class="sidebar">
+<a class="sidebar-brand" href="https://dlzlab.com" target="_blank" rel="noopener"><span class="tag">&lt;</span>DLZLAB<span class="tag">/&gt;</span></a>
+<div class="sidebar-student"><div class="avatar" id="avatarInitial">S</div><div><div class="name" id="studentNameShown"></div><div class="sub" data-t="examSub"></div></div></div>
+<div class="sidebar-timer"><div class="label" data-t="timerLabel"></div><div class="time mono" id="timerDisplay">00:00</div></div>
+<div class="sidebar-progress"><div class="bar"><div class="fill" id="progressFill" style="width:0%"></div></div><div class="info"><span id="answeredCount" data-t="answeredLabel"></span><span id="totalCount"></span></div></div>
+<div class="sidebar-lang" id="sidebarLang"></div>
+</aside>
+<div class="main-content"><div id="questionsContainer"></div>
+<div class="submit-zone"><button class="btn btn-primary" style="width:auto;min-width:260px" onclick="confirmSubmit()" data-t="submitBtn"></button><div class="hint" data-t="submitHint"></div></div></div></div></div>
+
+<div id="resultScreen" class="hidden">
+<div class="panel result-hero"><div class="badge">🎓</div><h1 id="completionTitle"></h1><p id="completionBody"></p></div>
+<div class="panel" style="margin-top:16px">
+<div class="score-panel"><div class="score-circle"><div class="num" id="scoreNum">0</div><div class="of mono" id="scoreOf">/ 20</div></div>
+<div class="score-stats"><div class="score-stat"><span class="k" data-t="statName"></span><span class="v mono" id="statName"></span></div><div class="score-stat"><span class="k" data-t="statCorrect"></span><span class="v mono ok" id="statCorrect"></span></div><div class="score-stat"><span class="k" data-t="statWrong"></span><span class="v mono bad" id="statWrong"></span></div><div class="score-stat"><span class="k" data-t="statPercent"></span><span class="v mono" id="statPercent"></span></div><div class="score-stat"><span class="k" data-t="statDuration"></span><span class="v mono" id="statDuration"></span></div><div class="score-stat"><span class="k" data-t="statDate"></span><span class="v mono" id="statDate"></span></div></div></div>
+<div class="footer-note mono" style="padding-bottom:22px"><a href="https://dlzlab.com" target="_blank" rel="noopener" style="color:var(--purple-soft);text-decoration:none">dlzlab.com</a></div>
+<div class="actions-row no-print"><button class="btn btn-ghost" onclick="window.print()" data-t="printBtn"></button><button class="btn btn-danger-ghost" onclick="resetExam()" data-t="resetBtn"></button></div></div>
+<div class="panel no-print" style="margin-top:16px"><div style="padding:22px 20px 4px"><div class="eyebrow" data-t="reviewEyebrow"></div></div><div class="review-list" id="reviewList"></div></div></div></div>
+
+<script>
+var QUESTIONS = [{"id":1,"type":"fill","answer":[".docx"],"fa":"پسوند پیش‌فرض فایل‌های Word چیست؟","en":"What is the default file extension of Word documents?"},{"id":2,"type":"radio","answer":"a","fa":"کدام میانبر صفحه‌کلید برای ذخیره سند استفاده می‌شود؟","en":"Which keyboard shortcut is used to save a document?","options":[{"k":"a","t":"Ctrl+S"},{"k":"b","t":"Ctrl+C"},{"k":"c","t":"Ctrl+V"},{"k":"d","t":"Ctrl+Z"}]},{"id":3,"type":"radio","answer":"a","fa":"کدام تب حاوی گزینه Page Setup است؟","en":"Which tab contains the Page Setup options?","options":[{"k":"a","t":"Layout"},{"k":"b","t":"Home"},{"k":"c","t":"Insert"},{"k":"d","t":"Review"}]},{"id":4,"type":"radio","answer":"b","fa":"فونت پیش‌فرض در MS Word 2016+ چیست؟","en":"What is the default font in MS Word 2016+?","options":[{"k":"a","t":"Times New Roman"},{"k":"b","t":"Calibri"},{"k":"c","t":"Arial"},{"k":"d","t":"Tahoma"}]},{"id":5,"type":"fill","answer":["F7","f7"],"fa":"کدام کلید F برای باز کردن Spelling & Grammar استفاده می‌شود؟","en":"Which F-key opens Spelling & Grammar check?"},{"id":6,"type":"radio","answer":"c","fa":"کدام نمایش سند، header و footer را نشان می‌دهد؟","en":"Which view shows headers and footers?","options":[{"k":"a","t":"Draft"},{"k":"b","t":"Web Layout"},{"k":"c","t":"Print Layout"},{"k":"d","t":"Outline"}]},{"id":7,"type":"checkbox","answer":["a","b","c"],"fa":"کدام یک از موارد زیر نمایش‌های معتبر سند در Word هستند؟","en":"Which of these are valid Word document views?","options":[{"k":"a","t":"Print Layout"},{"k":"b","t":"Web Layout"},{"k":"c","t":"Draft"},{"k":"d","t":"Slide Sorter"}]},{"id":8,"type":"fill","answer":["cursor","Cursor","insertion point","Insertion Point"],"fa":"خط عمودی چشمک‌زن در سند Word چه نام دارد؟","en":"What is the blinking vertical line in a Word document called?"},{"id":9,"type":"radio","answer":"b","fa":"کدام میانبر متن را bold می‌کند؟","en":"Which shortcut makes text bold?","options":[{"k":"a","t":"Ctrl+I"},{"k":"b","t":"Ctrl+B"},{"k":"c","t":"Ctrl+U"},{"k":"d","t":"Ctrl+D"}]},{"id":10,"type":"radio","answer":"b","fa":"برای وسط‌چین کردن متن از کدام دکمه استفاده می‌شود؟","en":"Which button is used to center-align text?","options":[{"k":"a","t":"Align Left"},{"k":"b","t":"Center"},{"k":"c","t":"Align Right"},{"k":"d","t":"Justify"}]},{"id":11,"type":"checkbox","answer":["a","b","c"],"fa":"کدام‌ها انواع Page Break در Word هستند؟","en":"Which are types of breaks in Word?","options":[{"k":"a","t":"Page Break"},{"k":"b","t":"Section Break"},{"k":"c","t":"Column Break"},{"k":"d","t":"Line Break"}]},{"id":12,"type":"fill","answer":["AutoCorrect","autocorrect","auto correct","Auto correct"],"fa":"ویژگی که اشتباهات تایپی رایج را خودکار تصحیح می‌کند چه نام دارد؟","en":"What is the feature that automatically corrects common typing errors called?"},{"id":13,"type":"radio","answer":"b","fa":"برای درج جدول از کدام تب استفاده می‌کنیم؟","en":"Which tab do you use to insert a table?","options":[{"k":"a","t":"Home"},{"k":"b","t":"Insert"},{"k":"c","t":"Design"},{"k":"d","t":"References"}]},{"id":14,"type":"radio","answer":"a","fa":"کدام کلید متن سمت چپ مکان‌نما را حذف می‌کند؟","en":"Which key deletes text to the left of the cursor?","options":[{"k":"a","t":"Backspace"},{"k":"b","t":"Delete"},{"k":"c","t":"Space"},{"k":"d","t":"Enter"}]},{"id":15,"type":"fill","answer":["margins","Margin","tabs","Tab","Margins","indents","Indent"],"fa":"خط‌کش بالای سند برای تنظیم چه چیزی استفاده می‌شود؟","en":"The ruler at the top of the document is used to set what?"},{"id":16,"type":"radio","answer":"a","fa":"Ctrl+Z چه کاری انجام می‌دهد؟","en":"What does Ctrl+Z do?","options":[{"k":"a","t":"Undo"},{"k":"b","t":"Redo"},{"k":"c","t":"Repeat"},{"k":"d","t":"Copy"}]},{"id":17,"type":"checkbox","answer":["a","b","c"],"fa":"Word می‌تواند به کدام فرمت‌ها خروجی بگیرد؟","en":"Which file formats can Word export to?","options":[{"k":"a","t":"PDF"},{"k":"b","t":"HTML"},{"k":"c","t":"TXT"},{"k":"d","t":"MP3"}]},{"id":18,"type":"fill","answer":["AutoSave","AutoRecover","autosave","autorecover","Auto Save","Auto Recover"],"fa":"ویژگی ذخیره خودکار اسناد در Word چه نام دارد؟","en":"What is the auto-save feature in Word called?"},{"id":19,"type":"radio","answer":"b","fa":"برای تغییر فاصله خطوط از کدام گروه در تب Home استفاده می‌شود؟","en":"To change line spacing, which group in the Home tab is used?","options":[{"k":"a","t":"Font"},{"k":"b","t":"Paragraph"},{"k":"c","t":"Editing"},{"k":"d","t":"Styles"}]},{"id":20,"type":"fill","answer":["header","Header","سربرگ"],"fa":"ناحیه بالای هر صفحه در یک سند چه نام دارد؟","en":"What is the area at the top of each page in a document called?"}];
+var EXAM_MINUTES = 30;
+var STORAGE_KEY = 'dlz_exam_201';
+var PASS_PERCENT = 60;
+var RESET_PW = 'DLZLab';
+
+var I18N_BASE = {"fa":{"langLabel":"فارسی","totalSuffix":" سوال","eyebrow":"MS Word — آزمون","startTitle":"آزمون نهایی <span class=\"accent\">MS Word</span>","startSub":"MS Word","chipQuestions":"20 سوال","chipTimer":"30 دقیقه","chipLocked":"نتیجه بعد از ارسال قفل می‌شود","nameLabel":"نام و تخلص شما","namePlaceholder":"مثال: راحیل حبیبی","startBtn":"شروع آزمون","examSub":"در حال امتحان دادن","timerLabel":"زمان باقی‌مانده","cancelBtn":"انصراف","confirmBtn":"تأیید","answeredLabel":"پاسخ داده شده:","submitBtn":"ارسال نهایی آزمون","submitHint":"بعد از ارسال، امکان بازگشت و ویرایش وجود ندارد.","typeFill":"جای خالی","typeRadio":"یک گزینه","typeCheckbox":"چند گزینه","yourAnswer":"جواب شما","correctAnswer":"جواب درست","notAnswered":"بدون جواب","statName":"نام شاگرد","statCorrect":"جواب‌های درست","statWrong":"جواب‌های نادرست","statPercent":"درصد نمره","statDuration":"مدت زمان","statDate":"تاریخ","printBtn":"🖨 چاپ / ذخیره PDF","resetBtn":"🔄 شروع دوباره آزمون","reviewEyebrow":"مرور سوالات","correctBadge":"درست ✓","incorrectBadge":"نادرست ✗","confirmSubmitTitle":"ارسال نهایی","confirmSubmit":"آیا از ارسال نهایی آزمون مطمئن هستید؟","unansweredAlert":"پاسخ‌های ناقص","unansweredAlertFill":"سوال {num} پاسخ داده نشده است.","timeUpNote":"⏰ وقت شما تمام شد و آزمون به صورت خودکار ارسال گردید.","fillYourPlaceholder":"جواب را اینجا بنویسید...","resetPromptTitle":"بازنشانی آزمون","resetPrompt":"برای شروع دوبارهٔ آزمون، رمز عبور را وارد کنید:","resetPromptPlaceholder":"رمز عبور","resetWrongTitle":"خطا","resetWrong":"رمز عبور اشتباه است.","durationTpl":"m>0?m+' دقیقه و '+s+' ثانیه':s+' ثانیه'","tiers":[{"min":90,"title":"'عالی بود، '+n+' عزیز! ✨'","body":"n+' عزیز، شما تسلط بسیار خوبی دارید!'"},{"min":75,"title":"'آفرین، '+n+' عزیز! 🎉'","body":"n+' عزیز، نتیجه شما خیلی خوب است!'"},{"min":60,"title":"'خوب بود، '+n+' عزیز! 👍'","body":"n+' عزیز، قبول شدید!'"},{"min":40,"title":"'تلاش خوبی بود، '+n+' عزیز'","body":"n+' عزیز، شروع خوبی بود!'"},{"min":0,"title":"'ادامه بده، '+n+' عزیز!'","body":"n+' عزیز، نگران نباش!'"}],"rule1":"سوالات به صورت تصادفی چیده شده‌اند.","rule2":"۲۰ سوال از مایکروسافت ورد.","rule3":"زمان محدود: ۳۰ دقیقه.","rule4":"بعد از ارسال، امکان بازگشت وجود ندارد."},"en":{"langLabel":"English","totalSuffix":" questions","eyebrow":"MS Word — Exam","startTitle":"Final Exam <span class=\"accent\">MS Word</span>","startSub":"MS Word","chipQuestions":"20 questions","chipTimer":"30 minutes","chipLocked":"Results lock after submission","nameLabel":"Your full name","namePlaceholder":"e.g. Ahmad Wali","startBtn":"Start Exam","examSub":"Exam in progress","timerLabel":"Time remaining","cancelBtn":"Cancel","confirmBtn":"Confirm","answeredLabel":"Answered:","submitBtn":"Submit Exam","submitHint":"You cannot go back after submitting.","typeFill":"Fill blank","typeRadio":"Single choice","typeCheckbox":"Multiple choice","yourAnswer":"Your answer","correctAnswer":"Correct answer","notAnswered":"Not answered","statName":"Student","statCorrect":"Correct answers","statWrong":"Incorrect answers","statPercent":"Score","statDuration":"Time taken","statDate":"Date","printBtn":"🖨 Print / Save as PDF","resetBtn":"🔄 Retry Exam","reviewEyebrow":"Question review","correctBadge":"Correct ✓","incorrectBadge":"Incorrect ✗","confirmSubmitTitle":"Submit Exam","confirmSubmit":"Are you sure you want to submit?","unansweredAlert":"Incomplete Answers","unansweredAlertFill":"Question {num} is not answered.","timeUpNote":"⏰ Your time ran out and the exam was submitted automatically.","fillYourPlaceholder":"Type your answer here...","resetPromptTitle":"Reset Exam","resetPrompt":"Enter password to retry:","resetPromptPlaceholder":"Password","resetWrongTitle":"Error","resetWrong":"Wrong password.","durationTpl":"m>0?m+' min '+s+' sec':s+' sec'","tiers":[{"min":90,"title":"'Outstanding, '+n+'! ✨'","body":"n+', you have a strong grasp!'"},{"min":75,"title":"'Great job, '+n+'! 🎉'","body":"n+', that\\'s a solid result!'"},{"min":60,"title":"'Nice work, '+n+'! 👍'","body":"n+', you passed!'"},{"min":40,"title":"'Good effort, '+n","body":"n+', good start!'"},{"min":0,"title":"'Keep going, '+n+'!'","body":"n+', don\\'t worry!'"}],"rule1":"Questions are randomly ordered.","rule2":"20 questions about Microsoft Word.","rule3":"Time limit: 30 minutes.","rule4":"You cannot go back after submission."}};
+
+// Convert I18N function templates to actual functions
+var I18N = {};
+Object.keys(I18N_BASE).forEach(function(lang){
+  var d = I18N_BASE[lang];
+  I18N[lang] = d;
+  I18N[lang].durationTpl = new Function('m','s', 'return ' + d.durationTpl);
+  I18N[lang].tiers = d.tiers.map(function(t){
+    return {
+      min: t.min,
+      title: new Function('n', 'return ' + t.title),
+      body: new Function('n', 'return ' + t.body)
+    };
+  });
+});
+
+var state = null, timerInterval = null, currentLang = 'fa';
+
+function loadState(){try{var r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):null}catch(e){return null}}
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+
+function showModal(opts){return new Promise(function(resolve){
+var overlay=document.getElementById('modalOverlay'),body=document.getElementById('modalBody'),actions=document.getElementById('modalActions'),icon=document.getElementById('modalIcon');
+overlay.classList.add('open');icon.className='modal-icon '+(opts.iconClass||'info');icon.textContent=opts.icon||'i';body.innerHTML='';
+if(opts.title){var t=document.createElement('div');t.className='title';t.textContent=opts.title;body.appendChild(t)}
+if(opts.message){var m=document.createElement('div');m.textContent=opts.message;body.appendChild(m)}
+var inputEl=null;
+if(opts.input){inputEl=document.createElement('input');inputEl.type=opts.inputType||'text';inputEl.placeholder=opts.inputPlaceholder||'';body.appendChild(inputEl);setTimeout(function(){inputEl.focus()},150)}
+actions.innerHTML='';
+if(opts.buttons&&opts.buttons.length){opts.buttons.forEach(function(btn){var b=document.createElement('button');b.className='btn '+(btn.className||'btn-confirm');b.textContent=btn.label;b.onclick=function(){overlay.classList.remove('open');resolve(btn.value!==undefined?btn.value:(inputEl?inputEl.value:true))};actions.appendChild(b)})}else{var b=document.createElement('button');b.className='btn btn-confirm';b.textContent='OK';b.onclick=function(){overlay.classList.remove('open');resolve(true)};actions.appendChild(b)}
+if(inputEl){inputEl.addEventListener('keydown',function(e){if(e.key==='Enter'){var confirmBtn=actions.querySelector('.btn-confirm');if(confirmBtn)confirmBtn.click()}})}
+})}
+
+function modalConfirm(title,message){return showModal({title:title,message:message,icon:'\u26a0',iconClass:'warn',buttons:[{label:I18N[currentLang].cancelBtn||'Cancel',value:false,className:'btn btn-cancel'},{label:I18N[currentLang].confirmBtn||'Confirm',value:true,className:'btn btn-confirm'}]})}
+function modalAlert(title,message,icon,iconClass){return showModal({title:title,message:message,icon:icon||'i',iconClass:iconClass||'info',buttons:[{label:'OK',value:true,className:'btn btn-confirm'}]})}
+function modalPrompt(title,message,placeholder){return showModal({title:title,message:message,icon:'\ud83d\udd11',iconClass:'warn',input:true,inputType:'password',inputPlaceholder:placeholder||'',buttons:[{label:I18N[currentLang].cancelBtn||'Cancel',value:null,className:'btn btn-cancel'},{label:I18N[currentLang].confirmBtn||'Confirm',className:'btn btn-confirm'}]})}
+
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=a[i];a[i]=a[j];a[j]=tmp}return a}
+
+function init(){state=loadState();if(state&&state.lang){currentLang=state.lang}applyLang(currentLang,true);renderLangButtons();if(state&&state.submitted){showResults()}else if(state&&state.started){resumeExam()}else{document.getElementById('startScreen').classList.remove('hidden')}}
+
+function setLang(lang){currentLang=lang;if(state){state.lang=lang;saveState()}applyLang(lang);renderLangButtons();if(state&&state.started&&!state.submitted){renderQuestions();updateProgress()}if(state&&state.submitted){renderResults()}}
+
+function applyLang(lang,silent){document.documentElement.lang=lang;document.documentElement.dir=lang==='fa'?'rtl':'ltr';var dict=I18N[lang];document.querySelectorAll('[data-t]').forEach(function(el){var key=el.getAttribute('data-t');if(dict[key]!==undefined)el.innerHTML=dict[key]});document.querySelectorAll('[data-t-ph]').forEach(function(el){var key=el.getAttribute('data-t-ph');if(dict[key]!==undefined)el.placeholder=dict[key]});var tc=document.getElementById('totalCount');if(tc)tc.textContent=QUESTIONS.length+' '+dict.totalSuffix}
+
+function renderLangButtons(){var topDiv=document.getElementById('langToggleTop'),sideDiv=document.getElementById('sidebarLang');var langs=Object.keys(I18N);var html='';langs.forEach(function(l){var active=l===currentLang?' active':'';html+='<button class="lang-btn'+active+'" onclick="setLang(\''+l+'\')">'+(I18N[l].langLabel||l)+'</button>'});if(topDiv)topDiv.innerHTML=html;if(sideDiv)sideDiv.innerHTML=html.replace(/lang-btn/g,'lang-btn');document.querySelectorAll('.lang-toggle button, .sidebar-lang button').forEach(function(b){if(I18N[currentLang]&&b.textContent===(I18N[currentLang].langLabel||currentLang))b.classList.add('active')})}
+
+function startExam(){var nameInput=document.getElementById('studentName');var name=nameInput.value.trim();if(!name){nameInput.focus();nameInput.style.borderColor='var(--coral)';return}
+var order=shuffle(QUESTIONS.map(function(q){return q.id}));var optionOrders={};QUESTIONS.forEach(function(q){if(q.type==='radio'||q.type==='checkbox'){optionOrders[q.id]=shuffle(q.options.map(function(o){return o.k}))}});state={name:name,lang:currentLang,started:true,submitted:false,startedAt:Date.now(),durationMs:EXAM_MINUTES*60*1000,order:order,optionOrders:optionOrders,answers:{},score:null,submittedAt:null,autoSubmitted:false};saveState();document.getElementById('startScreen').classList.add('hidden');document.getElementById('examScreen').classList.remove('hidden');renderExamHeader();renderQuestions();updateProgress();startTimer()}
+
+function resumeExam(){document.getElementById('examScreen').classList.remove('hidden');renderExamHeader();renderQuestions();updateProgress();startTimer()}
+function renderExamHeader(){document.getElementById('studentNameShown').textContent=state.name;document.getElementById('avatarInitial').textContent=state.name.trim().charAt(0).toUpperCase()||'S'}
+
+function startTimer(){if(timerInterval)clearInterval(timerInterval);tickTimer();timerInterval=setInterval(tickTimer,1000)}
+function tickTimer(){var elapsed=Date.now()-state.startedAt;var remaining=Math.max(0,state.durationMs-elapsed);var totalSec=Math.floor(remaining/1000);var mm=String(Math.floor(totalSec/60)).padStart(2,'0');var ss=String(totalSec%60).padStart(2,'0');var el=document.getElementById('timerDisplay');if(el){el.textContent=mm+':'+ss;el.classList.toggle('warn',totalSec<=120)}if(remaining<=0){clearInterval(timerInterval);submitExam(true)}}
+
+function getQuestion(id){return QUESTIONS.find(function(q){return q.id===id})}
+
+function renderQuestions(){var dict=I18N[currentLang];var container=document.getElementById('questionsContainer');container.innerHTML='';state.order.forEach(function(qid,idx){var q=getQuestion(qid);var num=String(idx+1).padStart(2,'0');var card=document.createElement('div');card.className='panel q-card';var typeLabel=q.type==='fill'?dict.typeFill:q.type==='radio'?dict.typeRadio:dict.typeCheckbox;var inner='<div class="q-tag">&lt;Q'+num+'&gt;<span class="type-badge">'+typeLabel+'</span></div><div class="q-body"><div class="q-text">'+q[currentLang]+'</div>';if(q.type==='fill'){var val=state.answers[qid]||'';inner+='<div class="fill-answer"><span class="bracket">&lt;</span><input type="text" class="mono" data-qid="'+qid+'" value="'+val.replace(/&/g,'&amp;').replace(/"/g,'&quot;')+'" placeholder="'+dict.fillYourPlaceholder+'" oninput="onFillInput('+qid+',this.value)"><span class="bracket">&gt;</span></div>'}else{var orderedKeys=state.optionOrders[qid];inner+='<div class="opt-list">';orderedKeys.forEach(function(k){var opt=q.options.find(function(o){return o.k===k});var inputType=q.type==='radio'?'radio':'checkbox';var name='q_'+qid;var checked=q.type==='radio'?state.answers[qid]===k:Array.isArray(state.answers[qid])&&state.answers[qid].includes(k);inner+='<label class="opt'+(checked?' checked':'')+'" data-qid="'+qid+'" data-k="'+k+'"><input type="'+inputType+'" name="'+name+'"'+(checked?' checked':'')+' onchange="onOptionChange('+qid+',\''+k+'\',\''+q.type+'\')"><span class="opt-label">'+opt.t+'</span></label>'});inner+='</div>'}inner+='</div>';card.innerHTML=inner;container.appendChild(card);var closing=document.createElement('div');closing.className='q-closing';closing.textContent='</Q'+num+'>';container.appendChild(closing)})}
+
+function onFillInput(qid,value){state.answers[qid]=value;saveState();updateProgress()}
+function onOptionChange(qid,key,type){if(type==='radio'){state.answers[qid]=key}else{var cur=Array.isArray(state.answers[qid])?state.answers[qid].slice():[];var i=cur.indexOf(key);if(i>=0)cur.splice(i,1);else cur.push(key);state.answers[qid]=cur}saveState();updateProgress();refreshOptionStyles(qid)}
+function refreshOptionStyles(qid){document.querySelectorAll('.opt[data-qid="'+qid+'"]').forEach(function(el){var k=el.getAttribute('data-k');var ans=state.answers[qid];var checked=Array.isArray(ans)?ans.includes(k):ans===k;el.classList.toggle('checked',!!checked)})}
+
+function updateProgress(){var answered=state.order.filter(function(qid){var a=state.answers[qid];if(a===undefined)return false;if(Array.isArray(a))return a.length>0;return String(a).trim().length>0}).length;var pct=Math.round((answered/state.order.length)*100);document.getElementById('progressFill').style.width=pct+'%';document.getElementById('answeredCount').textContent=I18N[currentLang].answeredLabel+' '+answered+'/'+state.order.length}
+
+async function confirmSubmit(){var unanswered=state.order.filter(function(qid){var a=state.answers[qid];if(a===undefined||a===null)return true;if(Array.isArray(a))return a.length===0;return String(a).trim().length===0});if(unanswered.length>0){var first=unanswered[0];var idx=state.order.indexOf(first)+1;await modalAlert(I18N[currentLang].unansweredAlert,I18N[currentLang].unansweredAlertFill.replace('{num}',String(idx)),'\u26a0','warn');return}var ok=await modalConfirm(I18N[currentLang].confirmSubmitTitle||'Submit Exam',I18N[currentLang].confirmSubmit);if(ok)submitExam(false)}
+
+function submitExam(auto){if(state.submitted)return;if(timerInterval)clearInterval(timerInterval);var correctCount=0;var detail=state.order.map(function(qid){var q=getQuestion(qid);var given=state.answers[qid];var isCorrect=false;if(q.type==='fill'){var val=(given||'').toString().trim().toLowerCase();isCorrect=q.answer.map(function(a){return a.toLowerCase()}).includes(val)}else if(q.type==='radio'){isCorrect=given===q.answer}else if(q.type==='checkbox'){var g=Array.isArray(given)?given.slice().sort():[];var a=q.answer.slice().sort();isCorrect=g.length===a.length&&g.every(function(v,i){return v===a[i]})}if(isCorrect)correctCount++;return{qid:qid,given:given,isCorrect:isCorrect}});state.submitted=true;state.autoSubmitted=!!auto;state.submittedAt=Date.now();state.score={correct:correctCount,total:state.order.length};saveState();document.getElementById('examScreen').classList.add('hidden');showResults()}
+
+function showResults(){document.getElementById('startScreen').classList.add('hidden');document.getElementById('examScreen').classList.add('hidden');document.getElementById('resultScreen').classList.remove('hidden');renderResults()}
+
+function renderResults(){var dict=I18N[currentLang];var total=state.score.total;var correct=state.score.correct;var wrong=total-correct;var pct=Math.round((correct/total)*100);var tier=dict.tiers.find(function(t){return pct>=t.min});document.getElementById('completionTitle').textContent=tier.title(state.name);document.getElementById('completionBody').textContent=(state.autoSubmitted?dict.timeUpNote+'  ':'')+tier.body(state.name);document.getElementById('scoreNum').textContent=correct;document.getElementById('scoreOf').textContent='/ '+total;document.getElementById('statName').textContent=state.name;document.getElementById('statCorrect').textContent=correct;document.getElementById('statWrong').textContent=wrong;document.getElementById('statPercent').textContent=pct+'%';var elapsedSec=Math.max(0,Math.round(((state.submittedAt||Date.now())-state.startedAt)/1000));var em=Math.floor(elapsedSec/60),es=elapsedSec%60;document.getElementById('statDuration').textContent=dict.durationTpl(em,es);document.getElementById('statDate').textContent=new Date(state.submittedAt).toLocaleString(currentLang==='fa'?'fa-IR':'en-US');var scoreCircle=document.querySelector('.score-circle');scoreCircle.style.borderColor=pct>=PASS_PERCENT?'var(--green)':'var(--coral)';document.getElementById('scoreNum').style.color=pct>=PASS_PERCENT?'var(--green)':'var(--coral)';var list=document.getElementById('reviewList');list.innerHTML='';state.order.forEach(function(qid,idx){var q=getQuestion(qid);var given=state.answers[qid];var isCorrect=false;var givenText=dict.notAnswered;var correctText='';if(q.type==='fill'){var val=(given||'').toString().trim();isCorrect=q.answer.map(function(a){return a.toLowerCase()}).includes(val.toLowerCase());givenText=val?val:dict.notAnswered;correctText=q.answer[0]}else if(q.type==='radio'){isCorrect=given===q.answer;givenText=given?(q.options.find(function(o){return o.k===given})||{}).t:dict.notAnswered;correctText=(q.options.find(function(o){return o.k===q.answer})||{}).t}else if(q.type==='checkbox'){var g=Array.isArray(given)?given.slice().sort():[];var a=q.answer.slice().sort();isCorrect=g.length===a.length&&g.every(function(v,i){return v===a[i]});givenText=g.length?g.map(function(k){return(q.options.find(function(o){return o.k===k})||{}).t}).join(', '):dict.notAnswered;correctText=a.map(function(k){return(q.options.find(function(o){return o.k===k})||{}).t}).join(', ')}var num=String(idx+1).padStart(2,'0');var item=document.createElement('div');item.className='review-item '+(isCorrect?'correct':'incorrect');item.innerHTML='<div class="review-head"><span class="qn mono">&lt;Q'+num+'&gt;</span><span class="status '+(isCorrect?'correct':'incorrect')+'">'+(isCorrect?dict.correctBadge:dict.incorrectBadge)+'</span></div><div class="review-q">'+q[currentLang]+'</div><div class="review-ans"><div class="row"><span class="k">'+dict.yourAnswer+':</span><span class="v '+(isCorrect?'ok':'bad')+'">'+givenText+'</span></div>'+(isCorrect?'':'<div class="row"><span class="k">'+dict.correctAnswer+':</span><span class="v ok">'+correctText+'</span></div>')+'</div>';list.appendChild(item)})}
+
+async function resetExam(){var pw=await modalPrompt(I18N[currentLang].resetPromptTitle||'Reset Exam',I18N[currentLang].resetPrompt,I18N[currentLang].resetPromptPlaceholder||'');if(pw===null)return;if(pw===RESET_PW){localStorage.removeItem(STORAGE_KEY);state=null;if(timerInterval)clearInterval(timerInterval);document.getElementById('resultScreen').classList.add('hidden');document.getElementById('examScreen').classList.add('hidden');document.getElementById('startScreen').classList.remove('hidden');document.getElementById('studentName').value=''}else{await modalAlert(I18N[currentLang].resetWrongTitle||'Error',I18N[currentLang].resetWrong,'\u2717','danger')}}
+
+init();
+</script>
+</body>
+</html>
