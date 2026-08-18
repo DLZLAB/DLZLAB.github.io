@@ -1,4 +1,12 @@
 (function () {
+  window.addEventListener('error', function (e) {
+    const v = document.getElementById('view');
+    if (v && !v.innerHTML.trim()) {
+      v.innerHTML = '<div class="empty"><div class="empty-ic">' + Icons.get('alert') + '</div><div class="empty-title">Something went wrong</div><div class="empty-sub">' +
+        Utils.escapeHtml(e.message || 'Unknown error') + '<br><br>Press Ctrl+Shift+R (or close the app and reopen it) to reload the latest version.</div></div>';
+    }
+  });
+
   const NAV = [
     { route: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
     { route: 'today', label: 'Today', icon: 'today' },
