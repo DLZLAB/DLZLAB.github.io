@@ -2,8 +2,8 @@
   "name": "FlowOS — Personal Productivity OS",
   "short_name": "FlowOS",
   "description": "Manage your daily schedule, tasks, habits, goals and time — your entire life at a glance.",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "../index.html",
+  "scope": "../",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#060a13",
@@ -11,19 +11,19 @@
   "categories": ["productivity", "utilities", "lifestyle"],
   "icons": [
     {
-      "src": "./pwa/icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./pwa/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./pwa/icon-maskable-512.png",
+      "src": "icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -33,26 +33,26 @@
     {
       "name": "New Task",
       "short_name": "New Task",
-      "url": "./index.html#/tasks?new=1",
-      "icons": [{ "src": "./pwa/icon-192.png", "sizes": "192x192" }]
+      "url": "../index.html#/tasks?new=1",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Habit Tracker",
       "short_name": "Habits",
-      "url": "./index.html#/habits",
-      "icons": [{ "src": "./pwa/icon-192.png", "sizes": "192x192" }]
+      "url": "../index.html#/habits",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Timetable",
       "short_name": "Timetable",
-      "url": "./index.html#/timetable",
-      "icons": [{ "src": "./pwa/icon-192.png", "sizes": "192x192" }]
+      "url": "../index.html#/timetable",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Statistics",
       "short_name": "Stats",
-      "url": "./index.html#/statistics",
-      "icons": [{ "src": "./pwa/icon-192.png", "sizes": "192x192" }]
+      "url": "../index.html#/statistics",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

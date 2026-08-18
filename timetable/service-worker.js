@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flowos-v2';
+const CACHE_NAME = 'flowos-v3';
 const ASSETS = [
   './',
   './index.html',
