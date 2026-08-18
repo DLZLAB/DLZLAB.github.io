@@ -1,7 +1,7 @@
 {
-  "name": "FlowOS — Personal Productivity OS",
-  "short_name": "FlowOS",
-  "description": "Manage your daily schedule, tasks, habits, goals and time — your entire life at a glance.",
+  "name": "DLZLAB Time management",
+  "short_name": "DLZ Time",
+  "description": "DLZLAB Time — plan your schedule, tasks, habits and goals. Your entire day at a glance.",
   "start_url": "../index.html",
   "scope": "../",
   "display": "standalone",

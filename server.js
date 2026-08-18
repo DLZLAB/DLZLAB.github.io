@@ -31,5 +31,5 @@ http.createServer(function (req, res) {
     fs.createReadStream(filePath).pipe(res);
   });
 }).listen(PORT, function () {
-  console.log('FlowOS running at http://localhost:' + PORT);
+  console.log('DLZLAB Time running at http://localhost:' + PORT);
 });
