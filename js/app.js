@@ -181,6 +181,7 @@
   }
 
   async function boot() {
+    if (window.Lock && Lock.isSetup()) Lock.lock();
     buildNav();
     await State.init();
     Router.register('dashboard', DashboardPage.render, { title: 'Dashboard', sub: SUB.dashboard });
@@ -220,7 +221,6 @@
     window.addEventListener('online', function () { UI.toast('Back online', 'success', 'wifi'); });
     window.addEventListener('offline', function () { UI.toast('You are offline — using cached copy', 'warn', 'wifi'); });
 
-    if (window.Lock && Lock.isSetup()) Lock.lock();
     Router.init();
   }
 

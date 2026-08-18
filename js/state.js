@@ -1,12 +1,12 @@
 const State = (function () {
-  const SETTINGS_KEY = 'flowos_settings_v1';
+  const SETTINGS_KEY = 'flowos_settings_v2';
   const data = {
     tasks: [], events: [], habits: [], habitLogs: [],
     goals: [], milestones: [], categories: [], notifications: []
   };
   let settings = {
     theme: 'dark', accent: 'blue', weekStart: 0, timeFormat: 24,
-    notificationsOn: true, seeded: false
+    notificationsOn: true, seeded: true
   };
   const listeners = new Set();
   let ready = false;
@@ -23,11 +23,13 @@ const State = (function () {
   function setSetting(key, value) {
     settings[key] = value;
     saveSettings();
+    if (key === 'theme' || key === 'accent') applyTheme();
     notify();
   }
   function setSettings(obj) {
     Object.keys(obj).forEach(function (k) { settings[k] = obj[k]; });
     saveSettings();
+    applyTheme();
     notify();
   }
 
@@ -43,14 +45,12 @@ const State = (function () {
     } catch (e) { /* keep defaults */ }
     applyTheme();
     await DB.open();
+    if (!localStorage.getItem(SETTINGS_KEY)) {
+      await DB.clearAll();
+    }
     await reload();
     ready = true;
-    if (!settings.seeded) {
-      await seedData();
-      await reload();
-      settings.seeded = true;
-      saveSettings();
-    }
+    saveSettings();
     expandRecurring();
     await reload();
     return true;

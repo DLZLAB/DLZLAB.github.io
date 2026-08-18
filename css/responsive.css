@@ -17,7 +17,6 @@
   #sidebar{transform:translateX(-105%);transition:transform .34s cubic-bezier(.22,1,.36,1)}
   #sidebar.open{transform:none;box-shadow:var(--shadow-l)}
   #main{margin-left:0}
-  .menu-btn{display:grid}
   #view{padding:20px 18px 110px}
   #topbar{padding:12px 18px}
   .bottom-nav{
