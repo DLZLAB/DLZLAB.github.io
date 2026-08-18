@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DLZLAB Timing — Info & Guide</title>
+<style>
+  :root{
+    --bg:#060a13; --bg2:#0a111f; --card:rgba(255,255,255,.05); --border:rgba(255,255,255,.09);
+    --t1:#eef2f9; --t2:#93a3bd; --t3:#5d6c85;
+    --accent:#4f7cff; --accent2:#8b5cf6; --green:#34d399; --red:#fb7185; --amber:#fbbf24;
+    --radius:22px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg);color:var(--t1);min-height:100vh;
+    font-family:'Segoe UI','Inter',system-ui,-apple-system,sans-serif;
+    overflow-x:hidden;
+  }
+  .orbs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+  .orb-1{width:520px;height:520px;background:rgba(64,104,255,.35);top:-160px;left:-120px}
+  .orb-2{width:460px;height:460px;background:rgba(142,88,250,.30);top:20%;right:-140px}
+  .orb-3{width:420px;height:420px;background:rgba(34,211,238,.18);bottom:-120px;left:30%}
+  .wrap{max-width:980px;margin:0 auto;padding:34px 22px 60px}
+
+  header.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+  .logo{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 12px 36px rgba(79,124,255,.35)}
+  .logo svg{width:22px;height:22px;color:#fff}
+  .brand h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
+  .brand p{font-size:12.5px;color:var(--t2);margin-top:2px;font-weight:600}
+  .lang-bar{margin-left:auto;display:flex;gap:6px;background:rgba(255,255,255,.06);
+    border:1px solid var(--border);border-radius:12px;padding:4px}
+  .lang-bar button{border:none;background:none;color:var(--t2);font:inherit;font-weight:700;font-size:13px;
+    padding:7px 16px;border-radius:9px;cursor:pointer;transition:.2s}
+  .lang-bar button.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 14px rgba(79,124,255,.4)}
+  .lang-bar button:hover{color:var(--t1)}
+
+  .hero{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));
+    border:1px solid var(--border);border-radius:28px;padding:40px 34px;margin-bottom:26px;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;inset:0;background:
+    radial-gradient(600px 220px at 85% 0%,rgba(139,92,246,.18),transparent 60%)}
+  .hero h2{font-size:30px;font-weight:800;letter-spacing:-.03em;margin-bottom:12px}
+  .hero p{color:var(--t2);font-size:15px;line-height:1.7;max-width:640px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+  .badge{font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:99px;
+    background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.25)}
+  .badge.b2{background:rgba(79,124,255,.12);color:#7ea2ff;border-color:rgba(79,124,255,.3)}
+
+  h3.sec{font-size:17px;font-weight:800;margin:34px 0 16px;display:flex;align-items:center;gap:10px}
+  h3.sec .dot{width:9px;height:9px;border-radius:99px;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+  h3.sec.neg .dot{background:var(--red);box-shadow:0 0 10px var(--red)}
+  h3.sec.how .dot{background:var(--green);box-shadow:0 0 10px var(--green)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px 18px 16px;transition:.25s}
+  .card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.075)}
+  .card .ic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;margin-bottom:12px;
+    background:rgba(52,211,153,.13);color:var(--green)}
+  .card .ic svg{width:16px;height:16px}
+  .card h4{font-size:14.5px;font-weight:750;margin-bottom:6px}
+  .card p{font-size:12.5px;color:var(--t2);line-height:1.65}
+
+  .neg .card .ic{background:rgba(251,113,133,.13);color:var(--red)}
+  .how .card .ic{background:rgba(79,124,255,.14);color:#7ea2ff}
+  .n-num{font-family:ui-monospace,Consolas,monospace;font-weight:800;font-size:13px;color:#7ea2ff;
+    background:rgba(79,124,255,.12);width:26px;height:26px;border-radius:8px;display:grid;place-items:center;margin-bottom:10px}
+
+  .foot{margin-top:44px;text-align:center;color:var(--t3);font-size:12px;line-height:1.8}
+  .foot a{color:#7ea2ff;text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+
+  html[dir="rtl"] body{font-family:Tahoma,'Segoe UI',system-ui,sans-serif}
+  html[dir="rtl"] .lang-bar{margin-left:0;margin-right:auto}
+  html[dir="rtl"] .card p,html[dir="rtl"] .hero p{text-align:right}
+  html[dir="rtl"] .hero{text-align:right}
+  @media(max-width:560px){
+    .lang-bar{margin-left:0;margin-top:6px}
+    .hero{padding:30px 22px}
+    .hero h2{font-size:24px}
+    .brand h1{font-size:18px}
+  }
+</style>
+</head>
+<body>
+<div class="orbs" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+    <div class="brand">
+      <h1>DLZLAB Timing</h1>
+      <p data-i18n="brandSub">Every minute, planned. Privacy first.</p>
+    </div>
+    <div class="lang-bar">
+      <button id="btnEn" class="on" type="button">English</button>
+      <button id="btnFa" type="button">فارسی</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2 data-i18n="heroTitle">What is DLZLAB Timing?</h2>
+    <p data-i18n="heroText">DLZLAB Timing is a personal time-management app that runs right in your browser — no account, no ads, no cloud. Plan your week on a visual timetable, schedule daily time blocks, track tasks, habits and goals, and review your statistics. You can install it on your phone or computer like a normal app and it keeps working offline. All your data stays on your own device.</p>
+    <div class="badges">
+      <span class="badge" data-i18n="b1">Free to use</span>
+      <span class="badge b2" data-i18n="b2">Works offline</span>
+      <span class="badge b2" data-i18n="b3">Installable app</span>
+      <span class="badge" data-i18n="b4">No account needed</span>
+    </div>
+  </section>
+
+  <h3 class="sec"><span class="dot"></span><span data-i18n="posTitle">Positive points</span></h3>
+  <div class="grid">
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h4 data-i18n="p1t">Privacy by design</h4><p data-i18n="p1d">No account, no tracking, no ads. Your schedule, tasks and habits live only in your browser's storage on your device.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h3l3-9 6 18 3-9h5"/></svg></div><h4 data-i18n="p2t">Full offline mode</h4><p data-i18n="p2d">After the first visit, the whole app is cached. Plan your day on a plane, train or without any connection.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div><h4 data-i18n="p3t">Real app feel</h4><p data-i18n="p3d">Installable on Android, iPhone (add to Home Screen), Windows and Mac — with its own icon, full screen and no browser bar.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h4 data-i18n="p4t">Visual weekly timetable</h4><p data-i18n="p4d">See your whole week at a glance. Tap any slot to add a plan, drag blocks to move them, drag the bottom edge to resize. Overlapping plans are flagged automatically.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6h-5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6h-6"/></svg></div><h4 data-i18n="p5t">Time blocks &amp; daily schedule</h4><p data-i18n="p5d">A 24-hour timeline for each day. Tap empty space to book a block, move or resize it, and never double-book yourself.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div><h4 data-i18n="p6t">Smart tasks</h4><p data-i18n="p6d">Priorities, categories, recurring tasks, reminders, due-date planning and instant search (press / on desktop).</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h4 data-i18n="p7t">Habits &amp; streaks</h4><p data-i18n="p7d">Build routines one day at a time with a visual tracker and a streak counter that keeps you motivated.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18M9 16l2 2 4-4"/></svg></div><h4 data-i18n="p8t">Calendar &amp; goals</h4><p data-i18n="p8d">Month, week and day views, plus goals broken into milestones with progress tracking.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg></div><h4 data-i18n="p9t">Statistics</h4><p data-i18n="p9d">Live, local insights: focus time, completion rate, habit streaks and weekly performance — no data ever leaves your device.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h4 data-i18n="p10t">PIN lock</h4><p data-i18n="p10d">Protect the app with a 4–6 digit PIN. The content stays hidden until you unlock it — perfect on a shared device.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div><h4 data-i18n="p11t">Personalized look</h4><p data-i18n="p11d">Dark and light themes, accent colors, 12/24-hour time and your choice of week start — all in Settings.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div><h4 data-i18n="p12t">Backup anytime</h4><p data-i18n="p12d">Export all your data as a JSON file and import it back later — your own insurance policy.</p></div>
+  </div>
+
+  <h3 class="sec neg"><span class="dot"></span><span data-i18n="negTitle">Honest limitations</span></h3>
+  <div class="grid neg">
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2Zm-2 4h19"/></svg></div><h4 data-i18n="n1t">No cloud sync</h4><p data-i18n="n1d">Data lives on one device only. If you uninstall the app without exporting first, everything is lost. Use Export regularly.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><h4 data-i18n="n2t">Forgotten PIN = no recovery</h4><p data-i18n="n2d">PINs are stored only as encrypted hashes with no backdoor. If you forget it, the only way back is a full reset, which erases the data on that device.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17 10 11 14 15 20 9"/><path d="M3 3v18h18"/></svg></div><h4 data-i18n="n3t">English-only interface</h4><p data-i18n="n3d">The app itself is available in English only. This guide is bilingual, but the app's menus and buttons are in English.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div><h4 data-i18n="n4t">Notifications need permission</h4><p data-i18n="n4d">Reminders and alerts only appear after you grant browser permission in Settings &rarr; General &rarr; Browser Permission.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h4 data-i18n="n5t">Single user per device</h4><p data-i18n="n5d">There are no user accounts. Everyone using the same browser shares one dataset — the PIN only hides it, it does not separate users.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg></div><h4 data-i18n="n6t">Needs internet for updates</h4><p data-i18n="n6d">The first load and future app updates require a connection. Over adjusting a cached offline session is impossible.</p></div>
+  </div>
+
+  <h3 class="sec how"><span class="dot"></span><span data-i18n="howTitle">How to use the app</span></h3>
+  <div class="grid how">
+    <div class="card"><div class="n-num">1</div><h4 data-i18n="s1t">Open &amp; install</h4><p data-i18n="s1d">Go to dlzlab.com/timetable on your phone or computer. Android: Chrome &rarr; &ldquo;Install app&rdquo; or &ldquo;Add to Home screen&rdquo;. iPhone: Safari &rarr; Share &rarr; &ldquo;Add to Home Screen&rdquo;.</p></div>
+    <div class="card"><div class="n-num">2</div><h4 data-i18n="s2t">Set the PIN (optional)</h4><p data-i18n="s2d">Settings &rarr; Security &rarr; Set PIN. Choose 4–6 digits, confirm, then press OK on the lock screen whenever you need to unlock.</p></div>
+    <div class="card"><div class="n-num">3</div><h4 data-i18n="s3t">Plan your week</h4><p data-i18n="s3d">Open Timetable. Tap any empty slot to add a plan, tap an existing block to edit it, and use the arrows to move between weeks.</p></div>
+    <div class="card"><div class="n-num">4</div><h4 data-i18n="s4t">Plan your day</h4><p data-i18n="s4d">Open Schedule. Tap empty space on the timeline to book a time block, drag it to move, drag its bottom edge to change the length.</p></div>
+    <div class="card"><div class="n-num">5</div><h4 data-i18n="s5t">Manage tasks</h4><p data-i18n="s5d">Press the + button (or key N on desktop) and choose Task. Add a priority, category, time and reminder. Tap the check circle to complete.</p></div>
+    <div class="card"><div class="n-num">6</div><h4 data-i18n="s6t">Build habits</h4><p data-i18n="s6d">Open Habits, create your habit, then check it off daily. Keep the streak alive — the sidebar and Today page show your current run.</p></div>
+    <div class="card"><div class="n-num">7</div><h4 data-i18n="s7t">Set goals</h4><p data-i18n="s7d">Open Goals, create a goal and break it into milestones. Each completed milestone advances the progress bar.</p></div>
+    <div class="card"><div class="n-num">8</div><h4 data-i18n="s8t">Enable notifications</h4><p data-i18n="s8d">Settings &rarr; General &rarr; Browser Permission &rarr; Request. Grant it and your reminders will arrive even when the app is closed.</p></div>
+    <div class="card"><div class="n-num">9</div><h4 data-i18n="s9t">Back up your data</h4><p data-i18n="s9d">Settings &rarr; Data &rarr; Export to save a JSON backup (keep it somewhere safe). Use Import to restore it, e.g. after reinstalling.</p></div>
+    <div class="card"><div class="n-num">10</div><h4 data-i18n="s10t">Customize</h4><p data-i18n="s10d">Settings &rarr; Appearance: switch dark/light theme, accent color, 12/24-hour format and the day your week starts on.</p></div>
+  </div>
+
+  <div class="foot">
+    <span data-i18n="foot1">Made with care for people who value their time.</span><br>
+    <a href="https://dlzlab.com" target="_blank" rel="noopener">DLZLAB.com</a> &nbsp;&bull;&nbsp; <a href="https://dlzlab.com/timetable/" target="_blank" rel="noopener" data-i18n="foot2">Open the app</a>
+  </div>
+</div>
+
+<script>
+(function () {
+  var T = {
+    en: {
+      brandSub: 'Every minute, planned. Privacy first.',
+      heroTitle: 'What is DLZLAB Timing?',
+      heroText: 'DLZLAB Timing is a personal time-management app that runs right in your browser — no account, no ads, no cloud. Plan your week on a visual timetable, schedule daily time blocks, track tasks, habits and goals, and review your statistics. You can install it on your phone or computer like a normal app and it keeps working offline. All your data stays on your own device.',
+      b1: 'Free to use', b2: 'Works offline', b3: 'Installable app', b4: 'No account needed',
+      posTitle: 'Positive points',
+      p1t: 'Privacy by design', p1d: 'No account, no tracking, no ads. Your schedule, tasks and habits live only in your browser\'s storage on your device.',
+      p2t: 'Full offline mode', p2d: 'After the first visit, the whole app is cached. Plan your day on a plane, train or without any connection.',
+      p3t: 'Real app feel', p3d: 'Installable on Android, iPhone (add to Home Screen), Windows and Mac — with its own icon, full screen and no browser bar.',
+      p4t: 'Visual weekly timetable', p4d: 'See your whole week at a glance. Tap any slot to add a plan, drag blocks to move them, drag the bottom edge to resize. Overlapping plans are flagged automatically.',
+      p5t: 'Time blocks & daily schedule', p5d: 'A 24-hour timeline for each day. Tap empty space to book a block, move or resize it, and never double-book yourself.',
+      p6t: 'Smart tasks', p6d: 'Priorities, categories, recurring tasks, reminders, due-date planning and instant search (press / on desktop).',
+      p7t: 'Habits & streaks', p7d: 'Build routines one day at a time with a visual tracker and a streak counter that keeps you motivated.',
+      p8t: 'Calendar & goals', p8d: 'Month, week and day views, plus goals broken into milestones with progress tracking.',
+      p9t: 'Statistics', p9d: 'Live, local insights: focus time, completion rate, habit streaks and weekly performance — no data ever leaves your device.',
+      p10t: 'PIN lock', p10d: 'Protect the app with a 4–6 digit PIN. The content stays hidden until you unlock it — perfect on a shared device.',
+      p11t: 'Personalized look', p11d: 'Dark and light themes, accent colors, 12/24-hour time and your choice of week start — all in Settings.',
+      p12t: 'Backup anytime', p12d: 'Export all your data as a JSON file and import it back later — your own insurance policy.',
+      negTitle: 'Honest limitations',
+      n1t: 'No cloud sync', n1d: 'Data lives on one device only. If you uninstall the app without exporting first, everything is lost. Use Export regularly.',
+      n2t: 'Forgotten PIN = no recovery', n2d: 'PINs are stored only as encrypted hashes with no backdoor. If you forget it, the only way back is a full reset, which erases the data on that device.',
+      n3t: 'English-only interface', n3d: 'The app itself is available in English only. This guide is bilingual, but the app\'s menus and buttons are in English.',
+      n4t: 'Notifications need permission', n4d: 'Reminders and alerts only appear after you grant browser permission in Settings → General → Browser Permission.',
+      n5t: 'Single user per device', n5d: 'There are no user accounts. Everyone using the same browser shares one dataset — the PIN only hides it, it does not separate users.',
+      n6t: 'Needs internet for updates', n6d: 'The first load and future app updates require a connection. Adjusting a fully cached offline session is impossible.',
+      howTitle: 'How to use the app',
+      s1t: 'Open & install', s1d: 'Go to dlzlab.com/timetable on your phone or computer. Android: Chrome → “Install app” or “Add to Home screen”. iPhone: Safari → Share → “Add to Home Screen”.',
+      s2t: 'Set the PIN (optional)', s2d: 'Settings → Security → Set PIN. Choose 4–6 digits, confirm, then press OK on the lock screen whenever you need to unlock.',
+      s3t: 'Plan your week', s3d: 'Open Timetable. Tap any empty slot to add a plan, tap an existing block to edit it, and use the arrows to move between weeks.',
+      s4t: 'Plan your day', s4d: 'Open Schedule. Tap empty space on the timeline to book a time block, drag it to move, drag its bottom edge to change the length.',
+      s5t: 'Manage tasks', s5d: 'Press the + button (or key N on desktop) and choose Task. Add a priority, category, time and reminder. Tap the check circle to complete.',
+      s6t: 'Build habits', s6d: 'Open Habits, create your habit, then check it off daily. Keep the streak alive — the sidebar and Today page show your current run.',
+      s7t: 'Set goals', s7d: 'Open Goals, create a goal and break it into milestones. Each completed milestone advances the progress bar.',
+      s8t: 'Enable notifications', s8d: 'Settings → General → Browser Permission → Request. Grant it and your reminders will arrive even when the app is closed.',
+      s9t: 'Back up your data', s9d: 'Settings → Data → Export to save a JSON backup (keep it somewhere safe). Use Import to restore it, e.g. after reinstalling.',
+      s10t: 'Customize', s10d: 'Settings → Appearance: switch dark/light theme, accent color, 12/24-hour format and the day your week starts on.',
+      foot1: 'Made with care for people who value their time.',
+      foot2: 'Open the app'
+    },
+    fa: {
+      brandSub: 'هر دقیقه برنامه‌ریزی شده. حریم خصوصی اولویت اول.',
+      heroTitle: '«DLZLAB Timing» چیست؟',
+      heroText: '«DLZLAB Timing» یک اپلیکیشن مدیریت زمان شخصی است که مستقیم در مرورگر اجرا می‌شود — بدون حساب کاربری، بدون تبلیغ، بدون ابر. هفته‌ات را روی میز تقسیم اوقات تصویری برنامه‌ریزی کن، بلوک‌های زمانی روزانه بساز، وظایف، عادت‌ها و اهداف را پیگیری کن و آمارت را ببین. می‌توانی آن را مثل یک اپ معمولی روی گوشی یا کامپیوتر نصب کنی و آفلاین هم کار می‌کند. همه داده‌ها فقط روی دستگاه خودت می‌ماند.',
+      b1: 'کاملاً رایگان', b2: 'کارکرد آفلاین', b3: 'قابل نصب به‌عنوان اپ', b4: 'بدون نیاز به حساب کاربری',
+      posTitle: 'نقاط قوت',
+      p1t: 'حریم خصوصی در طراحی', p1d: 'بدون حساب کاربری، بدون ردیابی، بدون تبلیغ. برنامه، وظایف و عادت‌های تو فقط در حافظه مرورگر روی دستگاه خودت ذخیره می‌شود.',
+      p2t: 'آفلاین کامل', p2d: 'بعد از اولین بازدید، کل اپ کش می‌شود. در هواپیما، قطار یا بدون هیچ اینترنتی برنامه‌ات را بچین.',
+      p3t: 'حس و حال اپ واقعی', p3d: 'قابل نصب روی اندروید، آیفون (افزودن به صفحه اصلی)، ویندوز و مک — با آیکون مخصوص، تمام‌صفحه و بدون نوار مرورگر.',
+      p4t: 'تقسیم اوقات هفتگی تصویری', p4d: 'کل هفته‌ات را یک‌نگاه ببین. روی هر خانه خالی بزن تا برنامه اضافه کنی، بلوک‌ها را بکش تا جابه‌جا کنی و لبه پایین را بکش تا اندازه تغییر کند. تداخل زمانی هم خودکار هشدار داده می‌شود.',
+      p5t: 'بلوک‌های زمانی و برنامه روزانه', p5d: 'خط زمان ۲۴ ساعته برای هر روز. روی فضای خالی بزن تا بلوک بسازی، جابه‌جا یا تغییر اندازه بده و هیچ‌وقت دو کار را هم‌زمان رزرو نکن.',
+      p6t: 'وظایف هوشمند', p6d: 'اولویت، دسته‌بندی، وظایف تکراری، یادآور، برنامه‌ریزی سررسید و جست‌وجوی فوری (روی دسکتاپ کلید /).',
+      p7t: 'عادت‌ها و رکورد پیاپی', p7d: 'روزبه‌روز عادت بساز با پیگیری تصویری و شمارنده رکورد پیاپی که انگیزه را زنده نگه می‌دارد.',
+      p8t: 'تقویم و اهداف', p8d: 'نمای ماه، هفته و روز، به‌علاوه اهداف شکسته‌شده به نقاط عطف با پیگیری پیشرفت.',
+      p9t: 'آمار', p9d: 'بینش‌های زنده و محلی: زمان تمرکز، درصد تکمیل، رکورد عادت‌ها و عملکرد هفتگی — هیچ داده‌ای از دستگاهت خارج نمی‌شود.',
+      p10t: 'قفل PIN', p10d: 'با یک رمز ۴ تا ۶ رقمی اپ را قفل کن. محتوا تا بازکردن قفل پنهان می‌ماند — عالی برای دستگاه مشترک.',
+      p11t: 'ظاهر شخصی‌سازی‌شده', p11d: 'تم تیره و روشن، رنگ‌های برجسته، ساعت ۱۲/۲۴ ساعته و انتخاب روز شروع هفته — همه در تنظیمات.',
+      p12t: 'پشتیبان‌گیری هر زمان', p12d: 'همه داده‌ها را به‌صورت فایل JSON خروجی بگیر و بعداً دوباره وارد کن — بیمه شخصی خودت.',
+      negTitle: 'محدودیت‌های صادقانه',
+      n1t: 'بدون همگام‌سازی ابری', n1d: 'داده فقط روی یک دستگاه می‌ماند. اگر بدون خروجی گرفتن اپ را حذف کنی، همه‌چیز از بین می‌رود. مرتباً خروجی بگیر.',
+      n2t: 'فراموشی رمز = بدون بازیابی', n2d: 'رمز فقط به‌صورت هش رمزگذاری‌شده ذخیره می‌شود و هیچ راه پشتیبان ندارد. اگر فراموشش کنی، تنها راه بازگشت ریست کامل است که داده همان دستگاه را پاک می‌کند.',
+      n3t: 'رابط فقط انگلیسی', n3d: 'خود اپ فقط انگلیسی است. این راهنما دو زبانه است، اما منوها و دکمه‌های داخل اپ انگلیسی‌اند.',
+      n4t: 'اطلاع‌رسانی نیاز به اجازه دارد', n4d: 'یادآورها فقط بعد از دادن اجازه مرورگر ظاهر می‌شوند: تنظیمات ← عمومی ← اجازه مرورگر ← درخواست.',
+      n5t: 'یک کاربر روی هر دستگاه', n5d: 'حساب کاربری وجود ندارد. همه کسانی که از همین مرورگر استفاده می‌کنند یک دیتاست مشترک دارند — رمز فقط آن را پنهان می‌کند، جدا نمی‌کند.',
+      n6t: 'برای به‌روزرسانی به اینترنت نیاز است', n6d: 'بارگذاری اول و دریافت نسخه‌های جدید اپ به اتصال نیاز دارد؛ محتوای کش‌شده را نمی‌توان به‌صورت آفلاین به‌روز کرد.',
+      howTitle: 'نحوه استفاده از اپ',
+      s1t: 'بازکردن و نصب', s1d: 'روی گوشی یا کامپیوتر به dlzlab.com/timetable برو. اندروید: کروم ← «نصب اپ» یا «افزودن به صفحه اصلی». آیفون: سافاری ← اشتراک‌گذاری ← «افزودن به صفحه اصلی».',
+      s2t: 'تنظیم رمز (اختیاری)', s2d: 'تنظیمات ← امنیت ← تنظیم رمز. ۴ تا ۶ رقم انتخاب کن و تأیید کن؛ بعداً برای بازکردن، دکمه OK را بزن.',
+      s3t: 'برنامه‌ریزی هفته', s3d: 'تقسیم اوقات را باز کن. روی هر خانه خالی بزن تا برنامه اضافه شود، روی بلوک موجود بزن تا ویرایش کنی و با فلش‌ها بین هفته‌ها جابه‌جا شو.',
+      s4t: 'برنامه‌ریزی روز', s4d: 'Schedule را باز کن. روی فضای خالی خط زمان بزن تا بلوک زمانی بسازی؛ بکش تا جابه‌جا شود و لبه پایین را بکش تا طولش عوض شود.',
+      s5t: 'مدیریت وظایف', s5d: 'دکمه + را بزن (روی دسکتاپ کلید N) و Task را انتخاب کن. اولویت، دسته، زمان و یادآور اضافه کن. برای تکمیل، دایره تیک را بزن.',
+      s6t: 'ساخت عادت', s6d: 'Habits را باز کن، عادتت را بساز و هر روز تیک بزن. رکورد پیاپی را زنده نگه دار — نوار کنار و صفحه Today تعداد روزهای پیاپی را نشان می‌دهند.',
+      s7t: 'تنظیم اهداف', s7d: 'Goals را باز کن، یک هدف بساز و به نقاط عطف تقسیمش کن. هر نقطه عطف تکمیل‌شده نوار پیشرفت را جلو می‌برد.',
+      s8t: 'فعال‌کردن اطلاع‌رسانی', s8d: 'تنظیمات ← عمومی ← اجازه مرورگر ← درخواست. بعد از اجازه، یادآورها حتی وقتی اپ بسته است هم می‌رسند.',
+      s9t: 'پشتیبان‌گیری از داده‌ها', s9d: 'تنظیمات ← داده ← خروجی، تا نسخه JSON بگیر (جای امن نگه دار). برای بازیابی، مثلاً بعد از نصب دوباره، از واردکردن استفاده کن.',
+      s10t: 'شخصی‌سازی', s10d: 'تنظیمات ← ظاهر: تم تیره/روشن، رنگ برجسته، ساعت ۱۲/۲۴ و روز شروع هفته را عوض کن.',
+      foot1: 'ساخته‌شده با دقت برای کسانی که برای زمانشان ارزش قائل‌اند.',
+      foot2: 'بازکردن اپ'
+    }
+  };
+
+  var btnEn = document.getElementById('btnEn');
+  var btnFa = document.getElementById('btnFa');
+
+  function apply(lang) {
+    var dict = T[lang] || T.en;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+    document.title = lang === 'fa' ? 'DLZLAB Timing — اطلاعات و راهنما' : 'DLZLAB Timing — Info & Guide';
+    btnEn.classList.toggle('on', lang === 'en');
+    btnFa.classList.toggle('on', lang === 'fa');
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var k = el.getAttribute('data-i18n');
+      if (dict[k]) el.textContent = dict[k];
+    });
+  }
+
+  btnEn.addEventListener('click', function () { apply('en'); localStorage.setItem('dlz_info_lang', 'en'); });
+  btnFa.addEventListener('click', function () { apply('fa'); localStorage.setItem('dlz_info_lang', 'fa'); });
+
+  var saved = localStorage.getItem('dlz_info_lang');
+  apply(saved === 'fa' ? 'fa' : (saved === 'en' ? 'en' : ((navigator.language || '').toLowerCase().indexOf('fa') === 0 ? 'fa' : 'en')));
+})();
+</script>
+</body>
+</html>
