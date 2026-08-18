@@ -43,6 +43,11 @@
 .lk-key:hover{background:var(--glass-bg-hover)}
 .lk-key:active{transform:scale(.94);background:var(--accent-soft)}
 .lk-key svg{width:17px;height:17px;opacity:.75}
+.lk-ok{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-glow)}
+.lk-ok:hover{background:var(--accent);color:#fff}
+.lk-ok:active{background:var(--accent);color:#fff}
+.lk-hint{font-size:11px;color:var(--text-muted);margin-top:12px}
+.lk-hint b{font-weight:750;color:var(--text-secondary)}
 .lk-ghost{visibility:hidden}
 .lk-pad.busy .lk-key{pointer-events:none;opacity:.55}
 .lk-forgot{

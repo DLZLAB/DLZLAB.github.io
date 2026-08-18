@@ -62,7 +62,7 @@ window.Lock = (function () {
     div.className = 'lock-screen';
     div.innerHTML =
       '<div class="lock-card">' +
-      '<div class="lk-brand"><span class="lk-mark">' + Icons.get('zap') + '</span><span class="lk-name">FlowOS</span></div>' +
+      '<div class="lk-brand"><span class="lk-mark">' + Icons.get('zap') + '</span><span class="lk-name">DLZLAB Time</span></div>' +
       '<div class="lk-title">Welcome back</div>' +
       '<div class="lk-sub">Enter your PIN to unlock</div>' +
       '<div class="lk-dots" id="lockDots"></div>' +
@@ -71,10 +71,11 @@ window.Lock = (function () {
       [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (n) {
         return '<button class="lk-key" type="button" data-k="' + n + '">' + n + '</button>';
       }).join('') +
-      '<span class="lk-ghost"></span>' +
+      '<button class="lk-key lk-ok" type="button" id="lkOk" aria-label="Unlock">' + Icons.get('check') + '</button>' +
       '<button class="lk-key" type="button" data-k="0">0</button>' +
       '<button class="lk-key" type="button" id="lkBack" aria-label="Delete">' + Icons.get('x') + '</button>' +
       '</div>' +
+      '<div class="lk-hint">Press <b>OK</b> or <b>Enter</b> to unlock</div>' +
       '<button class="lk-forgot" type="button" id="lkForgot">Forgot PIN?</button>' +
       '</div>';
     document.body.appendChild(div);
@@ -121,7 +122,7 @@ window.Lock = (function () {
       err.classList.remove('show');
       buffer += String(k);
       renderDots();
-      if (buffer.length === MIN_PIN) tryVerify();
+      if (buffer.length === MAX_PIN) tryVerify();
     }
     function back() {
       if (pad.classList.contains('busy')) return;
@@ -138,11 +139,12 @@ window.Lock = (function () {
       b.addEventListener('click', function () { press(b.dataset.k); });
     });
     div.querySelector('#lkBack').addEventListener('click', back);
+    div.querySelector('#lkOk').addEventListener('click', tryEnter);
     div.querySelector('#lkForgot').addEventListener('click', function () {
       if (pad.classList.contains('busy')) return;
       UI.confirm({
         title: 'Forgot your PIN?',
-        message: 'There is no way to recover a forgotten PIN. You can reset it, but <b>all FlowOS data on this device will be erased</b>.',
+        message: 'There is no way to recover a forgotten PIN. You can reset it, but <b>all DLZLAB Time data on this device will be erased</b>.',
         danger: true, okText: 'Reset App'
       }).then(function (ok) {
         if (!ok) return;
