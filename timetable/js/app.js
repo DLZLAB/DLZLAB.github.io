@@ -90,6 +90,10 @@
   }
 
   function bindChrome() {
+    document.getElementById('menuBtn').addEventListener('click', function () {
+      document.getElementById('sidebar').classList.add('open');
+      document.getElementById('scrim').classList.add('show');
+    });
     document.getElementById('scrim').addEventListener('click', closeDrawer);
     document.querySelectorAll('#nav a').forEach(function (a) {
       a.addEventListener('click', closeDrawer);
