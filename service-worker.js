@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flowos-v5';
+const CACHE_NAME = 'flowos-v6';
 const ASSETS = [
   './',
   './index.html',
@@ -68,7 +68,7 @@ self.addEventListener('fetch', function (event) {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  if (req.mode === 'navigate') {
+  if (req.mode === 'navigate' || url.pathname.indexOf('/pwa/manifest.json') >= 0) {
     event.respondWith(
       fetch(req)
         .then(function (res) {

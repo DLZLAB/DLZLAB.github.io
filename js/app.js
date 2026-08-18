@@ -224,7 +224,7 @@
       SettingsPage.setInstallPrompt(e);
     });
     window.addEventListener('appinstalled', function () {
-      UI.toast('DLZLAB Time installed', 'success', 'check');
+      UI.toast('DLZLAB Timing installed', 'success', 'check');
     });
     window.addEventListener('online', function () { UI.toast('Back online', 'success', 'wifi'); });
     window.addEventListener('offline', function () { UI.toast('You are offline — using cached copy', 'warn', 'wifi'); });

@@ -1,7 +1,7 @@
 {
-  "name": "DLZLAB Time management",
+  "name": "DLZLAB Timing",
   "short_name": "DLZ Time",
-  "description": "DLZLAB Time — plan your schedule, tasks, habits and goals. Your entire day at a glance.",
+  "description": "DLZLAB Timing — plan your schedule, tasks, habits and goals. Your entire day at a glance.",
   "start_url": "../index.html",
   "scope": "../",
   "display": "standalone",

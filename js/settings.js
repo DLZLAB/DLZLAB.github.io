@@ -21,7 +21,7 @@ window.SettingsPage = (function () {
     }
 
     container.innerHTML =
-      '<div class="page-head"><div><h2>Settings</h2><div class="page-head-sub">DLZLAB Time v1.0 · ' + (online ? 'Online' : 'Offline mode') + '</div></div></div>' +
+      '<div class="page-head"><div><h2>Settings</h2><div class="page-head-sub">DLZLAB Timing v1.0 · ' + (online ? 'Online' : 'Offline mode') + '</div></div></div>' +
 
       '<div class="settings-grid">' +
 
@@ -78,7 +78,7 @@ window.SettingsPage = (function () {
       '</div></div>' +
 
       '<div class="glass set-card">' +
-      '<div class="set-head"><span class="set-ic">' + Icons.get('info') + '</span><div><h3>About &amp; PWA</h3><p>DLZLAB Time — your time management app</p></div></div>' +
+      '<div class="set-head"><span class="set-ic">' + Icons.get('info') + '</span><div><h3>About &amp; PWA</h3><p>DLZLAB Timing — your time management app</p></div></div>' +
       '<div class="set-row"><div class="sr-main"><div class="sr-title">App Version</div><div class="sr-desc">Vanilla HTML / CSS / JS · IndexedDB</div></div><span class="chip accent">v1.0</span></div>' +
       '<div class="set-row"><div class="sr-main"><div class="sr-title">Install App</div><div class="sr-desc">Add to home screen</div></div>' +
       '<button class="btn btn-sm" id="installBtn" data-action="install-app">' + (installPrompt ? 'Install' : 'Available') + '</button></div>' +
@@ -206,7 +206,7 @@ window.SettingsPage = (function () {
     'pin-remove': async function () {
       const ok = await UI.confirm({
         title: 'Disable PIN lock?',
-        message: 'Anyone who opens DLZLAB Time on this device will have full access to its contents.',
+        message: 'Anyone who opens DLZLAB Timing on this device will have full access to its contents.',
         danger: true, okText: 'Disable PIN'
       });
       if (!ok) return;
