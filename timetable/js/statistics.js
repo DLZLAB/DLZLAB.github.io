@@ -83,14 +83,15 @@ window.StatisticsPage = (function () {
     const p = total ? done / total : 0;
     const dash = C * p;
     const gap = Math.min(8, dash * 0.06);
-    return '<svg viewBox="0 0 200 200">' +
+    return '<div class="donut-box">' +
+      '<svg viewBox="0 0 200 200">' +
       '<circle class="donut-track" cx="100" cy="100" r="' + R + '"/>' +
       (p > 0 ? '<circle class="donut-seg ds-green" cx="100" cy="100" r="' + R + '" stroke="url(#donutGrad)" stroke-dasharray="' + Math.max(dash - gap, 0.5) + ' ' + C + '" transform="rotate(-90 100 100)"/>' : '') +
       (p < 1 ? '<circle class="donut-seg" cx="100" cy="100" r="' + R + '" stroke="var(--warning)" stroke-dasharray="' + Math.max(C - dash - gap, 0.5) + ' ' + C + '" stroke-dashoffset="' + (-dash) + '" transform="rotate(-90 100 100)"/>' : '') +
       '<g class="donut-center"><text x="100" y="96" text-anchor="middle" font-size="30">' + (pct == null ? '—' : pct + '%') + '</text>' +
       '<text class="dc-label" x="100" y="118" text-anchor="middle">' + done + ' of ' + total + ' done</text></g>' +
       '<defs><linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--success)"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs>' +
-      '</svg>';
+      '</svg></div>';
   }
 
   function heatmap() {
@@ -236,7 +237,7 @@ window.StatisticsPage = (function () {
       '<div class="sc-chart">' + barChart(bars14) + '</div></div>' +
 
       '<div class="glass stat-card"><div class="sc-head"><span class="sc-title">' + Icons.get('tasks') + ' Task Completion</span><span class="sc-legend"><span><span class="sl-dot" style="background:var(--success)"></span>Done</span><span><span class="sl-dot" style="background:var(--warning)"></span>Remaining</span></span></div>' +
-      '<div class="sc-chart" style="height:200px;display:grid;place-items:center">' + donut(monthDone.length, monthTasks.length, donutPct) + '</div></div>' +
+      '<div class="sc-chart donut-chart">' + donut(monthDone.length, monthTasks.length, donutPct) + '</div></div>' +
 
       '<div class="glass stat-card full"><div class="sc-head"><span class="sc-title">' + Icons.get('statistics') + ' Weekly Productivity Trend</span><span class="sc-legend"><span><span class="sl-dot" style="background:var(--accent)"></span>Last 12 weeks</span></span></div>' +
       '<div class="sc-chart">' + areaChart(weeks12) + '</div></div>' +
