@@ -69,7 +69,7 @@ const Notifications = (function () {
     const panel = document.createElement('div');
     panel.className = 'bell-panel';
     panel.innerHTML =
-      '<h4>Notifications <button class="icon-btn small" id="bellClear">Clear all</button></h4>' +
+      '<h4>Notifications <button class="bell-clear" id="bellClear">Clear all</button></h4>' +
       (fired.length
         ? fired.slice(0, 12).map(function (n) {
           return '<div class="bell-item"><span class="bi-ic">' + Icons.get('alarm') + '</span>' +

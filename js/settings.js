@@ -164,8 +164,27 @@ window.SettingsPage = (function () {
 
   async function exportData() {
     const payload = State.buildExport();
-    Utils.download('flowos-backup-' + Utils.todayStr() + '.json', JSON.stringify(payload, null, 2), 'application/json');
-    UI.toast('Backup exported', 'success', 'download');
+    const name = 'dlzlab-backup-' + Utils.todayStr() + '.json';
+    const content = JSON.stringify(payload, null, 2);
+    try {
+      if (window.showSaveFilePicker) {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: name,
+          types: [{ description: 'DLZLAB Timing Backup', accept: { 'application/json': ['.json'] } }]
+        });
+        const w = await handle.createWritable();
+        await w.write(content);
+        await w.close();
+        UI.toast('Backup saved to your chosen folder', 'success', 'download');
+        return;
+      }
+      Utils.download(name, content, 'application/json');
+      UI.toast('Backup exported to Downloads', 'success', 'download');
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;
+      Utils.download(name, content, 'application/json');
+      UI.toast('Backup exported to Downloads', 'success', 'download');
+    }
   }
 
   function pinModal(mode) {

@@ -3,7 +3,7 @@
 .ht-toolbar .ht-title{font-size:19px;font-weight:800;min-width:150px;text-align:center;font-variant-numeric:tabular-nums}
 .ht-toolbar .ht-selects{display:flex;gap:8px}
 
-.ht-today{margin-bottom:18px}
+.ht-today{margin-bottom:18px;padding:18px 18px 16px}
 .ht-today .ht-today-title{font-size:12.5px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:11px;display:flex;align-items:center;gap:8px}
 .ht-today .ht-today-title svg{width:14px;height:14px;color:var(--success)}
 .ht-chips{display:flex;gap:9px;flex-wrap:wrap}
