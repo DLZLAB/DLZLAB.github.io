@@ -62,7 +62,7 @@ window.Lock = (function () {
     div.className = 'lock-screen';
     div.innerHTML =
       '<div class="lock-card">' +
-      '<div class="lk-brand"><span class="lk-mark">' + Icons.get('zap') + '</span><span class="lk-name">DLZLAB Time</span></div>' +
+      '<div class="lk-brand"><span class="lk-mark">' + Icons.get('zap') + '</span><span class="lk-name">DLZLAB Timing</span></div>' +
       '<div class="lk-title">Welcome back</div>' +
       '<div class="lk-sub">Enter your PIN to unlock</div>' +
       '<div class="lk-dots" id="lockDots"></div>' +
@@ -144,7 +144,7 @@ window.Lock = (function () {
       if (pad.classList.contains('busy')) return;
       UI.confirm({
         title: 'Forgot your PIN?',
-        message: 'There is no way to recover a forgotten PIN. You can reset it, but <b>all DLZLAB Time data on this device will be erased</b>.',
+        message: 'There is no way to recover a forgotten PIN. You can reset it, but <b>all DLZLAB Timing data on this device will be erased</b>.',
         danger: true, okText: 'Reset App'
       }).then(function (ok) {
         if (!ok) return;
