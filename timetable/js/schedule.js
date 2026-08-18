@@ -191,8 +191,19 @@ window.SchedulePage = (function () {
       });
     });
 
+    let downY = null, downX = null;
     stage.addEventListener('pointerdown', function (e) {
       if (e.target.closest('.tl-block')) return;
+      downY = e.clientY;
+      downX = e.clientX;
+    });
+    stage.addEventListener('pointerup', function (e) {
+      if (e.target.closest('.tl-block')) return;
+      if (downY == null) return;
+      const dy = e.clientY - downY;
+      const dx = e.clientX - downX;
+      downY = null;
+      if (Math.abs(dy) > 8 || Math.abs(dx) > 8) return;
       const rect = stage.getBoundingClientRect();
       const y = e.clientY - rect.top;
       const start = Utils.clamp(Math.round((y / ROWH) * 2) * 30, 0, 1410);
