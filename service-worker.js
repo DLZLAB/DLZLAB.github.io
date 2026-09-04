@@ -1,6 +1,5 @@
-const CACHE_NAME = 'flowos-v7';
+const CACHE_NAME = 'dlz-timing-v1';
 const ASSETS = [
-  './',
   './index.html',
   './favicon.svg',
   './css/variables.css',
@@ -76,11 +75,11 @@ self.addEventListener('fetch', function (event) {
           caches.open(CACHE_NAME).then(function (cache) { cache.put('./index.html', copy); });
           return res;
         })
-        .catch(function () {
-          return caches.match('./index.html').then(function (c) {
-            return c || caches.match('./');
-          });
-        })
+.catch(function () {
+           return caches.match('./index.html').then(function (c) {
+             return c || new Response('', { status: 504, statusText: 'offline' });
+           });
+         })
     );
     return;
   }

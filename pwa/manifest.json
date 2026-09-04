@@ -2,8 +2,8 @@
   "name": "DLZLAB Timing",
   "short_name": "DLZ Time",
   "description": "DLZLAB Timing — plan your schedule, tasks, habits and goals. Your entire day at a glance.",
-  "start_url": "../index.html",
-  "scope": "../",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#060a13",
@@ -33,25 +33,25 @@
     {
       "name": "New Task",
       "short_name": "New Task",
-      "url": "../index.html#/tasks?new=1",
+      "url": "./index.html#/tasks?new=1",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Habit Tracker",
       "short_name": "Habits",
-      "url": "../index.html#/habits",
+      "url": "./index.html#/habits",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Timetable",
       "short_name": "Timetable",
-      "url": "../index.html#/timetable",
+      "url": "./index.html#/timetable",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Statistics",
       "short_name": "Stats",
-      "url": "../index.html#/statistics",
+      "url": "./index.html#/statistics",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ]
