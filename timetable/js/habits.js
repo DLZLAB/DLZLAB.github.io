@@ -99,6 +99,7 @@ window.HabitsPage = (function () {
             '<span class="htn-dot" style="background:' + State.COLOR_HEX[h.color] + ';box-shadow:0 0 8px ' + State.COLOR_HEX[h.color] + '55"></span>' +
             '<span class="htn-txt">' + Utils.escapeHtml(h.name) + '</span>' +
             (stats.current > 0 ? '<span class="htn-stat">' + stats.current + 'd</span>' : '') +
+            '<button class="hm-delete" data-action="delete-habit" data-id="' + h.id + '" aria-label="Delete ' + Utils.escapeHtml(h.name) + '">' + Icons.get('trash') + '</button>' +
             '</div>' + cells + '</div>';
         }).join('') +
         '</div></div></div></div>' +
@@ -133,11 +134,24 @@ window.HabitsPage = (function () {
 
   const actions = {
     'add-habit': function () { UI.habitModal(null); },
-    'edit-habit': function (e, el) {
-      const h = State.data.habits.find(function (x) { return x.id === el.dataset.id; });
-      if (h) UI.habitModal(h);
-    },
-    'month-prev': function () {
+'edit-habit': function (e, el) {
+       const h = State.data.habits.find(function (x) { return x.id === el.dataset.id; });
+       if (h) UI.habitModal(h);
+     },
+     'delete-habit': async function (e, el) {
+       const h = State.data.habits.find(function (x) { return x.id === el.dataset.id; });
+       if (!h) return;
+       const ok = await UI.confirm({
+         title: 'Delete habit?',
+         message: 'This will permanently remove "' + Utils.escapeHtml(h.name) + '" and all its logs.',
+         danger: true, okText: 'Delete'
+       });
+       if (!ok) return;
+       await State.remove('habits', h.id);
+       UI.toast('Habit deleted', 'info', 'trash');
+       Router.refresh();
+     },
+     'month-prev': function () {
       viewMonth--;
       if (viewMonth < 1) { viewMonth = 12; viewYear--; }
       Router.refresh();

@@ -276,6 +276,14 @@ const UI = (function () {
         if (daysWrap) daysWrap.closest('.field').style.display = (v === 'custom') ? '' : 'none';
       });
       recSelect.dispatchEvent(new Event('change'));
+      const daysWrap = m.el.querySelector('#fRecDays');
+      if (daysWrap) {
+        daysWrap.querySelectorAll('button').forEach(function (b) {
+          b.addEventListener('click', function () {
+            b.classList.toggle('on');
+          });
+        });
+      }
     }
     m.el.querySelector('[data-save]').addEventListener('click', async function () {
       const title = m.el.querySelector('#fTitle').value.trim();
@@ -396,9 +404,25 @@ const UI = (function () {
     const m = modal({
       title: h.id ? 'Edit Habit' : 'New Habit',
       body: body,
-      footer: '<div class="modal-foot"><button class="btn" data-mclose>Cancel</button><button class="btn btn-accent" data-save>' + (h.id ? 'Save Changes' : 'Create Habit') + '</button></div>'
+      footer: '<div class="modal-foot"><button class="btn" data-mclose>Cancel</button>' +
+      (h.id ? '<button class="btn btn-danger" id="hDel">Delete</button>' : '') +
+      '<button class="btn btn-accent" data-save>' + (h.id ? 'Save Changes' : 'Create Habit') + '</button></div>'
     });
     m.el.querySelectorAll('[data-mclose]').forEach(function (b) { b.addEventListener('click', m.close); });
+    if (h.id) {
+      m.el.querySelector('#hDel').addEventListener('click', async function () {
+        const ok = await UI.confirm({
+          title: 'Delete habit?',
+          message: 'This will permanently remove "' + Utils.escapeHtml(h.name || '') + '" and all its logs.',
+          danger: true, okText: 'Delete'
+        });
+        if (!ok) return;
+        await State.remove('habits', h.id);
+        m.close();
+        UI.toast('Habit deleted', 'info', 'trash');
+        Router.refresh();
+      });
+    }
     const colorSel = h.color || 'blue';
     m.el.querySelectorAll('#hColors .swatch').forEach(function (s) {
       if (s.dataset.c === colorSel) s.classList.add('on');
