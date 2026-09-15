@@ -13,7 +13,7 @@
     { route: 'calendar', label: 'Calendar', icon: 'calendar', shortcut: 'C' },
     { route: 'tasks', label: 'Tasks', icon: 'tasks', shortcut: null },
     { route: 'schedule', label: 'Schedule', icon: 'schedule', shortcut: 'P' },
-    { route: 'timetable', label: 'Timetable', icon: 'timetable', shortcut: 'I' },
+    { route: 'timetable', label: 'Timetable', icon: 'timetable', shortcut: 'W' },
     { route: 'habits', label: 'Habits', icon: 'habits', shortcut: 'H' },
     { route: 'goals', label: 'Goals', icon: 'goals', shortcut: 'G' },
     { route: 'statistics', label: 'Statistics', icon: 'statistics', shortcut: 'A' },
@@ -215,6 +215,7 @@ else if (e.key === '/') { e.preventDefault(); UI.searchModal(); }
      else if (e.key === 'g' || e.key === 'G') { e.preventDefault(); Router.navigate('goals'); }
      else if (e.key === 'a' || e.key === 'A') { e.preventDefault(); Router.navigate('statistics'); }
      else if (e.key === 'p' || e.key === 'P') { e.preventDefault(); Router.navigate('schedule'); }
+     else if (e.key === 'w' || e.key === 'W') { e.preventDefault(); Router.navigate('timetable'); }
      else if (e.key === 'd' || e.key === 'D') { e.preventDefault(); Router.navigate('dashboard'); }
    }
 
