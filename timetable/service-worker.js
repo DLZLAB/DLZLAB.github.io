@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dlz-timing-v1';
+const CACHE_NAME = 'dlz-timing-v2';
 const ASSETS = [
   './index.html',
   './favicon.svg',
