@@ -8,16 +8,16 @@
   });
 
   const NAV = [
-    { route: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
-    { route: 'today', label: 'Today', icon: 'today' },
-    { route: 'calendar', label: 'Calendar', icon: 'calendar' },
-    { route: 'tasks', label: 'Tasks', icon: 'tasks' },
-    { route: 'schedule', label: 'Schedule', icon: 'schedule' },
-    { route: 'timetable', label: 'Timetable', icon: 'timetable' },
-    { route: 'habits', label: 'Habits', icon: 'habits' },
-    { route: 'goals', label: 'Goals', icon: 'goals' },
-    { route: 'statistics', label: 'Statistics', icon: 'statistics' },
-    { route: 'settings', label: 'Settings', icon: 'settings' }
+    { route: 'dashboard', label: 'Dashboard', icon: 'dashboard', shortcut: 'D' },
+    { route: 'today', label: 'Today', icon: 'today', shortcut: 'T' },
+    { route: 'calendar', label: 'Calendar', icon: 'calendar', shortcut: 'C' },
+    { route: 'tasks', label: 'Tasks', icon: 'tasks', shortcut: null },
+    { route: 'schedule', label: 'Schedule', icon: 'schedule', shortcut: 'P' },
+    { route: 'timetable', label: 'Timetable', icon: 'timetable', shortcut: 'I' },
+    { route: 'habits', label: 'Habits', icon: 'habits', shortcut: 'H' },
+    { route: 'goals', label: 'Goals', icon: 'goals', shortcut: 'G' },
+    { route: 'statistics', label: 'Statistics', icon: 'statistics', shortcut: 'A' },
+    { route: 'settings', label: 'Settings', icon: 'settings', shortcut: 'S' }
   ];
 
   const SUB = {
@@ -33,11 +33,42 @@
     settings: 'Preferences & data'
   };
 
-  function buildNav() {
+  function initStarfield() {
+  const container = document.getElementById('starfield');
+  if (!container) return;
+  container.innerHTML = '';
+  const count = window.innerWidth < 700 ? 80 : 160;
+  const colors = ['#ffffff', '#00e5ff', '#7c4dff', '#ffc857'];
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = (Math.random() * 2.2 + 0.4).toFixed(1);
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = (Math.random() * 100) + '%';
+    s.style.top = (Math.random() * 100) + '%';
+    s.style.background = colors[Math.floor(Math.random() * colors.length)];
+    s.style.setProperty('--dur', (Math.random() * 3 + 2).toFixed(1) + 's');
+    s.style.setProperty('--delay', (Math.random() * 4).toFixed(1) + 's');
+    s.style.setProperty('--base-opacity', (Math.random() * 0.4 + 0.2).toFixed(2));
+    frag.appendChild(s);
+  }
+  container.appendChild(frag);
+}
+
+let starfieldTimer = null;
+function debouncedStarfield() {
+  clearTimeout(starfieldTimer);
+  starfieldTimer = setTimeout(initStarfield, 200);
+}
+
+function buildNav() {
     const nav = document.getElementById('nav');
     nav.innerHTML = NAV.map(function (n) {
       return '<a class="nav-item" data-route="' + n.route + '" href="#/' + n.route + '">' +
         Icons.get(n.icon) + '<span class="n-label">' + n.label + '</span>' +
+        (n.shortcut ? '<span class="n-shortcut">' + n.shortcut + '</span>' : '') +
         (n.route === 'tasks'
           ? '<span class="n-count hidden" id="navTaskCount"></span>'
           : n.route === 'habits'
@@ -146,20 +177,23 @@
     });
   }
 
-  function moreSheet() {
+function moreSheet() {
     const links = NAV.filter(function (n) {
       return ['dashboard', 'calendar', 'tasks', 'habits'].indexOf(n.route) < 0;
     });
-    UI.sheet('<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">' +
+    var overlay = UI.sheet('<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">' +
       links.map(function (n) {
         return '<button class="btn" data-action="sheet-nav" data-route="' + n.route + '" style="justify-content:flex-start;gap:10px;padding:12px 14px">' +
           '<span style="color:var(--accent);display:grid;place-items:center;width:20px;height:20px">' + Icons.get(n.icon) + '</span>' + n.label + '</button>';
       }).join('') +
-      '</div>').querySelectorAll('[data-action="sheet-nav"]').forEach(function (b) {
+      '</div>');
+    overlay.querySelectorAll('[data-action="sheet-nav"]').forEach(function (b) {
       b.addEventListener('click', function () {
         Router.navigate(b.dataset.route);
+        overlay.remove();
       });
     });
+    overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) overlay.remove(); });
   }
 
   function closeDrawer() {
@@ -176,8 +210,13 @@
     else if (e.key === 'h' || e.key === 'H') { e.preventDefault(); UI.habitModal(null); }
     else if (e.key === 't' || e.key === 'T') { e.preventDefault(); Router.navigate('today'); }
     else if (e.key === 'c' || e.key === 'C') { e.preventDefault(); Router.navigate('calendar'); }
-    else if (e.key === '/') { e.preventDefault(); UI.searchModal(); }
-  }
+else if (e.key === '/') { e.preventDefault(); UI.searchModal(); }
+     else if (e.key === 's' || e.key === 'S') { e.preventDefault(); Router.navigate('settings'); }
+     else if (e.key === 'g' || e.key === 'G') { e.preventDefault(); Router.navigate('goals'); }
+     else if (e.key === 'a' || e.key === 'A') { e.preventDefault(); Router.navigate('statistics'); }
+     else if (e.key === 'p' || e.key === 'P') { e.preventDefault(); Router.navigate('schedule'); }
+     else if (e.key === 'd' || e.key === 'D') { e.preventDefault(); Router.navigate('dashboard'); }
+   }
 
   function registerSW() {
     if (!('serviceWorker' in navigator)) return;
@@ -189,6 +228,8 @@
   }
 
   async function boot() {
+    initStarfield();
+    window.addEventListener('resize', debouncedStarfield);
     if (window.Lock && Lock.isSetup()) Lock.lock();
     buildNav();
     await State.init();
