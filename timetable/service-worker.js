@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dlz-timing-v2';
+const CACHE_NAME = 'dlz-timing-v3';
 const ASSETS = [
   '/index.html',
   '/favicon.svg',
@@ -42,9 +42,12 @@ const ASSETS = [
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function (cache) { return cache.addAll(ASSETS); })
-      .then(function () { return self.skipWaiting(); })
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+    }).then(function () {
+      return caches.open(CACHE_NAME);
+    }).then(function (cache) { return cache.addAll(ASSETS); })
+    .then(function () { return self.skipWaiting(); })
   );
 });
 

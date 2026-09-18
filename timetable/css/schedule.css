@@ -13,8 +13,8 @@
 .tl-hour:nth-child(odd){background:rgba(255,255,255,.012)}
 .tl-hour .tl-label{
   position:absolute;top:-8px;left:12px;font-size:10px;font-weight:700;color:var(--text-muted);
-  font-variant-numeric:tabular-nums;letter-spacing:.02em;background:transparent;padding:2px 5px;border-radius:6px;
-  background:color-mix(in srgb,var(--bg-primary) 70%,transparent);
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;padding:2px 5px;border-radius:6px;
+  background:var(--glass-bg);
 }
 .tl-block{
   position:absolute;left:70px;right:14px;border-radius:12px;padding:8px 12px;
