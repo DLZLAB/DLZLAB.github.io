@@ -1,0 +1,1 @@
+{"name": "dlz-timetable", "version": "1.0.0", "description": "DLZLAB Timing - Time Management PWA", "main": "server.js", "scripts": {"start": "node server.js", "dev": "node server.js"}, "dependencies": {}}

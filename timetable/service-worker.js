@@ -1,43 +1,43 @@
 const CACHE_NAME = 'dlz-timing-v2';
 const ASSETS = [
-  './index.html',
-  './favicon.svg',
-  './css/variables.css',
-  './css/base.css',
-  './css/layout.css',
-  './css/components.css',
-  './css/dashboard.css',
-  './css/calendar.css',
-  './css/habits.css',
-  './css/schedule.css',
-  './css/timetable.css',
-  './css/goals.css',
-  './css/statistics.css',
-  './css/responsive.css',
-  './css/lock.css',
-  './js/utils.js',
-  './js/lock.js',
-  './js/icons.js',
-  './js/db.js',
-  './js/state.js',
-  './js/ui.js',
-  './js/router.js',
-  './js/notifications.js',
-  './js/dashboard.js',
-  './js/today.js',
-  './js/tasks.js',
-  './js/habits.js',
-  './js/calendar.js',
-  './js/schedule.js',
-  './js/timetable.js',
-  './js/goals.js',
-  './js/statistics.js',
-  './js/settings.js',
-  './js/app.js',
-  './pwa/manifest.json',
-  './pwa/icon-192.png',
-  './pwa/icon-512.png',
-  './pwa/icon-maskable-512.png'
+  '/index.html',
+  '/favicon.svg',
+  '/css/variables.css',
+  '/css/base.css',
+  '/css/layout.css',
+  '/css/components.css',
+  '/css/dashboard.css',
+  '/css/calendar.css',
+  '/css/habits.css',
+  '/css/schedule.css',
+  '/css/timetable.css',
+  '/css/goals.css',
+  '/css/statistics.css',
+  '/css/responsive.css',
+  '/css/lock.css',
+  '/js/utils.js',
+  '/js/lock.js',
+  '/js/icons.js',
+  '/js/db.js',
+  '/js/state.js',
+  '/js/ui.js',
+  '/js/router.js',
+  '/js/notifications.js',
+  '/js/dashboard.js',
+  '/js/today.js',
+  '/js/tasks.js',
+  '/js/habits.js',
+  '/js/calendar.js',
+  '/js/schedule.js',
+  '/js/timetable.js',
+  '/js/goals.js',
+  '/js/statistics.js',
+  '/js/settings.js',
+  '/js/app.js',
+  '/manifest.json',
+  '/pwa/icon-192.png',
+  '/pwa/icon-512.png',
+  '/pwa/icon-maskable-512.png'
 ];
 
 self.addEventListener('install', function (event) {
@@ -67,38 +67,38 @@ self.addEventListener('fetch', function (event) {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  if (req.mode === 'navigate' || url.pathname.indexOf('/pwa/manifest.json') >= 0) {
-    event.respondWith(
-      fetch(req)
-        .then(function (res) {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then(function (cache) { cache.put('./index.html', copy); });
-          return res;
-        })
-.catch(function () {
-           return caches.match('./index.html').then(function (c) {
-             return c || new Response('', { status: 504, statusText: 'offline' });
-           });
+if (req.mode === 'navigate' || url.pathname.indexOf('/pwa/manifest.json') >= 0) {
+     event.respondWith(
+       fetch(req)
+         .then(function (res) {
+           const copy = res.clone();
+           caches.open(CACHE_NAME).then(function (cache) { cache.put('/index.html', copy); });
+           return res;
          })
-    );
-    return;
-  }
+ .catch(function () {
+            return caches.match('/index.html').then(function (c) {
+              return c || new Response('', { status: 504, statusText: 'offline' });
+            });
+          })
+     );
+     return;
+   }
 
-  event.respondWith(
-    caches.match(req).then(function (cached) {
-      if (cached) return cached;
-      return fetch(req).then(function (res) {
-        if (res && res.status === 200 && res.type === 'basic') {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then(function (cache) { cache.put(req, copy); });
-        }
-        return res;
-      }).catch(function () {
-        if (req.url.indexOf('fonts.g') >= 0 || req.url.indexOf('fonts.google') >= 0) {
-          return new Response('', { status: 200, statusText: 'ok' });
-        }
-        return new Response('', { status: 504, statusText: 'offline' });
-      });
-    })
-  );
+   event.respondWith(
+     caches.match(req).then(function (cached) {
+       if (cached) return cached;
+       return fetch(req).then(function (res) {
+         if (res && res.status === 200 && res.type === 'basic') {
+           const copy = res.clone();
+           caches.open(CACHE_NAME).then(function (cache) { cache.put(req.url, copy); });
+         }
+         return res;
+       }).catch(function () {
+         if (req.url.indexOf('fonts.g') >= 0 || req.url.indexOf('fonts.google') >= 0) {
+           return new Response('', { status: 200, statusText: 'ok' });
+         }
+         return new Response('', { status: 504, statusText: 'offline' });
+       });
+     })
+   );
 });
