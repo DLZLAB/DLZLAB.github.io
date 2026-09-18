@@ -1,7 +1,9 @@
 const CACHE_NAME = 'dlz-timing-v3';
 const ASSETS = [
   '/index.html',
+  '/404.html',
   '/favicon.svg',
+  '/manifest.json',
   '/css/variables.css',
   '/css/base.css',
   '/css/layout.css',
@@ -34,7 +36,6 @@ const ASSETS = [
   '/js/statistics.js',
   '/js/settings.js',
   '/js/app.js',
-  '/manifest.json',
   '/pwa/icon-192.png',
   '/pwa/icon-512.png',
   '/pwa/icon-maskable-512.png'
@@ -42,25 +43,20 @@ const ASSETS = [
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.keys().then(function (keys) {
-      return Promise.all(keys.map(function (k) { return caches.delete(k); }));
-    }).then(function () {
-      return caches.open(CACHE_NAME);
-    }).then(function (cache) { return cache.addAll(ASSETS); })
+    caches.open(CACHE_NAME).then(function (cache) { return cache.addAll(ASSETS); })
+    .catch(function (err) { console.warn('SW cache addAll partial failure:', err); })
     .then(function () { return self.skipWaiting(); })
   );
 });
 
 self.addEventListener('activate', function (event) {
   event.waitUntil(
-    caches.keys()
-      .then(function (keys) {
-        return Promise.all(
-          keys.filter(function (k) { return k !== CACHE_NAME; })
-            .map(function (k) { return caches.delete(k); })
-        );
-      })
-      .then(function () { return self.clients.claim(); })
+    caches.keys().then(function (keys) {
+      return Promise.all(
+        keys.filter(function (k) { return k !== CACHE_NAME; })
+          .map(function (k) { return caches.delete(k); })
+      );
+    }).then(function () { return self.clients.claim(); })
   );
 });
 
@@ -70,38 +66,36 @@ self.addEventListener('fetch', function (event) {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-if (req.mode === 'navigate' || url.pathname.indexOf('/pwa/manifest.json') >= 0) {
-     event.respondWith(
-       fetch(req)
-         .then(function (res) {
-           const copy = res.clone();
-           caches.open(CACHE_NAME).then(function (cache) { cache.put('/index.html', copy); });
-           return res;
-         })
- .catch(function () {
-            return caches.match('/index.html').then(function (c) {
-              return c || new Response('', { status: 504, statusText: 'offline' });
-            });
-          })
-     );
-     return;
-   }
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req).then(function (res) {
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then(function (cache) { cache.put('/index.html', copy); });
+        return res;
+      }).catch(function () {
+        return caches.match('/index.html').then(function (c) {
+          return c || caches.match('/404.html').then(function (c2) { return c2 || new Response('', { status: 504, statusText: 'offline' }); });
+        });
+      })
+    );
+    return;
+  }
 
-   event.respondWith(
-     caches.match(req).then(function (cached) {
-       if (cached) return cached;
-       return fetch(req).then(function (res) {
-         if (res && res.status === 200 && res.type === 'basic') {
-           const copy = res.clone();
-           caches.open(CACHE_NAME).then(function (cache) { cache.put(req.url, copy); });
-         }
-         return res;
-       }).catch(function () {
-         if (req.url.indexOf('fonts.g') >= 0 || req.url.indexOf('fonts.google') >= 0) {
-           return new Response('', { status: 200, statusText: 'ok' });
-         }
-         return new Response('', { status: 504, statusText: 'offline' });
-       });
-     })
-   );
+  event.respondWith(
+    caches.match(req).then(function (cached) {
+      if (cached) return cached;
+      return fetch(req).then(function (res) {
+        if (res && res.status === 200 && res.type === 'basic') {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then(function (cache) { cache.put(req.url, copy); });
+        }
+        return res;
+      }).catch(function () {
+        if (req.url.indexOf('fonts.g') >= 0 || req.url.indexOf('fonts.google') >= 0) {
+          return new Response('', { status: 200, statusText: 'ok' });
+        }
+        return caches.match(req).then(function (c) { return c || new Response('', { status: 504, statusText: 'offline' }); });
+      });
+    })
+  );
 });
